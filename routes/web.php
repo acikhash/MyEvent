@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendeesController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Mail;
 
 Route::group(['middleware' => 'auth'], function () {
 
+    
     Route::get('/', [HomeController::class, 'home']);
     Route::get('dashboard', function () {
         return view('dashboard');
@@ -46,6 +48,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('laravel-examples/user-management');
     })->name('user-management');
 
+   // Route::get('attendees', function () {
+    //    return view('laravel-examples/attandees');
+   // })->name('attendees');
+
     Route::get('tables', function () {
         return view('tables');
     })->name('tables');
@@ -61,6 +67,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('static-sign-up', function () {
         return view('static-sign-up');
     })->name('sign-up');
+
+    Route::get('/attendees', [Attendeescontroller::class, 'create']);
+    Route::post('/attendees', [Attendeescontroller::class, 'store']);
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
     Route::get('/user-profile', [InfoUserController::class, 'create']);
@@ -87,6 +96,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
+    
 });
 
 Route::get('/login', function () {
