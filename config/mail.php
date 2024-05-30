@@ -95,10 +95,7 @@ return [
     |
     */
 
-    'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'noorhasni@graduate.utm.my'),
-        'name' => env('MAIL_FROM_NAME', 'MyEvent'),
-    ],
+    'from' => ['address' => 'semyevent2024@gmail.com', 'name' => 'MyEvent'],
 
     /*
     |--------------------------------------------------------------------------

@@ -68,12 +68,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/login', function () {
         return view('dashboard');
     })->name('sign-up');
-    Route::get('/testroute', function () {
-        $name = "Funny Coder";
-
-        // The email sending is done using the to method on the Mail facade
-        Mail::to('testreceiver@gmail.com')->send(new MyTestEmail($name));
-    });
 });
 
 
@@ -92,3 +86,9 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
+Route::get('/testroute', function () {
+    $name = "Funny Coder";
+
+    // The email sending is done using the to method on the Mail facade
+    Mail::to('noorhasni@graduate.utm.my')->send(new MyTestEmail($name));
+});
