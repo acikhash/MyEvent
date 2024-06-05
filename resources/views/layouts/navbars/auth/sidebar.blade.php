@@ -48,7 +48,7 @@
                             class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('tables') ? 'text-white' : 'text-dark' }} "
                             aria-hidden="true"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Event Info</span>
+                    <span class="nav-link-text ms-1">Event List</span>
                 </a>
             </li>
             <li class="nav-item pb-2">
