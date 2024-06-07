@@ -4,7 +4,7 @@
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
         <a class="align-items-center d-flex m-0 navbar-brand text-wrap" href="{{ route('dashboard') }}">
-            {{-- <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="..."> --}}
+            <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="...">
             <span class="ms-3 font-weight-bold">Event Management System (MyEvent)</span>
         </a>
     </div>
@@ -41,11 +41,11 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage Event</h6>
 
             <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('tables') ? 'active' : '' }}" href="{{ url('tables') }}">
+                <a class="nav-link {{ Request::is('/event') ? 'active' : '' }}" href="{{ route('event.index') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('tables') ? 'text-white' : 'text-dark' }} "
+                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('/event') ? 'text-white' : 'text-dark' }} "
                             aria-hidden="true"></i>
                     </div>
                     <span class="nav-link-text ms-1">Event List</span>

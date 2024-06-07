@@ -14,6 +14,8 @@ class EventController extends Controller
     public function index()
     {
         //
+        // $list = Event::paginate(10);
+        return view('event.index');
     }
 
     /**
@@ -22,6 +24,7 @@ class EventController extends Controller
     public function create()
     {
         //
+        return view('event.create');
     }
 
     /**

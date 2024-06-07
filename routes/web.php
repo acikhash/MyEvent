@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AttendeesController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
@@ -26,7 +27,7 @@ use Illuminate\Support\Facades\Mail;
 
 Route::group(['middleware' => 'auth'], function () {
 
-    
+
     Route::get('/', [HomeController::class, 'home']);
     Route::get('dashboard', function () {
         return view('dashboard');
@@ -48,9 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
         return view('laravel-examples/user-management');
     })->name('user-management');
 
-   // Route::get('attendees', function () {
+    // Route::get('attendees', function () {
     //    return view('laravel-examples/attandees');
-   // })->name('attendees');
+    // })->name('attendees');
 
     Route::get('tables', function () {
         return view('tables');
@@ -77,6 +78,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/login', function () {
         return view('dashboard');
     })->name('sign-up');
+
+    //event page
+    Route::get('event', [EventController::class, 'index'])->name('event.index');
+    Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
+    //
 });
 
 
@@ -90,7 +96,6 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-    
 });
 
 Route::get('/login', function () {
