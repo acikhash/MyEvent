@@ -1,25 +1,23 @@
 <?php
 
-namespace App\Livewire\Event\tables;
+namespace {{ namespace }};
 
-use Illuminate\Database\Query\Builder;
+use {{ modelFqn }};
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
+use PowerComponents\LivewirePowerGrid\Facades\Rule;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
-use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class EventList extends PowerGridComponent
+final class {{ componentName }} extends PowerGridComponent
 {
-    use WithExport;
-
     public function setUp(): array
     {
         $this->showCheckBox();
@@ -37,7 +35,7 @@ final class EventList extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('events');
+        return {{ model }}::query();
     }
 
     public function fields(): PowerGridFields
@@ -45,81 +43,37 @@ final class EventList extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('name')
-            ->add('theme')
-            ->add('dateStart')
-            ->add('timeStart')
-            ->add('dateEnd')
-            ->add('timeEnd')
-            ->add('organizer')
-            ->add('maxGuest')
-            ->add('deleted_at')
+            ->add('name_lower', fn ({{ model }} $model) => strtolower(e($model->name)))
             ->add('created_at')
-            ->add('updated_at');
+            ->add('created_at_formatted', fn ({{ model }} $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
-            Column::make('Name', 'name')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Theme', 'theme')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('DateStart', 'dateStart')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('TimeStart', 'timeStart')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('DateEnd', 'dateEnd')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('TimeEnd', 'timeEnd')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Organizer', 'organizer')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('MaxGuest', 'maxGuest')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
+            Column::make('ID', 'id')
+                ->searchable()
                 ->sortable(),
 
-            Column::make('Deleted at', 'deleted_at')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Created at', 'created_at_formatted', 'created_at')
+            Column::make('Name', 'name')
+                ->searchable()
                 ->sortable(),
 
             Column::make('Created at', 'created_at')
-                ->sortable()
+                ->hidden(),
+
+            Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->searchable(),
 
-            Column::make('Updated at', 'updated_at_formatted', 'updated_at')
-                ->sortable(),
-
-            Column::make('Updated at', 'updated_at')
-                ->sortable()
-                ->searchable(),
-
+            Column::action('Action')
         ];
     }
 
     public function filters(): array
     {
         return [
+            Filter::inputText('name'),
+            Filter::datepicker('created_at_formatted', 'created_at'),
         ];
     }
 
@@ -129,7 +83,7 @@ final class EventList extends PowerGridComponent
         $this->js('alert('.$rowId.')');
     }
 
-    public function actions($row): array
+    public function actions({{ model }} $row): array
     {
         return [
             Button::add('edit')
@@ -141,7 +95,7 @@ final class EventList extends PowerGridComponent
     }
 
     /*
-    public function actionRules($row): array
+    public function actionRules({{ model }} $row): array
     {
        return [
             // Hide button edit for ID 1

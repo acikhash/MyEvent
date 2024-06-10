@@ -19,8 +19,8 @@ class EventFactory extends Factory
 
         //auto generate data for dummyevent
         return [
-            'name' => fake()->realText(200, 2),
-            'theme' => fake()->realText(100, 1),
+            'name' => fake()->realText(150, 1),
+            'theme' => fake()->realText(50, 1),
             'dateStart' => fake()->date(),
             'dateEnd' => fake()->date(),
             'timeStart' => fake()->time(),

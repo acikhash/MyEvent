@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('timeEnd')->nullable();
             $table->string('organizer')->nullable();
             $table->string('maxGuest')->nullable();
+            $table->string('created_by');
+            $table->string('updated_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
