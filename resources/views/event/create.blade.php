@@ -142,8 +142,8 @@
                                 <div class="form-group">
                                     <label for="event-name" class="form-control-label">{{ __('Event Name') }}</label>
                                     <div class="@error('event.name')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="" type="text" placeholder="Name"
-                                            id="event-name" name="name">
+                                        <input class="form-control" value="" type="text"
+                                            placeholder="i.e : Will Smith" id="event-name" name="name">
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -154,8 +154,8 @@
                                 <div class="form-group">
                                     <label for="organizer-email" class="form-control-label">{{ __('Email') }}</label>
                                     <div class="@error('email')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="{{ auth()->user()->email }}" type="email"
-                                            placeholder="@example.com" id="organizer-email" name="email">
+                                        <input class="form-control" value="" type="email"
+                                            placeholder="i.e : xxx@example.com" id="organizer-email" name="email">
                                         @error('email')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -169,7 +169,7 @@
                                     <label for="event-theme" class="form-control-label">{{ __('Event Theme') }}</label>
                                     <div class="@error('event.theme')border border-danger rounded-3 @enderror">
                                         <input class="form-control" value="" type="text"
-                                            placeholder="formal tuxedo" id="event-theme" name="theme">
+                                            placeholder="i.e : formal tuxedo" id="event-theme" name="theme">
                                         @error('theme')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -206,8 +206,8 @@
                                 <div class="form-group">
                                     <label for="event.veneu" class="form-control-label">{{ __('Veneu') }}</label>
                                     <div class="@error('event.veneu') border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="text" placeholder="Veneu" id="name"
-                                            name="veneu" value="">
+                                        <input class="form-control" type="text" placeholder="i.e : PWTC"
+                                            id="name" name="veneu" value="">
                                     </div>
                                 </div>
                             </div>
