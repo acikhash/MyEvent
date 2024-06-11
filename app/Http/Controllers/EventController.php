@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Http\Requests\StoreEventRequest;
-use App\Http\Requests\UpdateEventRequest;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\View;
+
 
 class EventController extends Controller
 {
@@ -31,9 +33,31 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventRequest $request): RedirectResponse
+    public function store(Request $request)
     {
         //
+        $attributes = request()->validate([
+            'name' => ['required', 'max:50'],
+            'email' => ['required', 'email', 'max:50'],
+            'phone'     => ['max:12'],
+            'location' => ['max:70'],
+            'about_me'    => ['max:150'],
+        ]);
+
+
+
+        Event::where('id',)
+            ->cr([
+                'name'    => $attributes['name'],
+                'email' => $attributes['email'],
+                'phone'     => $attributes['phone'],
+                'veneu' => $attributes['location'],
+                'about_me'    => $attributes["about_me"],
+                'created_by' => Auth::user()->id,
+            ]);
+
+
+        return redirect('/user-profile')->with('success', 'Profile updated successfully');
         return redirect()->route('event.index')->with('success', 'Record Created');
     }
 

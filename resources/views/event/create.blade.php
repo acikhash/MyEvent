@@ -1,6 +1,7 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
+    <script src="/assets/js/plugins/flatpickr.min.js"></script>
     <div>
         <div class="container-fluid">
             <div class="page-header min-height-100 border-radius-xl mt-4"
@@ -116,8 +117,9 @@
                     <h6 class="mb-0">{{ __('Event Information') }}</h6>
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form method="post" action="{{ route('event.store') }}" role="form text-left">
+                    <form method="post" action="/event" enctype="multipart/form-data">
                         @csrf
+                        @method('post')
                         @if ($errors->any())
                             <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
                                 <span class="alert-text text-white">
@@ -141,7 +143,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="event-name" class="form-control-label">{{ __('Event Name') }}</label>
-                                    <div class="@error('event.name')border border-danger rounded-3 @enderror">
+                                    <div class="@error('event-name')border border-danger rounded-3 @enderror">
                                         <input class="form-control" value="" type="text"
                                             placeholder="i.e : Will Smith" id="event-name" name="name">
                                         @error('name')
@@ -150,20 +152,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="organizer-email" class="form-control-label">{{ __('Email') }}</label>
-                                    <div class="@error('email')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="" type="email"
-                                            placeholder="i.e : xxx@example.com" id="organizer-email" name="email">
-                                        @error('email')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="event-theme" class="form-control-label">{{ __('Event Theme') }}</label>
@@ -176,6 +164,21 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    {{-- <label for="organizer-email" class="form-control-label">{{ __('Email') }}</label>
+                                    <div class="@error('email')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="" type="email"
+                                            placeholder="i.e : xxx@example.com" id="organizer-email" name="email">
+                                        @error('email')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div> --}}
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     {{-- <label for="organizer-email" class="form-control-label">{{ __('Email') }}</label>
@@ -186,6 +189,46 @@
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div> --}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="start" class="form-control-label">{{ __('Event Date') }}</label>
+                                    <div class="@error('start')border border-danger rounded-3 @enderror">
+                                        <input class="form-control datepicker" placeholder="Please select date"
+                                            type="text" onfocus="focused(this)" onfocusout="defocused(this)">
+
+                                        <script>
+                                            if (document.querySelector('.datepicker')) {
+                                                flatpickr('.datepicker', {
+                                                    mode: "range",
+                                                    minDate: "today",
+                                                    dateFormat: "d-m-Y",
+                                                });
+                                            }
+                                        </script>
+                                        @error('date')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="@error('time-start') border border-danger rounded-3 @enderror">
+                                        <label for="time-start" class="form-control-label">Start Time</label>
+                                        <input class="form-control" type="time" value="" id="time-start">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="@error('time-end') border border-danger rounded-3 @enderror">
+                                        <label for="time-end" class="form-control-label">End Time</label>
+                                        <input class="form-control" type="time" value="" id="time-end">
+                                    </div>
                                 </div>
                             </div>
                         </div>
