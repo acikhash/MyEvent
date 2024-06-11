@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use Illuminate\Http\RedirectResponse;
 
 class EventController extends Controller
 {
@@ -30,9 +31,10 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventRequest $request)
+    public function store(StoreEventRequest $request): RedirectResponse
     {
         //
+        return redirect()->route('event.index')->with('success', 'Record Created');
     }
 
     /**
@@ -41,6 +43,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         //
+        return view('event.edit', ['event' => $event]);
     }
 
     /**
@@ -49,6 +52,7 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         //
+        return view('event.edit', ['event' => $event]);
     }
 
     /**
@@ -57,6 +61,8 @@ class EventController extends Controller
     public function update(UpdateeventRequest $request, Event $event)
     {
         //
+        $event = Event::find($request->id);
+        return view('event.edit', ['event' => $event]);
     }
 
     /**

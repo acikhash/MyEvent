@@ -25,6 +25,7 @@ class EventFactory extends Factory
             'dateEnd' => fake()->date(),
             'timeStart' => fake()->time(),
             'timeEnd' => fake()->time(),
+            'veneu' => fake()->address(),
             'maxGuest' => fake()->numberBetween(10, 1000),
             'organizer' => fake()->company(),
             'created_at' => now(),

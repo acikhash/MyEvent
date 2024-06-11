@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('timeStart')->nullable();
             $table->string('dateEnd')->nullable();
             $table->string('timeEnd')->nullable();
+            $table->string('veneu')->nullable();
             $table->string('organizer')->nullable();
             $table->string('maxGuest')->nullable();
             $table->string('created_by');
