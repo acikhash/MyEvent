@@ -3,6 +3,7 @@
 use App\Http\Controllers\AttendeesController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GuestCategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 use App\Mail\MyTestEmail;
+use App\Models\Event;
 use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +90,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/event/{event}', [EventController::class, 'show'])->name('event.show');
     Route::post('/event', [EventController::class, 'store'])->name('event.store');
     //
+
+    //guestcategory page
+    Route::get('guestcategory', [GuestCategoryController::class, 'index'])->name('guestcategory.index');
+    Route::get('/guestcategory/create', [GuestCategoryController::class, 'create'])->name('guestcategory.create');
+    Route::post('/guestcategory/{guestcategory}', [GuestCategoryController::class, 'update'])->name('guestcategory.update');
+    Route::get('/guestcategory/{id}/edit', [GuestCategoryController::class, 'edit'])->name('guestcategory.edit');
+    Route::delete('/guestcategory/{guestcategory}', [GuestCategoryController::class, 'destroy'])->name('guestcategory.destroy');
+    Route::get('/guestcategory/{guestcategory}', [GuestCategoryController::class, 'show'])->name('guestcategory.show');
+    Route::post('/guestcategory', [GuestCategoryController::class, 'store'])->name('guestcategory.store');
+    //
 });
 
 
@@ -107,7 +119,13 @@ Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
 Route::get('/testroute', function () {
-    $name = "Funny Coder";
+    // $inv = new Event();
+    $name = "Guest";
+    // $eventname = "Seminar AI";
+    // $eventdate = "9-12-2024";
+    // $starttime = "9.00 am";
+    // $eventveneu = "Dewan 1";
+    // $eventrsvp = route("event.index");
 
     // The email sending is done using the to method on the Mail facade
     Mail::to('noorhasni@graduate.utm.my')->send(new MyTestEmail($name));

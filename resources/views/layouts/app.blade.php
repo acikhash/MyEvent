@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
 
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="/assets/js/plugins/flatpickr.min.js"></script>
 </head>
 
 <body

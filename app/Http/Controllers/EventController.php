@@ -35,30 +35,26 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         //
         $attributes = request()->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required', 'email', 'max:50'],
-            'phone'     => ['max:12'],
-            'location' => ['max:70'],
-            'about_me'    => ['max:150'],
+            'theme' => ['required', 'max:50'],
+            'dateStart' => ['required'],
+            'veneu' => ['max:70']
+
         ]);
 
+        Event::create([
+            'name'    => $attributes['name'],
+            'theme' => $attributes['theme'],
+            'dateStart'     => $attributes['dateStart'],
+            'veneu' => $attributes['veneu'],
+            'timeStart'    => $request["timeStart"],
+            'created_by' => Auth::user()->id,
+        ]);
 
-
-        Event::where('id',)
-            ->cr([
-                'name'    => $attributes['name'],
-                'email' => $attributes['email'],
-                'phone'     => $attributes['phone'],
-                'veneu' => $attributes['location'],
-                'about_me'    => $attributes["about_me"],
-                'created_by' => Auth::user()->id,
-            ]);
-
-
-        return redirect('/user-profile')->with('success', 'Profile updated successfully');
-        return redirect()->route('event.index')->with('success', 'Record Created');
+        return redirect('event')->with('success', 'Record Created Successfully');
     }
 
     /**

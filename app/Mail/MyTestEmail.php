@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Event;
 
 class MyTestEmail extends Mailable
 {
@@ -28,7 +29,7 @@ class MyTestEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'My Test Email',
+            subject: 'MyEvent Invitation Email',
         );
     }
 
@@ -39,7 +40,9 @@ class MyTestEmail extends Mailable
     {
         return new Content(
             view: 'mail.test-email',
-            with: ['name' => $this->name],
+            with: [
+                'name' => $this->name,
+            ],
         );
     }
 

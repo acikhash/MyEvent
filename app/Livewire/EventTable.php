@@ -46,6 +46,7 @@ final class EventTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('theme')
+            ->add('veneu')
             ->add('dateStart')
             ->add('timeStart')
             ->add('dateEnd')
@@ -63,6 +64,7 @@ final class EventTable extends PowerGridComponent
             Column::make('Id', 'id')
                 ->sortable()
                 ->searchable(),
+
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
@@ -71,19 +73,23 @@ final class EventTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('DateStart', 'dateStart')
+            Column::make('Date Start', 'dateStart')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('TimeStart', 'timeStart')
+            Column::make('Time Start', 'timeStart')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('DateEnd', 'dateEnd')
+            Column::make('Date End', 'dateEnd')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('TimeEnd', 'timeEnd')
+            Column::make('Time End', 'timeEnd')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Veneu', 'veneu')
                 ->sortable()
                 ->searchable(),
 
@@ -137,10 +143,13 @@ final class EventTable extends PowerGridComponent
         return [
 
             Button::add('edit')
-                ->slot('Edit: ' . $row->id)
+                // ->slot('Edit: ' . $row->id)
                 ->id()
-                ->class('btn btn-primary')
+                ->class('fas fa-edit text-secondary')
+                // ->class('btn btn-primary')
                 ->route('event.edit', ['id' => $row->id])
+                ->tooltip('Edit Record'),
+
 
         ];
     }
