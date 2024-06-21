@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -15,6 +16,7 @@ use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
+use App\Models\Event;
 
 final class EventTable extends PowerGridComponent
 {
@@ -132,25 +134,34 @@ final class EventTable extends PowerGridComponent
     }
 
     #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
+    public function edit($rowId): View
+    {
+        //$this->js('alert(' . $rowId . ')');
+        // $event = Event::find($rowId);
+        return view('guestcategory.index', [$rowId]);
+    }
+
+    #[\Livewire\Attributes\On('delete')]
+    public function delete($rowId): void
     {
         $this->js('alert(' . $rowId . ')');
     }
-
     public function actions($row): array
     {
 
         return [
 
             Button::add('edit')
-                // ->slot('Edit: ' . $row->id)
-                ->id()
+                ->id('edit')
                 ->class('fas fa-edit text-secondary')
-                // ->class('btn btn-primary')
-                ->route('event.edit', ['id' => $row->id])
-                ->tooltip('Edit Record'),
-
-
+                // ->route('event.edit', ['id' => $row->id])
+                ->tooltip('Edit Record')
+                ->dispatch('edit', ['rowId' => $row->id]),
+            Button::add('delete')
+                ->id('delete')
+                ->class('fas fa-trash text-secondary')
+                ->tooltip('delete Record')
+                ->dispatch('delete', ['rowId' => $row->id]),
         ];
     }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GuestCategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
@@ -102,6 +103,8 @@ Route::group(['middleware' => 'auth'], function () {
     //
 });
 
+//send invitation email
+Route::get('/testroute', [NotificationController::class, 'sendInvitation'])->name('email.send');
 
 
 Route::group(['middleware' => 'guest'], function () {
@@ -118,15 +121,3 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
-Route::get('/testroute', function () {
-    // $inv = new Event();
-    $name = "Guest";
-    // $eventname = "Seminar AI";
-    // $eventdate = "9-12-2024";
-    // $starttime = "9.00 am";
-    // $eventveneu = "Dewan 1";
-    // $eventrsvp = route("event.index");
-
-    // The email sending is done using the to method on the Mail facade
-    Mail::to('noorhasni@graduate.utm.my')->send(new MyTestEmail($name));
-});

@@ -145,7 +145,7 @@
                                     <label for="name" class="form-control-label">{{ __('Event Name') }}</label>
                                     <div class="@error('event-name')border border-danger rounded-3 @enderror">
                                         <input class="form-control" value="" type="text"
-                                            placeholder="i.e : Will Smith" id="name" name="name">
+                                            placeholder="i.e : Sambutan Hari Raya" id="name" name="name">
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -171,10 +171,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="dateStart" class="form-control-label">{{ __('Event Date') }}</label>
-                                    {{-- <input class="form-control" placeholder="Please select date" id="dateStart"
-                                        type="text" value="12/06/2023"> --}}
                                     <input class="form-control datepicker" placeholder="Please select date"
-                                        id="dateStart" type="date" onfocus="focused(this)"
+                                        id="dateStart" name="dateStart" type="date" onfocus="focused(this)"
                                         onfocusout="defocused(this)">
 
                                     <script>
@@ -197,7 +195,8 @@
                                 <div class="form-group">
                                     <div class="@error('timeStart') border border-danger rounded-3 @enderror">
                                         <label for="timeStart" class="form-control-label">Start Time</label>
-                                        <input class="form-control" type="time" value="" id="timeStart">
+                                        <input class="form-control" type="time" value="" id="timeStart"
+                                            name="timeStart">
                                         @error('timeStart')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -208,7 +207,8 @@
                                 <div class="form-group">
                                     <div class="@error('timeEnd') border border-danger rounded-3 @enderror">
                                         <label for="timeEnd" class="form-control-label">End Time</label>
-                                        <input class="form-control" type="time" value="" id="timeEnd">
+                                        <input class="form-control" type="time" value="" id="timeEnd"
+                                            name="timeEnd">
                                         @error('timeEnd')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror

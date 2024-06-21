@@ -13,6 +13,6 @@ class EventSeeder extends Seeder
     public function run(): void
     {
         //run factory for dummyevent
-        \App\Models\Event::factory(10)->create();
+        \App\Models\Event::factory(5)->create();
     }
 }
