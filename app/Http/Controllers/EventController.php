@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\View;
 
 
+
 class EventController extends Controller
 {
     /**
@@ -35,30 +36,39 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        // //
         $attributes = request()->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required', 'email', 'max:50'],
-            'phone'     => ['max:12'],
-            'location' => ['max:70'],
-            'about_me'    => ['max:150'],
+            'theme' => ['required', 'max:50'],
+            'dateStart' => ['required'],
+            'veneu' => ['max:70']
+
         ]);
 
+        $pieces = explode(" ", $request['dateStart']);
+        if (count($pieces) > 1) {
+            $start = $pieces[0];
+            $end = $pieces[2];
+        } else {
+            $start = $request['dateStart'];
+            $end = $request['dateStart'];
+        }
 
+        Event::create([
+            'name'    => $attributes['name'],
+            'theme' => $attributes['theme'],
+            'dateStart'     => $start,
+            'dateEnd'     => $end,
+            'veneu' => $attributes['veneu'],
+            'timeStart'    => $request["timeStart"],
+            'timeEnd'    => $request["timeEnd"],
+            'maxGuest' => $request["maxGuest"],
+            'organizer' => $request["organizer"],
+            'created_by' => Auth::user()->id,
+        ]);
 
-        Event::where('id',)
-            ->cr([
-                'name'    => $attributes['name'],
-                'email' => $attributes['email'],
-                'phone'     => $attributes['phone'],
-                'veneu' => $attributes['location'],
-                'about_me'    => $attributes["about_me"],
-                'created_by' => Auth::user()->id,
-            ]);
-
-
-        return redirect('/user-profile')->with('success', 'Profile updated successfully');
-        return redirect()->route('event.index')->with('success', 'Record Created');
+        return redirect('event')->with('success', 'Record Created Successfully');
     }
 
     /**
@@ -73,16 +83,17 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Event $event)
+    public function edit(Request $request)
     {
-        //
+        $event = Event::find($request->id);
+        // dd($request);
         return view('event.edit', ['event' => $event]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateeventRequest $request, Event $event)
+    public function update(Request $request, Event $event)
     {
         //
         $event = Event::find($request->id);
@@ -92,8 +103,17 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function destroy(Request $request)
     {
+        Event::find($request->event)->update(
+            [
+                'updated_by' => Auth::id(),
+                'updated_at' => now(),
+            ]
+        );
+        Event::find($request->event)->delete();
+        return redirect()->route('event.index')->with('success', 'Record Deleted');
+        //
         //
     }
 }

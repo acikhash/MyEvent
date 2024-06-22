@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -15,6 +16,7 @@ use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
+use App\Models\Event;
 
 final class EventTable extends PowerGridComponent
 {
@@ -46,6 +48,7 @@ final class EventTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('theme')
+            ->add('veneu')
             ->add('dateStart')
             ->add('timeStart')
             ->add('dateEnd')
@@ -63,6 +66,7 @@ final class EventTable extends PowerGridComponent
             Column::make('Id', 'id')
                 ->sortable()
                 ->searchable(),
+
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
@@ -71,19 +75,23 @@ final class EventTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('DateStart', 'dateStart')
+            Column::make('Date Start', 'dateStart')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('TimeStart', 'timeStart')
+            Column::make('Time Start', 'timeStart')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('DateEnd', 'dateEnd')
+            Column::make('Date End', 'dateEnd')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('TimeEnd', 'timeEnd')
+            Column::make('Time End', 'timeEnd')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Veneu', 'veneu')
                 ->sortable()
                 ->searchable(),
 
@@ -126,22 +134,34 @@ final class EventTable extends PowerGridComponent
     }
 
     #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
+    public function edit($rowId): View
+    {
+        //$this->js('alert(' . $rowId . ')');
+        // $event = Event::find($rowId);
+        return view('guestcategory.index', [$rowId]);
+    }
+
+    #[\Livewire\Attributes\On('delete')]
+    public function delete($rowId): void
     {
         $this->js('alert(' . $rowId . ')');
     }
-
     public function actions($row): array
     {
 
         return [
 
             Button::add('edit')
-                ->slot('Edit: ' . $row->id)
-                ->id()
-                ->class('btn btn-primary')
-                ->route('event.edit', ['id' => $row->id])
-
+                ->id('edit')
+                ->class('fas fa-edit text-secondary')
+                // ->route('event.edit', ['id' => $row->id])
+                ->tooltip('Edit Record')
+                ->dispatch('edit', ['rowId' => $row->id]),
+            Button::add('delete')
+                ->id('delete')
+                ->class('fas fa-trash text-secondary')
+                ->tooltip('delete Record')
+                ->dispatch('delete', ['rowId' => $row->id]),
         ];
     }
 

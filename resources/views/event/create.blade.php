@@ -1,7 +1,6 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-    <script src="/assets/js/plugins/flatpickr.min.js"></script>
     <div>
         <div class="container-fluid">
             <div class="page-header min-height-100 border-radius-xl mt-4"
@@ -46,8 +45,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;"
-                                        role="tab" aria-controls="teams" aria-selected="false">
+                                    <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab"
+                                        href={{ route('guestcategory.index') }} role="tab" aria-controls="teams"
+                                        aria-selected="false">
                                         <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 44"
                                             version="1.1" xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -70,10 +70,10 @@
                                                 </g>
                                             </g>
                                         </svg>
-                                        <span class="ms-1">{{ __('Teams') }}</span>
+                                        <span class="ms-1">{{ __('Guest Category') }}</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;"
                                         role="tab" aria-controls="dashboard" aria-selected="false">
                                         <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 40"
@@ -104,7 +104,7 @@
                                         </svg>
                                         <span class="ms-1">{{ __('Projects') }}</span>
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -140,24 +140,26 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="event-name" class="form-control-label">{{ __('Event Name') }}</label>
+                                    <label for="name" class="form-control-label">{{ __('Event Name') }}</label>
                                     <div class="@error('event-name')border border-danger rounded-3 @enderror">
                                         <input class="form-control" value="" type="text"
-                                            placeholder="i.e : Will Smith" id="event-name" name="name">
+                                            placeholder="i.e : Sambutan Hari Raya" id="name" name="name">
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="event-theme" class="form-control-label">{{ __('Event Theme') }}</label>
-                                    <div class="@error('event.theme')border border-danger rounded-3 @enderror">
+                                    <label for="theme" class="form-control-label">{{ __('Event Theme') }}</label>
+                                    <div class="@error('theme')border border-danger rounded-3 @enderror">
                                         <input class="form-control" value="" type="text"
-                                            placeholder="i.e : formal tuxedo" id="event-theme" name="theme">
+                                            placeholder="i.e : formal tuxedo" id="theme" name="theme">
                                         @error('theme')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -166,50 +168,24 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
+                                    <label for="dateStart" class="form-control-label">{{ __('Event Date') }}</label>
+                                    <input class="form-control datepicker" placeholder="Please select date"
+                                        id="dateStart" name="dateStart" type="date" onfocus="focused(this)"
+                                        onfocusout="defocused(this)">
 
-                                    {{-- <label for="organizer-email" class="form-control-label">{{ __('Email') }}</label>
-                                    <div class="@error('email')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="" type="email"
-                                            placeholder="i.e : xxx@example.com" id="organizer-email" name="email">
-                                        @error('email')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div> --}}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    {{-- <label for="organizer-email" class="form-control-label">{{ __('Email') }}</label>
-                                    <div class="@error('email')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="{{ auth()->user()->email }}" type="email"
-                                            placeholder="@example.com" id="organizer-email" name="email">
-                                        @error('email')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div> --}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="start" class="form-control-label">{{ __('Event Date') }}</label>
-                                    <div class="@error('start')border border-danger rounded-3 @enderror">
-                                        <input class="form-control datepicker" placeholder="Please select date"
-                                            type="text" onfocus="focused(this)" onfocusout="defocused(this)">
-
-                                        <script>
-                                            if (document.querySelector('.datepicker')) {
-                                                flatpickr('.datepicker', {
-                                                    mode: "range",
-                                                    minDate: "today",
-                                                    dateFormat: "d-m-Y",
-                                                });
-                                            }
-                                        </script>
-                                        @error('date')
+                                    <script>
+                                        if (document.querySelector('.datepicker')) {
+                                            flatpickr('.datepicker', {
+                                                mode: "range",
+                                                minDate: "today",
+                                                dateFormat: "d-m-Y",
+                                            });
+                                        }
+                                    </script>
+                                    <div class="@error('dateStart')border border-danger rounded-3 @enderror">
+                                        @error('dateStart')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -217,35 +193,43 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <div class="@error('time-start') border border-danger rounded-3 @enderror">
-                                        <label for="time-start" class="form-control-label">Start Time</label>
-                                        <input class="form-control" type="time" value="" id="time-start">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="@error('time-end') border border-danger rounded-3 @enderror">
-                                        <label for="time-end" class="form-control-label">End Time</label>
-                                        <input class="form-control" type="time" value="" id="time-end">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phone" class="form-control-label">{{ __('Phone') }}</label>
-                                    <div class="@error('phone')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="tel" placeholder="40770888444"
-                                            id="number" name="phone" value="">
-                                        @error('phone')
+                                    <div class="@error('timeStart') border border-danger rounded-3 @enderror">
+                                        <label for="timeStart" class="form-control-label">Start Time</label>
+                                        <input class="form-control" type="time" value="" id="timeStart"
+                                            name="timeStart">
+                                        @error('timeStart')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="@error('timeEnd') border border-danger rounded-3 @enderror">
+                                        <label for="timeEnd" class="form-control-label">End Time</label>
+                                        <input class="form-control" type="time" value="" id="timeEnd"
+                                            name="timeEnd">
+                                        @error('timeEnd')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="maxGuest" class="form-control-label">{{ __('Max Guest') }}</label>
+                                    <div class="@error('maxGuest')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" type="number" placeholder="0" id="maxGuest"
+                                            name="maxGuest" value="">
+                                        @error('maxGuest')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="event.veneu" class="form-control-label">{{ __('Veneu') }}</label>
                                     <div class="@error('event.veneu') border border-danger rounded-3 @enderror">
@@ -255,8 +239,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="organizer" class="form-control-label">{{ __('Organizer') }}</label>
+                                    <div class="@error('organizer') border border-danger rounded-3 @enderror">
+                                        <input class="form-control" type="text"
+                                            placeholder="i.e : Universiti Teknologi Malaysia" id="organizer"
+                                            name="organizer" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
-                            <label for="about">{{ 'About Me' }}</label>
+                            <label for="about">{{ 'Event Details' }}</label>
                             <div class="@error('event.about')border border-danger rounded-3 @enderror">
                                 <textarea class="form-control" id="about" rows="3" placeholder="Say something about the event"
                                     name="about_me"></textarea>
