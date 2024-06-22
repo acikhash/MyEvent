@@ -78,6 +78,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/Registrationform', [GuestListManagementController::class, 'store'])->name('guest.store');
     Route::get('/GuestList', [GuestListManagementController::class, 'GuestList']);
     Route::get('/Events', [GuestListManagementController::class, 'EventTables']);
+    Route::get('/guest/{id}', [GuestListManagementController::class, 'Show'])->name('guest.show');
+    Route::get('/confirmation/{id}', [GuestListManagementController::class, 'confirmation'])->name('guest.confirmation');
 
 
 
