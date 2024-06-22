@@ -42,7 +42,7 @@
                                                     <p class="text-xs font-weight-bold mb-0">{{ $event->veneu }}</p>
                                                 </td>
                                                 <td>
-                                                    <p class="align-middle text-center text-sm">{{ $event->organizer }}</p>
+                                                    <span class="align-middle text-center text-sm">{{ $event->organizer }}</span>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <span class="badge badge-sm bg-gradient-success">{{ $event->dateStart }}</span>
@@ -51,7 +51,7 @@
                                                 <td class="align-middle">
                                                     <a href="{{ route('guest.registrationform') }}" class="btn bg-gradient-primary btn-sm mb-0"
                                                     type="button">+&nbsp;
-                                                    Add Guest</a>
+                                                    Manage Guest</a>
                                                     <!-- Add actions for each event if needed -->
                                                 </td>
                                             </tr>
