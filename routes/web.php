@@ -72,9 +72,12 @@ Route::group(['middleware' => 'auth'], function () {
         return view('static-sign-up');
     })->name('sign-up');
 
-    Route::get('/Registrationform', [GuestListManagementController::class, 'create']);
+
+    //Guest Management
+    Route::get('/Registrationform', [GuestListManagementController::class, 'create'])->name('guest.registrationform');
     Route::post('/Registrationform', [GuestListManagementController::class, 'store'])->name('guest.store');
     Route::get('/GuestList', [GuestListManagementController::class, 'GuestList']);
+    Route::get('/Events', [GuestListManagementController::class, 'EventTables']);
 
 
 

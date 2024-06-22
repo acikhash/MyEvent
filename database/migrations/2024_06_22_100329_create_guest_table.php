@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
+            $table->string('eventid');
+            $table->string('eventname');
             $table->string('salutations');
             $table->string('name')->nullable();
             $table->string('organization');
