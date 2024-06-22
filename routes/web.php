@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AttendeesController;
+use App\Http\Controllers\GuestListManagementController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
@@ -69,8 +69,12 @@ Route::group(['middleware' => 'auth'], function () {
         return view('static-sign-up');
     })->name('sign-up');
 
-    Route::get('/attendees', [Attendeescontroller::class, 'create']);
-    Route::post('/attendees', [Attendeescontroller::class, 'store']);
+    Route::get('/Registrationform', [GuestListManagementController::class, 'create']);
+    Route::post('/Registrationform', [GuestListManagementController::class, 'store'])->name('guest.store');
+    Route::get('/GuestList', [GuestListManagementController::class, 'GuestList']);
+
+
+
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
     Route::get('/user-profile', [InfoUserController::class, 'create']);
