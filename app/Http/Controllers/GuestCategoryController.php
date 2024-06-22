@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\GuestCategory;
 use App\Http\Requests\StoreGuestCategoryRequest;
 use App\Http\Requests\UpdateGuestCategoryRequest;
+use App\Http\Controllers\Request;
 
 class GuestCategoryController extends Controller
 {
@@ -14,6 +15,8 @@ class GuestCategoryController extends Controller
     public function index()
     {
         //
+
+        return view('guestcategory.index');
     }
 
     /**

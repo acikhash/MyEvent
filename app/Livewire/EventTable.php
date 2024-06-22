@@ -17,6 +17,8 @@ use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use App\Models\Event;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Redirect;
 
 final class EventTable extends PowerGridComponent
 {
@@ -103,26 +105,6 @@ final class EventTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            // Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-            //     ->sortable(),
-
-            // Column::make('Deleted at', 'deleted_at')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Created at', 'created_at_formatted', 'created_at')
-            //     ->sortable(),
-
-            // Column::make('Created at', 'created_at')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Updated at', 'updated_at_formatted', 'updated_at')
-            //     ->sortable(),
-
-            // Column::make('Updated at', 'updated_at')
-            //     ->sortable()
-            //     ->searchable(),
             Column::action('Action'),
 
         ];
@@ -134,17 +116,16 @@ final class EventTable extends PowerGridComponent
     }
 
     #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): View
+    public function edit($rowId): Redirector
     {
-        //$this->js('alert(' . $rowId . ')');
-        // $event = Event::find($rowId);
-        return view('guestcategory.index', [$rowId]);
+        return redirect(route('event.edit', $rowId));
     }
 
     #[\Livewire\Attributes\On('delete')]
-    public function delete($rowId): void
+    public function delete($rowId): Redirector
     {
         $this->js('alert(' . $rowId . ')');
+        return redirect(route('event.edit', $rowId));
     }
     public function actions($row): array
     {
@@ -154,7 +135,6 @@ final class EventTable extends PowerGridComponent
             Button::add('edit')
                 ->id('edit')
                 ->class('fas fa-edit text-secondary')
-                // ->route('event.edit', ['id' => $row->id])
                 ->tooltip('Edit Record')
                 ->dispatch('edit', ['rowId' => $row->id]),
             Button::add('delete')
