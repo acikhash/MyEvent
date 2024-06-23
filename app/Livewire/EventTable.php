@@ -122,10 +122,10 @@ final class EventTable extends PowerGridComponent
     }
 
     #[\Livewire\Attributes\On('delete')]
-    public function delete($rowId): Redirector
+    public function guest($rowId): Redirector
     {
-        $this->js('alert(' . $rowId . ')');
-        return redirect(route('event.edit', $rowId));
+        // $this->js('alert(' . $rowId . ')');
+        return redirect(route('guest.index', $rowId));
     }
     public function actions($row): array
     {
@@ -137,11 +137,11 @@ final class EventTable extends PowerGridComponent
                 ->class('fas fa-edit text-secondary')
                 ->tooltip('Edit Record')
                 ->dispatch('edit', ['rowId' => $row->id]),
-            Button::add('delete')
-                ->id('delete')
+            Button::add('guest')
+                ->id('guest')
                 ->class('fas fa-trash text-secondary')
-                ->tooltip('delete Record')
-                ->dispatch('delete', ['rowId' => $row->id]),
+                ->tooltip('Guest List Mangement')
+                ->dispatch('guest', ['rowId' => $row->id]),
         ];
     }
 

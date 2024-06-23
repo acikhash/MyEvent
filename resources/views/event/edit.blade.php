@@ -1,5 +1,5 @@
 @extends('layouts.user_type.auth')
-
+<script src="/assets/js/plugins/flatpickr.min.js"></script>
 @section('content')
     <div>
         <div class="container-fluid">

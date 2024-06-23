@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Auth;
 
 class  GuestListManagementController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index($id)
+    {
+        $event = Event::find($id);
+
+        return view('guestlist.index', $event);
+    }
+
     public function GuestList()
     {
         return view('guest.guestlist');
@@ -38,15 +49,15 @@ class  GuestListManagementController extends Controller
             'address' => [],
             'contactNumber' => [],
             'email' => ['required', 'email', 'max:50'],
-    
+
         ]);
 
         Guest::create($attributes);
 
-        
+
         session()->flash('success', 'Guest added successfully.');
-       
-       // Auth::login($user); 
+
+        // Auth::login($user);
         return redirect('/Registrationform');
     }
 }

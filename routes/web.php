@@ -78,7 +78,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/Registrationform', [GuestListManagementController::class, 'store'])->name('guest.store');
     Route::get('/GuestList', [GuestListManagementController::class, 'GuestList']);
     Route::get('/Events', [GuestListManagementController::class, 'EventTables']);
-
+    //get guestlist filter by event
+    Route::get('/guestlist/{eventid}', [GuestListManagementController::class, 'index'])->name('guest.index');
 
 
 
@@ -93,7 +94,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('event', [EventController::class, 'index'])->name('event.index');
     Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
     Route::post('/event/{event}', [EventController::class, 'update'])->name('event.update');
-    Route::get('/event/edit/{id}', [EventController::class, 'edit'])->name('event.edit');
+    Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
     Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('event.destroy');
     Route::get('/event/{id}', [EventController::class, 'show'])->name('event.show');
     Route::post('/event', [EventController::class, 'store'])->name('event.store');
