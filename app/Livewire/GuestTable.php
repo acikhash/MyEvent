@@ -55,6 +55,10 @@ final class GuestTable extends PowerGridComponent
             ->add('address')
             ->add('contactNumber')
             ->add('email')
+            ->add('guesttype')
+            ->add('bringrep')
+            ->add('attendance')
+            ->add('checkedin')
             ->add('deleted_at')
             ->add('created_at')
             ->add('updated_at');
@@ -91,6 +95,22 @@ final class GuestTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
+            Column::make('Guest Type', 'guesttype')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Bring Representative', 'bringrep')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Attendance', 'attendance')
+                ->sortable()
+                ->searchable(), 
+
+            Column::make('Checked In', 'checkedin')
+                ->sortable()
+                ->searchable(),   
+
             Column::action('Action'),
 
         ];
@@ -105,14 +125,15 @@ final class GuestTable extends PowerGridComponent
     public function edit($rowId): Redirector
     {
         $guest = Guest::findOrFail($rowId);
-        return redirect()->route('guest.show', ['id' => $guest->id]);
+        return redirect()->route('guest.qrcode', ['id' => $guest->id]);
     }
 
     #[\Livewire\Attributes\On('delete')]
     public function delete($rowId): Redirector
     {
-        $this->js('alert(' . $rowId . ')');
-        return redirect(route('event.edit', $rowId));
+        //$this->js('alert(' . $rowId . ')');
+        $guest = Guest::findOrFail($rowId);
+        return redirect()->route('guest.edit', ['id' => $guest->id]);
     }
     public function actions($row): array
     {

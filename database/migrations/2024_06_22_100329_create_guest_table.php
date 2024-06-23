@@ -13,14 +13,18 @@ return new class extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
-            $table->string('eventid');
-            $table->string('eventname');
+            $table->string('eventid')->nullable();
+            $table->string('eventname')->nullable();
             $table->string('salutations');
             $table->string('name')->nullable();
             $table->string('organization');
             $table->string('address')->nullable();
             $table->string('contactNumber')->nullable();
             $table->string('email')->nullable();
+            $table->string('guesttype')->nullable();
+            $table->string('bringrep')->nullable();;
+            $table->string('attendance')->nullable();
+            $table->string('checkedin')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

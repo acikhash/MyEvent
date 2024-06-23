@@ -8,7 +8,7 @@
                 <h6 class="mb-0">{{ __('Guest Information') }}</h6>
             </div>
             <div class="card-body pt-4 p-3">
-                <form method="POST" action="{{ route('guest.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('guest.edit', ['id' => $guest->id]) }}" enctype="multipart/form-data">
                     @csrf
                     @if ($errors->any())
                         <div class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">
@@ -31,13 +31,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="salutations" class="form-control-label">{{ __('Guest Salutations') }}</label>
-                                <input class="form-control" type="text" placeholder="i.e: Dato/Datin" id="salutations" name="salutations">
+                                <input class="form-control" type="text" placeholder="i.e: Dato/Datin" id="salutations" name="salutations" value="{{ old('salutations', $guest->salutations)}}" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name" class="form-control-label">{{ __('Guest Name') }}</label>
-                                <input class="form-control" type="text" placeholder="i.e: Will Smith" id="name" name="name">
+                                <input class="form-control" type="text" placeholder="i.e: Will Smith" id="name" name="name" value="{{ old('name', $guest->name) }}">
                             </div>
                         </div>
                     </div>
@@ -46,13 +46,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="organization" class="form-control-label">{{ __('Organization') }}</label>
-                                <input class="form-control" type="text" placeholder="i.e: Synergy Software House" id="organization" name="organization">
+                                <input class="form-control" type="text" placeholder="i.e: Synergy Software House" id="organization" name="organization" value="{{ old('organization', $guest->organization) }}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="address" class="form-control-label">{{ __('Address') }}</label>
-                                <input class="form-control" type="text" placeholder="i.e: 123 Main St" id="address" name="address">
+                                <input class="form-control" type="text" placeholder="i.e: 123 Main St" id="address" name="address" value="{{ old('address', $guest->address) }}">
                             </div>
                         </div>
                     </div>
@@ -61,24 +61,25 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="contactNumber" class="form-control-label">{{ __('Contact Number') }}</label>
-                                <input class="form-control" type="tel" placeholder="0123456789" id="contactNumber" name="contactNumber">
+                                <input class="form-control" type="tel" placeholder="0123456789" id="contactNumber" name="contactNumber" value="{{ old('contactNumber', $guest->contactNumber) }}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="email" class="form-control-label">{{ __('Email') }}</label>
-                                <input class="form-control" type="email" placeholder="i.e: example@example.com" id="email" name="email">
+                                <input class="form-control" type="email" placeholder="i.e: example@example.com" id="email" name="email" value="{{ old('email', $guest->email) }}">
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                                <label class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="bringrep" name="bringrep">
-                                    {{ __('Bring Representative') }}
-                                </label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="bringrep" name="bringrep" {{ $guest->bringrep ? 'checked' : '' }}>
+                                <label class="form-check-label" for="bringrep">{{ __('Bring Representative') }}</label>
+                            </div>
                         </div>
+                    </div>
 
                     <div class="row">
                         <div class="d-flex justify-content-end">

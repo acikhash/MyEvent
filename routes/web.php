@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GuestListManagementController;
+use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GuestCategoryController;
@@ -78,8 +79,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/Registrationform', [GuestListManagementController::class, 'store'])->name('guest.store');
     Route::get('/GuestList', [GuestListManagementController::class, 'GuestList']);
     Route::get('/Events', [GuestListManagementController::class, 'EventTables']);
-    Route::get('/guest/{id}', [GuestListManagementController::class, 'Show'])->name('guest.show');
-    Route::get('/confirmation/{id}', [GuestListManagementController::class, 'confirmation'])->name('guest.confirmation');
+    Route::get('/Edit/{id}', [GuestListManagementController::class, 'ShowEdit'])->name('guest.edit');
+    Route::post('/Edit/{id}', [GuestListManagementController::class, 'edit'])->name('guest.edit');
+    Route::get('/Representativeform', [GuestListManagementController::class, 'RepresentativeCreate'])->name('guest.representativeform');
+    Route::post('/Representativeform', [GuestListManagementController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
+
+
+    //Qr Code
+    Route::get('/QRcode/{id}', [QRCodeController::class, 'QRcode'])->name('guest.qrcode');
+    Route::get('/checkin/{id}', [QRCodeController::class, 'checkin'])->name('guest.checkin');
 
 
 
