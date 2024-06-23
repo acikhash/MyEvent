@@ -17,6 +17,11 @@ class Guest extends Model
         'address',
         'contactNumber',
         'email',
+        'guesttype',
+        'bringrep',
+        'attendance',
+        'checkedin',
+        
 
     ];
 

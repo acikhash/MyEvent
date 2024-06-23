@@ -2,12 +2,6 @@
 
 @section('content')
     <div>
-        <div class="alert alert-secondary mx-4" role="alert">
-            <span class="text-white" name="message" id="txtmessage">
-                function not configure yet
-            </span>
-        </div>
-
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4 mx-4">
@@ -17,16 +11,16 @@
                                 <h5 class="mb-0">Guest List</h5>
                             </div>
                             <div class="card mb-4 mx-6">
-                                <a href={{ route('event.create') }} class="btn bg-gradient-primary btn-sm mb-0"
+                                <a href={{ route('guest.registrationform') }} class="btn bg-gradient-primary btn-sm mb-0"
                                     type="button">+&nbsp;
-                                    New Event</a>
+                                    Add Guest</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="card-body px-2 pt-2 pb-2">
 
-                        <livewire:event-table />
+                        <livewire:guest-table />
 
                     </div>
                 </div>
