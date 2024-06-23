@@ -79,6 +79,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/Registrationform', [GuestListManagementController::class, 'store'])->name('guest.store');
     Route::get('/GuestList', [GuestListManagementController::class, 'GuestList']);
     Route::get('/Events', [GuestListManagementController::class, 'EventTables']);
+<<<<<<< HEAD
+    //get guestlist filter by event
+    Route::get('/guestlist/{eventid}', [GuestListManagementController::class, 'index'])->name('guest.index');
+=======
     Route::get('/Edit/{id}', [GuestListManagementController::class, 'ShowEdit'])->name('guest.edit');
     Route::post('/Edit/{id}', [GuestListManagementController::class, 'edit'])->name('guest.edit');
     Route::get('/Representativeform', [GuestListManagementController::class, 'RepresentativeCreate'])->name('guest.representativeform');
@@ -91,6 +95,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/QRcode/{id}', [QRCodeController::class, 'QRcode'])->name('guest.qrcode');
     Route::get('/checkin/{id}', [QRCodeController::class, 'checkin'])->name('guest.checkin');
 
+>>>>>>> b4126ebc35a6c74ba8e3e2ab57f8209bd0df5072
 
 
 
@@ -105,7 +110,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('event', [EventController::class, 'index'])->name('event.index');
     Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
     Route::post('/event/{event}', [EventController::class, 'update'])->name('event.update');
-    Route::get('/event/edit/{id}', [EventController::class, 'edit'])->name('event.edit');
+    Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
     Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('event.destroy');
     Route::get('/event/{id}', [EventController::class, 'show'])->name('event.show');
     Route::post('/event', [EventController::class, 'store'])->name('event.store');

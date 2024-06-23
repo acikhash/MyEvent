@@ -16,6 +16,17 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class  GuestListManagementController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index($id)
+    {
+        $event = Event::find($id);
+
+        return view('guestlist.index', $event);
+    }
+
     public function GuestList()
     {
         return view('guest.guestlist');
@@ -48,21 +59,21 @@ class  GuestListManagementController extends Controller
             'contactNumber' => [],
             'email' => ['required', 'email', 'max:50'],
             'guesttype' => [],
-            'bringrep'=>'',
+            'bringrep' => '',
             'attendance' => [],
-    
+
         ]);
 
-        // Assign default values 
-        $attributes['guesttype'] = $attributes['guesttype'] ?? 'Invitation';
+        // Assign default values
+        $attributes['guesttype'] = $attributes['guesttype'] ?? 'Invitations';
         $attributes['attendance'] = $attributes['attendance'] ?? 'off';
 
         Guest::create($attributes);
 
-        
+
         session()->flash('success', 'Guest added successfully.');
-       
-       // Auth::login($user); 
+
+        // Auth::login($user);
         return redirect('/GuestList');
     }
 
@@ -73,11 +84,11 @@ class  GuestListManagementController extends Controller
 
     public function showEdit($id)
     {
-    // Fetch the guest data for editing, assuming Guest model exists
-    $guest = Guest::find($id);
-    
-    // Return view with guest data
-    return view('guest.edit', compact('guest'));
+        // Fetch the guest data for editing, assuming Guest model exists
+        $guest = Guest::find($id);
+
+        // Return view with guest data
+        return view('guest.edit', compact('guest'));
     }
 
 
@@ -95,8 +106,8 @@ class  GuestListManagementController extends Controller
             'address' => [],
             'contactNumber' => [],
             'email' => ['required', 'email', 'max:50'],
-            'bringrep' =>'',
-    
+            'bringrep' => '',
+
         ]);
 
 
@@ -104,15 +115,15 @@ class  GuestListManagementController extends Controller
 
         $guest->bringrep = $request->has('bringrep') ? 'on' : 'off';
 
-        // Assuming fillable fields in Guest model
-        $guest->fill($attributes); 
+
+        $guest->fill($attributes); // Assuming fillable fields in Guest model
         $guest->save();
 
 
-        
+
         session()->flash('success', 'successfully updated.');
-       
-       // Auth::login($user); 
+
+        // Auth::login($user);
         return redirect('/GuestList');
     }
 
@@ -134,96 +145,19 @@ class  GuestListManagementController extends Controller
             'email' => ['required', 'email', 'max:50'],
             'guesttype' => [],
             'attendance' => [],
-    
+
         ]);
 
-        // Assign default values 
+        // Assign default values
         $attributes['guesttype'] = $attributes['guesttype'] ?? 'Representative';
         $attributes['attendance'] = $attributes['attendance'] ?? 'off';
 
         Guest::create($attributes);
 
-        
+
         session()->flash('success', 'Guest added successfully.');
-       
-       // Auth::login($user); 
-        return redirect('/GuestList');
+
+        // Auth::login($user);
+        return redirect('/Registrationform');
     }
-
-
-
-    public function walkincreate()
-    {
-        return view('guest.walkinregistrationform');
-    }
-
-
-
-
-    public function walkinstore()
-    {
-        $attributes = request()->validate([
-            'eventid',
-            'eventname',
-            'salutations' => [],
-            'name' => ['required', 'max:50'],
-            'organization' => [],
-            'address' => [],
-            'contactNumber' => [],
-            'email' => ['required', 'email', 'max:50'],
-            'guesttype' => [],
-            'bringrep'=>'',
-            'attendance' => [],
-            'checkedin' => [],
-    
-        ]);
-
-        // Assign default values 
-        $attributes['guesttype'] = $attributes['guesttype'] ?? 'Walk-in';
-        $attributes['attendance'] = $attributes['attendance'] ?? 'on';
-        $attributes['bringrep'] = $attributes['bringrep'] ?? 'off';
-        $attributes['checkedin'] = $attributes['checkedin'] ?? 'on';
-
-        Guest::create($attributes);
-
-        
-        session()->flash('success', 'Guest added successfully.');
-       
-       // Auth::login($user); 
-        return redirect('/Walk-inRegistrationform');
-    }
-
-
-
-
-
-
-
-
-
-
-     /* QR code
-       public function show($id)
-    {
-        // Fetch guest information 
-        $guest = Guest::findOrFail($id);
-
-        // Generate QR code content 
-        $qrCodeContent = url('/confirmation/' . $guest->id);
-
-        // Generate QR code image
-        $qrCode = QrCode::size(200)->generate($qrCodeContent);
-
-        // Pass the QR code image and guest data to the view
-        return view('guest.show', compact('guest', 'qrCode'));
-    }
-
-    public function confirmation($id)
-    {
-        $guest = Guest::findOrFail($id);
-
-        return view('guest.confirmation', compact('guest'));
-
-    }*/
-
 }
