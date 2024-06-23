@@ -125,7 +125,7 @@ final class GuestTable extends PowerGridComponent
     public function edit($rowId): Redirector
     {
         $guest = Guest::findOrFail($rowId);
-        return redirect()->route('guest.qrcode', ['id' => $guest->id]);
+        return redirect()->route('guest.edit', ['id' => $guest->id]);
     }
 
     #[\Livewire\Attributes\On('delete')]
@@ -135,6 +135,15 @@ final class GuestTable extends PowerGridComponent
         $guest = Guest::findOrFail($rowId);
         return redirect()->route('guest.edit', ['id' => $guest->id]);
     }
+
+    #[\Livewire\Attributes\On('QR')]
+    public function QR($rowId): Redirector
+    {
+        $guest = Guest::findOrFail($rowId);
+        return redirect()->route('guest.qrcode', ['id' => $guest->id]);
+    }
+
+
     public function actions($row): array
     {
 
@@ -143,13 +152,20 @@ final class GuestTable extends PowerGridComponent
             Button::add('edit')
                 ->id('edit')
                 ->class('fas fa-edit text-secondary')
-                ->tooltip('View QR Code')
+                ->tooltip('Edit')
                 ->dispatch('edit', ['rowId' => $row->id]),
+
             Button::add('delete')
                 ->id('delete')
                 ->class('fas fa-trash text-secondary')
                 ->tooltip('delete Record')
                 ->dispatch('delete', ['rowId' => $row->id]),
+
+            Button::add('QR')
+                ->id('QR')
+                ->class('fas fa-qrcode text-secondary')
+                ->tooltip('View QR Code')
+                ->dispatch('QR', ['rowId' => $row->id]),    
         ];
     }
 
