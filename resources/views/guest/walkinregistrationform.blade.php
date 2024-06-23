@@ -5,10 +5,10 @@
     <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header pb-0 px-3">
-                <h6 class="mb-0">{{ __('Representative Information') }}</h6>
+                <h6 class="mb-0">{{ __('Walk-in Guest Information') }}</h6>
             </div>
             <div class="card-body pt-4 p-3">
-                <form method="POST" action="{{ route('guest.RepresentativeStore') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('guest.walkinstore') }}" enctype="multipart/form-data">
                     @csrf
                     @if ($errors->any())
                         <div class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">

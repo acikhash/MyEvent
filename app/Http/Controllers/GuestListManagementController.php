@@ -54,7 +54,7 @@ class  GuestListManagementController extends Controller
         ]);
 
         // Assign default values 
-        $attributes['guesttype'] = $attributes['guesttype'] ?? 'Invitations';
+        $attributes['guesttype'] = $attributes['guesttype'] ?? 'Invitation';
         $attributes['attendance'] = $attributes['attendance'] ?? 'off';
 
         Guest::create($attributes);
@@ -104,8 +104,8 @@ class  GuestListManagementController extends Controller
 
         $guest->bringrep = $request->has('bringrep') ? 'on' : 'off';
 
-        
-        $guest->fill($attributes); // Assuming fillable fields in Guest model
+        // Assuming fillable fields in Guest model
+        $guest->fill($attributes); 
         $guest->save();
 
 
@@ -152,7 +152,46 @@ class  GuestListManagementController extends Controller
 
 
 
+    public function walkincreate()
+    {
+        return view('guest.walkinregistrationform');
+    }
 
+
+
+
+    public function walkinstore()
+    {
+        $attributes = request()->validate([
+            'eventid',
+            'eventname',
+            'salutations' => [],
+            'name' => ['required', 'max:50'],
+            'organization' => [],
+            'address' => [],
+            'contactNumber' => [],
+            'email' => ['required', 'email', 'max:50'],
+            'guesttype' => [],
+            'bringrep'=>'',
+            'attendance' => [],
+            'checkedin' => [],
+    
+        ]);
+
+        // Assign default values 
+        $attributes['guesttype'] = $attributes['guesttype'] ?? 'Walk-in';
+        $attributes['attendance'] = $attributes['attendance'] ?? 'on';
+        $attributes['bringrep'] = $attributes['bringrep'] ?? 'off';
+        $attributes['checkedin'] = $attributes['checkedin'] ?? 'on';
+
+        Guest::create($attributes);
+
+        
+        session()->flash('success', 'Guest added successfully.');
+       
+       // Auth::login($user); 
+        return redirect('/Walk-inRegistrationform');
+    }
 
 
 
