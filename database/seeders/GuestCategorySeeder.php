@@ -15,8 +15,19 @@ class GuestCategorySeeder extends Seeder
     {
         //
         DB::table('guest_categories')->insert([
-            'id' => 1,
             'name' => 'admin',
+            'event_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('guest_categories')->insert([
+            'name' => 'VIP',
+            'event_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('guest_categories')->insert([
+            'name' => 'normal',
             'event_id' => '1',
             'created_at' => now(),
             'updated_at' => now()

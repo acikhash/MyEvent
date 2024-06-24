@@ -36,8 +36,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        // //
+
         $attributes = request()->validate([
             'name' => ['required', 'max:50'],
             'theme' => ['required', 'max:50'],
@@ -87,7 +86,7 @@ class EventController extends Controller
     {
         //dd($id);
         $event = Event::find($id);
-
+        //dd($event->name);
         return view('event.edit', ['event' => $event]);
     }
 
@@ -97,8 +96,39 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         //
+        $attributes = request()->validate([
+            'name' => ['required', 'max:50'],
+            'theme' => ['required', 'max:50'],
+            'dateStart' => ['required'],
+            'veneu' => ['max:70']
+
+        ]);
+
+        $pieces = explode(" ", $request['dateStart']);
+        if (count($pieces) > 1) {
+            $start = $pieces[0];
+            $end = $pieces[2];
+        } else {
+            $start = $request['dateStart'];
+            $end = $request['dateStart'];
+        }
         $event = Event::find($request->id);
-        return view('event.edit', ['event' => $event]);
+
+        $event->update([
+            'name'    => $attributes['name'],
+            'theme' => $attributes['theme'],
+            'dateStart'     => $start,
+            'dateEnd'     => $end,
+            'veneu' => $attributes['veneu'],
+            'timeStart'    => $request["timeStart"],
+            'timeEnd'    => $request["timeEnd"],
+            'maxGuest' => $request["maxGuest"],
+            'organizer' => $request["organizer"],
+            'updated_by' => Auth::id(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect('event')->with('success', 'Record Updated Successfully');
     }
 
     /**

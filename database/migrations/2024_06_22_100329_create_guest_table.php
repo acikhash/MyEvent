@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
-            $table->string('eventid')->nullable();
-            $table->string('eventname')->nullable();
-            $table->string('salutations');
+            $table->string('eventid')->nullable(); //$table->foreignIdFor(Event::class);
+            $table->string('eventname')->nullable(); // x perlu kalau buat foreign id ke event $table->foreignIdFor(Event::class);
+            $table->string('salutations')->default('Mr');
             $table->string('name')->nullable();
-            $table->string('organization');
+            $table->string('organization')->nullable();
             $table->string('address')->nullable();
             $table->string('contactNumber')->nullable();
             $table->string('email')->nullable();
-            $table->string('guesttype')->nullable();
+            $table->string('guesttype')->nullable(); //guestcategory
             $table->string('bringrep')->nullable();;
             $table->string('attendance')->nullable();
             $table->string('checkedin')->nullable();

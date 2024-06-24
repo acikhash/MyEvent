@@ -4,14 +4,15 @@
     <div>
         <div class="container-fluid">
             <div class="page-header min-height-100 border-radius-xl mt-4"
-                style="background-image: url('../assets/img/curved-images/curved00.jpg'); background-position-y: 50%;">
+                style="background-image: url('/assets/img/curved-images/curved00.jpg'); background-position-y: 50%;">
                 <span class="mask bg-gradient-primary opacity-6"></span>
             </div>
             <div class="card card-body blur shadow-blur mx-4 mt-n6">
                 <div class="row gx-4">
                     <div class="col-auto">
                     </div>
-                    <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                    <h6 class="mb-0">{{ $event->name }} {{ __('Event Information') }}</h6>
+                    {{-- <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                         <div class="nav-wrapper position-relative end-0">
                             <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">
                                 <li class="nav-item">
@@ -73,49 +74,17 @@
                                         <span class="ms-1">{{ __('Guest Category') }}</span>
                                     </a>
                                 </li>
-                                {{-- <li class="nav-item">
-                                    <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;"
-                                        role="tab" aria-controls="dashboard" aria-selected="false">
-                                        <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 40"
-                                            version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink">
-                                            <title>settings</title>
-                                            <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none"
-                                                fill-rule="evenodd">
-                                                <g id="Rounded-Icons" transform="translate(-2020.000000, -442.000000)"
-                                                    fill="#FFFFFF" fill-rule="nonzero">
-                                                    <g id="Icons-with-opacity"
-                                                        transform="translate(1716.000000, 291.000000)">
-                                                        <g id="settings" transform="translate(304.000000, 151.000000)">
-                                                            <polygon class="color-background" id="Path"
-                                                                opacity="0.596981957"
-                                                                points="18.0883333 15.7316667 11.1783333 8.82166667 13.3333333 6.66666667 6.66666667 0 0 6.66666667 6.66666667 13.3333333 8.82166667 11.1783333 15.315 17.6716667">
-                                                            </polygon>
-                                                            <path class="color-background"
-                                                                d="M31.5666667,23.2333333 C31.0516667,23.2933333 30.53,23.3333333 30,23.3333333 C29.4916667,23.3333333 28.9866667,23.3033333 28.48,23.245 L22.4116667,30.7433333 L29.9416667,38.2733333 C32.2433333,40.575 35.9733333,40.575 38.275,38.2733333 L38.275,38.2733333 C40.5766667,35.9716667 40.5766667,32.2416667 38.275,29.94 L31.5666667,23.2333333 Z"
-                                                                id="Path" opacity="0.596981957"></path>
-                                                            <path class="color-background"
-                                                                d="M33.785,11.285 L28.715,6.215 L34.0616667,0.868333333 C32.82,0.315 31.4483333,0 30,0 C24.4766667,0 20,4.47666667 20,10 C20,10.99 20.1483333,11.9433333 20.4166667,12.8466667 L2.435,27.3966667 C0.95,28.7083333 0.0633333333,30.595 0.00333333333,32.5733333 C-0.0583333333,34.5533333 0.71,36.4916667 2.11,37.89 C3.47,39.2516667 5.27833333,40 7.20166667,40 C9.26666667,40 11.2366667,39.1133333 12.6033333,37.565 L27.1533333,19.5833333 C28.0566667,19.8516667 29.01,20 30,20 C35.5233333,20 40,15.5233333 40,10 C40,8.55166667 39.685,7.18 39.1316667,5.93666667 L33.785,11.285 Z"
-                                                                id="Path"></path>
-                                                        </g>
-                                                    </g>
-                                                </g>
-                                            </g>
-                                        </svg>
-                                        <span class="ms-1">{{ __('Projects') }}</span>
-                                    </a>
-                                </li> --}}
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
         <div class="container-fluid py-4">
             <div class="card">
-                <div class="card-header pb-0 px-3">
-                    <h6 class="mb-0">{{ __('Event Information') }}</h6>
-                </div>
+                {{-- <div class="card-header pb-0 px-3">
+                    <h6 class="mb-0">{{ $event->name }} {{ __('Event Information') }}</h6>
+                </div> --}}
                 <div class="card-body pt-4 p-3">
                     <form method="post" action="/event" enctype="multipart/form-data">
                         @csrf
@@ -144,8 +113,9 @@
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">{{ __('Event Name') }}</label>
                                     <div class="@error('event-name')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="" type="text"
-                                            placeholder="i.e : Sambutan Hari Raya" id="name" name="name">
+                                        <input class="form-control" type="text" placeholder="i.e : Sambutan Hari Raya"
+                                            id="name" name="name" onfocus="focused(this)"
+                                            onfocusout="defocused(this)" value="{{ $event->name }}">
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -158,7 +128,7 @@
                                 <div class="form-group">
                                     <label for="theme" class="form-control-label">{{ __('Event Theme') }}</label>
                                     <div class="@error('theme')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="" type="text"
+                                        <input class="form-control" value={{ $event->theme }} type="text"
                                             placeholder="i.e : formal tuxedo" id="theme" name="theme">
                                         @error('theme')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -171,16 +141,16 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="dateStart" class="form-control-label">{{ __('Event Date') }}</label>
-                                    <input class="form-control datepicker" placeholder="Please select date"
-                                        id="dateStart" name="dateStart" type="date" onfocus="focused(this)"
+                                    <input class="form-control datepicker" placeholder="Please select date" id="dateStart"
+                                        name="dateStart" type="date" onfocus="focused(this)"
                                         onfocusout="defocused(this)">
 
                                     <script>
                                         if (document.querySelector('.datepicker')) {
                                             flatpickr('.datepicker', {
                                                 mode: "range",
-                                                minDate: "today",
-                                                dateFormat: "d-m-Y",
+                                                dateFormat: "Y-m-d",
+                                                defaultDate: ["{{ $event->dateStart }}", "{{ $event->dateEnd }}"]
                                             });
                                         }
                                     </script>
@@ -195,8 +165,8 @@
                                 <div class="form-group">
                                     <div class="@error('timeStart') border border-danger rounded-3 @enderror">
                                         <label for="timeStart" class="form-control-label">Start Time</label>
-                                        <input class="form-control" type="time" value="" id="timeStart"
-                                            name="timeStart">
+                                        <input class="form-control" type="time" value={{ $event->timeStart }}
+                                            id="timeStart" name="timeStart">
                                         @error('timeStart')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -207,8 +177,8 @@
                                 <div class="form-group">
                                     <div class="@error('timeEnd') border border-danger rounded-3 @enderror">
                                         <label for="timeEnd" class="form-control-label">End Time</label>
-                                        <input class="form-control" type="time" value="" id="timeEnd"
-                                            name="timeEnd">
+                                        <input class="form-control" type="time" value={{ $event->timeEnd }}
+                                            id="timeEnd" name="timeEnd">
                                         @error('timeEnd')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -220,7 +190,7 @@
                                     <label for="maxGuest" class="form-control-label">{{ __('Max Guest') }}</label>
                                     <div class="@error('maxGuest')border border-danger rounded-3 @enderror">
                                         <input class="form-control" type="number" placeholder="0" id="maxGuest"
-                                            name="maxGuest" value="">
+                                            name="maxGuest" value={{ $event->maxGuest }}>
                                         @error('maxGuest')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -234,7 +204,7 @@
                                     <label for="event.veneu" class="form-control-label">{{ __('Veneu') }}</label>
                                     <div class="@error('event.veneu') border border-danger rounded-3 @enderror">
                                         <input class="form-control" type="text" placeholder="i.e : PWTC"
-                                            id="name" name="veneu" value="">
+                                            id="name" name="veneu" value={{ $event->veneu }}>
                                     </div>
                                 </div>
                             </div>
@@ -244,7 +214,7 @@
                                 <div class="form-group">
                                     <label for="organizer" class="form-control-label">{{ __('Organizer') }}</label>
                                     <div class="@error('organizer') border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="text"
+                                        <input class="form-control" type="text" value={{ $event->organizer }}
                                             placeholder="i.e : Universiti Teknologi Malaysia" id="organizer"
                                             name="organizer" value="">
                                     </div>
@@ -255,7 +225,7 @@
                             <label for="about">{{ 'Event Details' }}</label>
                             <div class="@error('event.about')border border-danger rounded-3 @enderror">
                                 <textarea class="form-control" id="about" rows="3" placeholder="Say something about the event"
-                                    name="about_me"></textarea>
+                                    name="about_me">{{ $event->about }}</textarea>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">

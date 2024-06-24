@@ -83,12 +83,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/Edit/{id}', [GuestListManagementController::class, 'edit'])->name('guest.edit');
     Route::get('/Representativeform', [GuestListManagementController::class, 'RepresentativeCreate'])->name('guest.representativeform');
     Route::post('/Representativeform', [GuestListManagementController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
+
     Route::get('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkincreate'])->name('guest.walkinregistrationform');
     Route::post('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkinstore'])->name('guest.walkinstore');
 
 
     //get guestlist filter by event
     Route::get('/guestlist/{eventid}', [GuestListManagementController::class, 'index'])->name('guest.index');
+
+
 
 
 
