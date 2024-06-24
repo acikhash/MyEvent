@@ -83,8 +83,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/Edit/{id}', [GuestListManagementController::class, 'edit'])->name('guest.edit');
     Route::get('/Representativeform', [GuestListManagementController::class, 'RepresentativeCreate'])->name('guest.representativeform');
     Route::post('/Representativeform', [GuestListManagementController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
+<<<<<<< HEAD
     //get guestlist filter by event
     Route::get('/guestlist/{eventid}', [GuestListManagementController::class, 'index'])->name('guest.index');
+=======
+    Route::get('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkincreate'])->name('guest.walkinregistrationform');
+    Route::post('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkinstore'])->name('guest.walkinstore');
+
+
+    //get guestlist filter by event
+    Route::get('/guestlist/{eventid}', [GuestListManagementController::class, 'index'])->name('guest.index');
+
+
+>>>>>>> 0962e33ef47f50ae52150691bd7fdc4ccd5298fc
 
     //Qr Code
     Route::get('/QRcode/{id}', [QRCodeController::class, 'QRcode'])->name('guest.qrcode');
