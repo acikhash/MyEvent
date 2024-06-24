@@ -4,13 +4,13 @@ namespace App\Livewire;
 
 use App\Models\Guest;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Carbon;
+
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
+
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
+
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
@@ -105,11 +105,11 @@ final class GuestTable extends PowerGridComponent
 
             Column::make('Attendance', 'attendance')
                 ->sortable()
-                ->searchable(), 
+                ->searchable(),
 
             Column::make('Checked In', 'checkedin')
                 ->sortable()
-                ->searchable(),   
+                ->searchable(),
 
             Column::action('Action'),
 

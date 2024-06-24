@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('veneu')->nullable();
             $table->string('organizer')->nullable();
             $table->string('maxGuest')->nullable();
+            $table->string('about')->nullable();
             $table->string('created_by');
             $table->string('updated_by')->nullable();
             $table->softDeletes();

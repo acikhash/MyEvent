@@ -23,8 +23,8 @@ class  GuestListManagementController extends Controller
     public function index($id)
     {
         $event = Event::find($id);
-
-        return view('guestlist.index', $event);
+        // dd($event);
+        return view('guest.index', compact('event'));
     }
 
     public function GuestList()

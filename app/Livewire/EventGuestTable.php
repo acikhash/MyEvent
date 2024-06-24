@@ -14,12 +14,9 @@ use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
-use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class CategoryTable extends PowerGridComponent
+final class EventGuestTable extends PowerGridComponent
 {
-    use WithExport;
-
     public function setUp(): array
     {
         $this->showCheckBox();
@@ -37,7 +34,7 @@ final class CategoryTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('guest_categories');
+        return DB::table('guests');
     }
 
     public function fields(): PowerGridFields
@@ -45,50 +42,38 @@ final class CategoryTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('name')
-            ->add('event_id')
-            ->add('deleted_at')
             ->add('created_at')
-            ->add('updated_at');
+            ->add('created_at_formatted', fn ($row) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
-            Column::make('Name', 'name')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Event id', 'event_id'),
-            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
+            Column::make('ID', 'id')
+                ->searchable()
                 ->sortable(),
 
-            // Column::make('Deleted at', 'deleted_at')
-            //     ->sortable()
-            //     ->searchable(),
+            Column::make('Name', 'name')
+                ->searchable()
+                ->sortable(),
 
-            // Column::make('Created at', 'created_at_formatted', 'created_at')
-            //     ->sortable(),
+            Column::make('Created at', 'created_at')
+                ->hidden(),
 
-            // Column::make('Created at', 'created_at')
-            //     ->sortable()
-            //     ->searchable(),
+            Column::make('Created at', 'created_at_formatted', 'created_at')
+                ->searchable(),
 
-            // Column::make('Updated at', 'updated_at_formatted', 'updated_at')
-            //     ->sortable(),
-
-            // Column::make('Updated at', 'updated_at')
-            //     ->sortable()
-            //     ->searchable(),
-            Column::action('Action'),
-
+            Column::action('Action')
         ];
     }
 
-    public function filters(): array
-    {
-        return [];
-    }
+    // public function filters(): array
+    // {
+    //     return [
+    //         Filter::inputText('name'),
+    //         Filter::datepicker('created_at_formatted', 'created_at'),
+    //     ];
+    // }
 
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
@@ -102,13 +87,13 @@ final class CategoryTable extends PowerGridComponent
             Button::add('edit')
                 ->id('edit')
                 ->class('fas fa-edit text-secondary')
-                ->tooltip('Edit Guest Category')
+                ->tooltip('Edit Record')
                 ->dispatch('edit', ['rowId' => $row->id]),
-            Button::add('delete')
-                ->id('delete')
-                ->class('fas fa-trash text-secondary')
-                ->tooltip('Delete Record')
-                ->dispatch('delete', ['rowId' => $row->id]),
+            Button::add('invitation')
+                ->id('guest')
+                ->class('fas fa-email text-secondary')
+                ->tooltip('Guest List Mangement')
+                ->dispatch('guest', ['rowId' => $row->id]),
         ];
     }
 
