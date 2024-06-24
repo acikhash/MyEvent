@@ -24,7 +24,7 @@ class  QRCodeController extends Controller
         $guest = Guest::findOrFail($id);
 
         // Generate QR code content 
-        $qrCodeContent = url('/Qrcode/' . $guest->id);
+        $qrCodeContent = url('/checkin/' . $guest->id);
 
         // Generate QR code image
         $qrCode = QrCode::size(200)->generate($qrCodeContent);
