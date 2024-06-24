@@ -115,7 +115,7 @@
                                     <div class="@error('event-name')border border-danger rounded-3 @enderror">
                                         <input class="form-control" type="text" placeholder="i.e : Sambutan Hari Raya"
                                             id="name" name="name" onfocus="focused(this)"
-                                            onfocusout="defocused(this)" value={{ auth()->$event->name }}>
+                                            onfocusout="defocused(this)" value="{{ $event->name }}">
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror

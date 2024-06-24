@@ -31,13 +31,15 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="salutations" class="form-control-label">{{ __('Guest Salutations') }}</label>
-                                <input class="form-control" type="text" placeholder="i.e: Dato/Datin" id="salutations" name="salutations">
+                                <input class="form-control" type="text" placeholder="i.e: Dato/Datin" id="salutations"
+                                    name="salutations">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name" class="form-control-label">{{ __('Guest Name') }}</label>
-                                <input class="form-control" type="text" placeholder="i.e: Will Smith" id="name" name="name">
+                                <input class="form-control" type="text" placeholder="i.e: Will Smith" id="name"
+                                    name="name">
                             </div>
                         </div>
                     </div>
@@ -46,13 +48,15 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="organization" class="form-control-label">{{ __('Organization') }}</label>
-                                <input class="form-control" type="text" placeholder="i.e: Synergy Software House" id="organization" name="organization">
+                                <input class="form-control" type="text" placeholder="i.e: Synergy Software House"
+                                    id="organization" name="organization">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="address" class="form-control-label">{{ __('Address') }}</label>
-                                <input class="form-control" type="text" placeholder="i.e: 123 Main St" id="address" name="address">
+                                <input class="form-control" type="text" placeholder="i.e: 123 Main St" id="address"
+                                    name="address">
                             </div>
                         </div>
                     </div>
@@ -61,20 +65,23 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="contactNumber" class="form-control-label">{{ __('Contact Number') }}</label>
-                                <input class="form-control" type="tel" placeholder="0123456789" id="contactNumber" name="contactNumber">
+                                <input class="form-control" type="tel" placeholder="0123456789" id="contactNumber"
+                                    name="contactNumber">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="email" class="form-control-label">{{ __('Email') }}</label>
-                                <input class="form-control" type="email" placeholder="i.e: example@example.com" id="email" name="email">
+                                <input class="form-control" type="email" placeholder="i.e: example@example.com"
+                                    id="email" name="email">
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ __('Submit') }}</button>
+                            <button type="submit"
+                                class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ __('Submit') }}</button>
                         </div>
                     </div>
                 </form>
