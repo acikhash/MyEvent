@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\GuestCategory;
+//use Illuminate\Database\Eloquent\Builder; //if want to join using eloquent builder
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +20,7 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
 final class CategoryTable extends PowerGridComponent
 {
+    public string  $eventid;
     use WithExport;
 
     public function setUp(): array
@@ -37,7 +40,16 @@ final class CategoryTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('guest_categories');
+        return DB::table('guest_categories as gc')
+            ->where('event_id', '=', $this->eventid);
+
+        //if want to join table using eloquent table
+        // return GuestCategory::query()
+        //     ->where('event_id', '=', $this->eventid)
+        //     ->join('events as e', function ($event) {
+        //         $event->on('guest_categories.event_id', '=', 'e.id');
+        //     })
+        //     ->select('guest_categories.*', 'e.name as eventname');
     }
 
     public function fields(): PowerGridFields
@@ -45,6 +57,7 @@ final class CategoryTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('name')
+            // ->add('eventname', fn ($guest_categories) => e($guest_categories->event->name)) //if want to join table using eloquent table
             ->add('event_id')
             ->add('deleted_at')
             ->add('created_at')
@@ -58,28 +71,13 @@ final class CategoryTable extends PowerGridComponent
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
-
-            Column::make('Event id', 'event_id'),
-            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-                ->sortable(),
-
-            // Column::make('Deleted at', 'deleted_at')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Created at', 'created_at_formatted', 'created_at')
+            // Column::make('Event', 'eventname', 'e.name')//if want to join table using eloquent table
+            //     ->searchable()
+            //     ->sortable(),
+            // Column::make('Event id', 'event_id'),
+            // Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
             //     ->sortable(),
 
-            // Column::make('Created at', 'created_at')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Updated at', 'updated_at_formatted', 'updated_at')
-            //     ->sortable(),
-
-            // Column::make('Updated at', 'updated_at')
-            //     ->sortable()
-            //     ->searchable(),
             Column::action('Action'),
 
         ];

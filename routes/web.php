@@ -120,8 +120,8 @@ Route::group(['middleware' => 'auth'], function () {
     //
 
     //guestcategory page
-    Route::get('guestcategory', [GuestCategoryController::class, 'index'])->name('guestcategory.index');
-    Route::get('/guestcategory/create', [GuestCategoryController::class, 'create'])->name('guestcategory.create');
+    Route::get('guestcategory/{event}', [GuestCategoryController::class, 'index'])->name('guestcategory.index');
+    Route::get('/guestcategory/create/{event}', [GuestCategoryController::class, 'create'])->name('guestcategory.create');
     Route::post('/guestcategory/{guestcategory}', [GuestCategoryController::class, 'update'])->name('guestcategory.update');
     Route::get('/guestcategory/{id}/edit', [GuestCategoryController::class, 'edit'])->name('guestcategory.edit');
     Route::delete('/guestcategory/{guestcategory}', [GuestCategoryController::class, 'destroy'])->name('guestcategory.destroy');

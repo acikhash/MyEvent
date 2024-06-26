@@ -21,9 +21,12 @@ class Guest extends Model
         'bringrep',
         'attendance',
         'checkedin',
-        
+
 
     ];
 
- 
+    public function event()
+    {
+        return $this->belongsTo(Event::class,  'event_id', 'id');
+    }
 }

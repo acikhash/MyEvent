@@ -39,7 +39,7 @@
 
                     <div class="card-body px-2 pt-2 pb-2">
 
-                        <livewire:event-guest-table />
+                        <livewire:event-guest-table eventid={{ $event->id }} />
 
                     </div>
                 </div>

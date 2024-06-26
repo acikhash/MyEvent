@@ -14,9 +14,13 @@ use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
+use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
 final class EventGuestTable extends PowerGridComponent
 {
+    public string  $eventid;
+    use WithExport;
+
     public function setUp(): array
     {
         $this->showCheckBox();
@@ -34,46 +38,77 @@ final class EventGuestTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('guests');
+        return DB::table('guests')->where('eventid', '=', $this->eventid);
     }
 
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
             ->add('id')
+            ->add('salutations')
             ->add('name')
-            ->add('created_at')
-            ->add('created_at_formatted', fn ($row) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->add('organization')
+            ->add('address')
+            ->add('contactNumber')
+            ->add('email')
+            ->add('guesttype')
+            ->add('bringrep')
+            ->add('attendance')
+            ->add('checkedin');
     }
 
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->searchable()
-                ->sortable(),
+            Column::make('Id', 'id')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Salutations', 'salutations')
+                ->sortable()
+                ->searchable(),
 
             Column::make('Name', 'name')
-                ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
 
-            Column::make('Created at', 'created_at')
-                ->hidden(),
+            Column::make('Organization', 'organization')
+                ->sortable()
+                ->searchable(),
 
-            Column::make('Created at', 'created_at_formatted', 'created_at')
+            Column::make('Address', 'address')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Contact Number', 'contactNumber')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Email', 'email')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Guest Type', 'guesttype')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Bring Representative', 'bringrep')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Attendance', 'attendance')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Checked In', 'checkedin')
+                ->sortable()
                 ->searchable(),
 
             Column::action('Action')
         ];
     }
 
-    // public function filters(): array
-    // {
-    //     return [
-    //         Filter::inputText('name'),
-    //         Filter::datepicker('created_at_formatted', 'created_at'),
-    //     ];
-    // }
+
 
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
@@ -96,16 +131,4 @@ final class EventGuestTable extends PowerGridComponent
                 ->dispatch('guest', ['rowId' => $row->id]),
         ];
     }
-
-    /*
-    public function actionRules($row): array
-    {
-       return [
-            // Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($row) => $row->id === 1)
-                ->hide(),
-        ];
-    }
-    */
 }

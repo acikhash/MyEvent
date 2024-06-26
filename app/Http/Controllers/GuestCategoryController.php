@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\GuestCategory;
 use App\Http\Requests\StoreGuestCategoryRequest;
 use App\Http\Requests\UpdateGuestCategoryRequest;
@@ -12,19 +13,20 @@ class GuestCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($event)
     {
         //
-
-        return view('guestcategory.index');
+        $event = Event::find($event);
+        return view('guestcategory.index', ['event' => $event]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($event)
     {
-        //
+        $event = Event::find($event);
+        return view('guestcategory.create', ['event' => $event]);
     }
 
     /**

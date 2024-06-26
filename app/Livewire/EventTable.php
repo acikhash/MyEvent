@@ -41,7 +41,7 @@ final class EventTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('Events');
+        return DB::table('Events')->where('deleted_at', '=', null);
     }
 
     public function fields(): PowerGridFields
@@ -126,6 +126,12 @@ final class EventTable extends PowerGridComponent
     {
         return redirect(route('guest.index', $rowId));
     }
+
+    #[\Livewire\Attributes\On('category')]
+    public function category($rowId): Redirector
+    {
+        return redirect(route('guestcategory.index', $rowId));
+    }
     public function actions($row): array
     {
 
@@ -134,13 +140,19 @@ final class EventTable extends PowerGridComponent
             Button::add('edit')
                 ->id('edit')
                 ->class('fas fa-edit text-secondary')
-                ->tooltip('Edit Record')
+                ->tooltip('Edit Event')
                 ->dispatch('edit', ['rowId' => $row->id]),
             Button::add('guest')
                 ->id('guest')
                 ->class('fas fa-users text-secondary')
-                ->tooltip('Guest List Mangement')
+                ->tooltip('Guest List Management')
                 ->dispatch('guest', ['rowId' => $row->id]),
+            Button::add('category')
+                ->id('category')
+                ->class('fas fa-user-cog text-secondary')
+                ->tooltip('Guest Category Management')
+                ->dispatch('category', ['rowId' => $row->id]),
+
         ];
     }
 }
