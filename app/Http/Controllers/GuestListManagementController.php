@@ -41,7 +41,7 @@ class  GuestListManagementController extends Controller
 
     public function create()
     {
-        return view('guest.registrationform');
+        return view('guest.Invitation.registrationform');
     }
 
 
@@ -132,7 +132,7 @@ class  GuestListManagementController extends Controller
     public function RepresentativeCreate($id)
     {
         $guest = Guest::find($id);
-        return view('guest.representativeform',compact('guest'));
+        return view('guest.Representative.representativeform',compact('guest'));
     }
 
     public function RepresentativeStore(Request $request, $id)
@@ -171,18 +171,13 @@ class  GuestListManagementController extends Controller
         return redirect('/Thankyouform');
     }
     
-    public function Thankyou()
-    {
-        return view('guest.Thankyouform');
-    }
-
     
 
 
 
     public function walkincreate()
     {
-        return view('guest.walkinregistrationform');
+        return view('guest.Walk-In.walkinregistrationform');
     }
 
 
@@ -234,7 +229,7 @@ class  GuestListManagementController extends Controller
         }
         else{
 
-            return view("guest.Updateattendanceform",compact('guest'));
+            return view("guest.Attendance.Updateattendanceform",compact('guest'));
 
         }
             
@@ -272,6 +267,11 @@ class  GuestListManagementController extends Controller
     }
     
     
+    public function Thankyou()
+    {
+        return view('guest.Attendance.Thankyouform');
+    }
+
     
 
 

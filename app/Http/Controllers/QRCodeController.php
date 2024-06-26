@@ -30,7 +30,7 @@ class  QRCodeController extends Controller
         $qrCode = QrCode::size(200)->generate($qrCodeContent);
 
         // Pass the QR code image and guest data to the view
-        return view('guest.qrcode', compact('guest', 'qrCode'));
+        return view('guest.Attendance.qrcode', compact('guest', 'qrCode'));
     }
 
     public function checkin($id)
@@ -38,8 +38,47 @@ class  QRCodeController extends Controller
         
         $guest = Guest::findOrFail($id);
 
-        return view('guest.checkin', compact('guest'));
+        if ($guest->checkedin !== null) {
+            return redirect("/Thankyouform");
+        }
+        else {
+            return view('guest.Attendance.checkin', compact('guest'));
+        }
 
+    }
+
+    public function checkinupdate(Request $request, $id)
+    {
+        
+        $guest = Guest::findOrFail($id);
+
+        $guest = Guest::find($id);
+
+        $attributes = $request->validate([
+
+            'checkedin' => [],
+            
+        ]);
+
+        
+
+    
+        if ($guest->checkin !== null) {
+            return redirect("/Thankyouform");
+        }
+        else{
+
+            $attributes['checkedin'] = $attributes['checkedin'] ?? 'on';
+               
+        // Validate request data
+            $guest->fill($attributes); 
+            $guest->save();
+    
+    
+            return redirect('/Thankyouform')->with('success', 'Information updated successfully.');
+
+        }
+    
     }
 
  

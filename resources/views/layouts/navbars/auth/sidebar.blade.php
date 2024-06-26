@@ -41,7 +41,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage Event</h6>
 
             <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('/event') ? 'active' : '' }}" href="{{ route('event.index') }}">
+                <a class="nav-link {{ Request::is('event') ? 'active' : '' }}" href="{{ route('event.index') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1rem;"
@@ -56,7 +56,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage Guest</h6>
 
             <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('/Events') ? 'active' : '' }}" href="{{ url('Events') }}">
+                <a class="nav-link {{ Request::is('Events') ? 'active' : '' }}" href="{{ url('Events') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1rem;"
@@ -67,7 +67,7 @@
                 </a>
             </li>
             <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('/GuestList') ? 'active' : '' }}" href="{{ url('GuestList') }}">
+                <a class="nav-link {{ Request::is('GuestList') ? 'active' : '' }}" href="{{ url('GuestList') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1rem;"
