@@ -143,6 +143,13 @@ final class GuestTable extends PowerGridComponent
         return redirect()->route('guest.qrcode', ['id' => $guest->id]);
     }
 
+    #[\Livewire\Attributes\On('email')]
+    public function email($rowId): Redirector
+    {
+        $guest = Guest::findOrFail($rowId);
+        return redirect()->route('guest.representativeform', ['id' => $guest->id]);
+    }
+
 
     public function actions($row): array
     {
@@ -166,6 +173,12 @@ final class GuestTable extends PowerGridComponent
                 ->class('fas fa-qrcode text-secondary')
                 ->tooltip('View QR Code')
                 ->dispatch('QR', ['rowId' => $row->id]),    
+
+            Button::add('email')
+                ->id('email')
+                ->class('fas fa-envelope text-secondary')
+                ->tooltip('Send Email')
+                ->dispatch('email', ['rowId' => $row->id]),  
         ];
     }
 

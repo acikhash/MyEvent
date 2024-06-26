@@ -81,11 +81,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/Events', [GuestListManagementController::class, 'EventTables']);
     Route::get('/Edit/{id}', [GuestListManagementController::class, 'ShowEdit'])->name('guest.edit');
     Route::post('/Edit/{id}', [GuestListManagementController::class, 'edit'])->name('guest.edit');
-    Route::get('/Representativeform', [GuestListManagementController::class, 'RepresentativeCreate'])->name('guest.representativeform');
-    Route::post('/Representativeform', [GuestListManagementController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
+    Route::get('/guest/{id}/Representativeform', [GuestListManagementController::class, 'RepresentativeCreate'])->name('guest.representativeform');
+    Route::post('/guest/{id}/Representativeform', [GuestListManagementController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
+
+    Route::get('/guest/{id}/Updateattendanceform', [GuestListManagementController::class, 'Updateattendanceshow'])->name('guest.representativeform');
+    Route::post('/guest/{id}/Updateattendanceform', [GuestListManagementController::class, 'Updateattendancestore'])->name('guest.Updateattendancestore');
 
     Route::get('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkincreate'])->name('guest.walkinregistrationform');
     Route::post('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkinstore'])->name('guest.walkinstore');
+
+    Route::get('/Thankyouform', [GuestListManagementController::class, 'ThankYou'])->name('guest.Thankyouform');
 
 
     //get guestlist filter by event

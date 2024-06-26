@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
-            $table->string('eventid')->nullable(); //$table->foreignIdFor(Event::class);
+            $table->foreignId('event_id')->nullable(); //$table->foreignIdFor(Event::class);
             $table->string('eventname')->nullable(); // x perlu kalau buat foreign id ke event $table->foreignIdFor(Event::class);
             $table->string('salutations')->default('Mr');
             $table->string('name')->nullable();

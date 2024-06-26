@@ -46,7 +46,7 @@ class  GuestListManagementController extends Controller
 
 
 
-
+    //for invitations guest type
     public function store()
     {
         $attributes = request()->validate([
@@ -67,7 +67,7 @@ class  GuestListManagementController extends Controller
 
         // Assign default values
         $attributes['guesttype'] = $attributes['guesttype'] ?? 'Invitation';
-        $attributes['attendance'] = $attributes['attendance'] ?? 'off';
+        //$attributes['attendance'] = $attributes['attendance'] ?? 'off';
 
         Guest::create($attributes);
 
@@ -102,12 +102,13 @@ class  GuestListManagementController extends Controller
             'eventid',
             'eventname',
             'salutations' => [],
-            'name' => ['required', 'max:50'],
+            'name' =>  ['required', 'max:50'],
             'organization' => [],
             'address' => [],
             'contactNumber' => [],
             'email' => ['required', 'email', 'max:50'],
             'bringrep' => '',
+            'attendance' => [],
 
         ]);
 
@@ -128,39 +129,54 @@ class  GuestListManagementController extends Controller
         return redirect('/GuestList');
     }
 
-    public function RepresentativeCreate()
+    public function RepresentativeCreate($id)
     {
-        return view('guest.representativeform');
+        $guest = Guest::find($id);
+        return view('guest.representativeform',compact('guest'));
     }
 
-    public function RepresentativeStore()
+    public function RepresentativeStore(Request $request, $id)
     {
-        $attributes = request()->validate([
-            'eventid',
-            'eventname',
-            'salutations' => [],
-            'name' => ['required', 'max:50'],
-            'organization' => [],
-            'address' => [],
-            'contactNumber' => [],
-            'email' => ['required', 'email', 'max:50'],
-            'guesttype' => [],
-            'attendance' => [],
+        $guest = Guest::findOrFail($id); // Find the guest by ID
 
-        ]);
-
-        // Assign default values
-        $attributes['guesttype'] = $attributes['guesttype'] ?? 'Representative';
-        $attributes['attendance'] = $attributes['attendance'] ?? 'off';
-
-        Guest::create($attributes);
-
-
-        session()->flash('success', 'Guest added successfully.');
-
-        // Auth::login($user);
-        return redirect('/Registrationform');
+        $valid = $guest->bringrep;
+    
+        
+            // Validate representative information
+            $attributes = $request->validate([
+                'salutations' => [],
+                'name' => ['required', 'max:50'],
+                'organization' => [],
+                'address' => [],
+                'contactNumber' => [],
+                'email' => ['required', 'email', 'max:50'],
+                'guesttype' => [],
+                'attendance' => [],
+                'bringrep' => [],
+            ]);
+    
+            // Assign event details
+            $attributes['eventid'] = $guest->eventid;
+            $attributes['eventname'] = $guest->eventname;
+    
+            // Set default values if not provided
+            $attributes['guesttype'] = $attributes['guesttype'] ?? 'Representative';
+            $attributes['bringrep'] = $attributes['bringrep'] ?? 'off';
+    
+            // Create new representative record
+            $representative = Guest::create($attributes);
+    
+            session()->flash('success', 'Guest added successfully.');
+    
+        return redirect('/Thankyouform');
     }
+    
+    public function Thankyou()
+    {
+        return view('guest.Thankyouform');
+    }
+
+    
 
 
 
@@ -199,7 +215,7 @@ class  GuestListManagementController extends Controller
         Guest::create($attributes);
 
         
-        session()->flash('success', 'Guest added successfully.');
+        session()->flash('success', 'Thank you for registering.');
        
        // Auth::login($user); 
         return redirect('/Walk-inRegistrationform');
@@ -207,7 +223,56 @@ class  GuestListManagementController extends Controller
 
 
 
+    public function Updateattendanceshow($id)
+    {
+        $guest = Guest::find($id);
 
+        if ($guest->attendance !== null) {
+
+            return redirect('/Thankyouform')->with('success', 'Attendance updated successfully.');
+            
+        }
+        else{
+
+            return view("guest.Updateattendanceform",compact('guest'));
+
+        }
+            
+     
+    }
+    public function Updateattendancestore(Request $request, $id)
+    {
+        $guest = Guest::find($id);
+
+    
+        if ($guest->attendance !== null) {
+            return redirect("/Thankyouform");
+        }
+    
+    
+        // Validate request data
+        $attributes = $request->validate([
+            'attendance' => 'required|string|in:on,off', // Validate attendance as a string and allow only 'on' or 'off'
+            'bringrep' => [], // Assuming this is an array that might contain other data
+        ]);
+    
+    
+        // Update guest attributes based on form submission
+        $guest->attendance = $request->input('attendance');
+        $guest->bringrep = $request->has('bringrep') ? 'on' : 'off'; // Check if bringrep checkbox is checked
+        $guest->save();
+
+    
+        // Check if bringrep is 'yes' to redirect to representative form
+        if ($request->has('bringrep') && $request->input('bringrep') == 'on') {
+            return redirect("/guest/{$id}/Representativeform")->with('success', 'Attendance updated successfully.');
+        } else {
+            return redirect('/Thankyouform')->with('success', 'Attendance updated successfully.');
+        }
+    }
+    
+    
+    
 
 
 
