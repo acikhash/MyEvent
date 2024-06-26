@@ -128,14 +128,6 @@ final class GuestTable extends PowerGridComponent
         return redirect()->route('guest.edit', ['id' => $guest->id]);
     }
 
-    #[\Livewire\Attributes\On('delete')]
-    public function delete($rowId): Redirector
-    {
-        //$this->js('alert(' . $rowId . ')');
-        $guest = Guest::findOrFail($rowId);
-        return redirect()->route('guest.edit', ['id' => $guest->id]);
-    }
-
     #[\Livewire\Attributes\On('QR')]
     public function QR($rowId): Redirector
     {
@@ -161,12 +153,6 @@ final class GuestTable extends PowerGridComponent
                 ->class('fas fa-edit text-secondary')
                 ->tooltip('Edit')
                 ->dispatch('edit', ['rowId' => $row->id]),
-
-            Button::add('delete')
-                ->id('delete')
-                ->class('fas fa-trash text-secondary')
-                ->tooltip('delete Record')
-                ->dispatch('delete', ['rowId' => $row->id]),
 
             Button::add('QR')
                 ->id('QR')

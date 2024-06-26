@@ -109,6 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Qr Code
     Route::get('/QRcode/{id}', [QRCodeController::class, 'QRcode'])->name('guest.qrcode');
     Route::get('/checkin/{id}', [QRCodeController::class, 'checkin'])->name('guest.checkin');
+    Route::post('/checkin/{id}', [QRCodeController::class, 'checkinupdate'])->name('guest.checkinupdate');
 
 
 
