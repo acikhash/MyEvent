@@ -154,7 +154,7 @@ class EventController extends Controller
      */
     public function destroy(Request $request)
     {
-        dd("destroy");
+        // dd("destroy");
         Event::find($request->event)->update(
             [
                 'updated_by' => Auth::id(),

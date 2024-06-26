@@ -19,21 +19,21 @@ class GuestCategorySeeder extends Seeder
             'description' => 'organizer staff',
             'event_id' => '1',
             'created_at' => now(),
-            'updated_at' => now()
+            'created_by' => 1
         ]);
         DB::table('guest_categories')->insert([
             'name' => 'VIP',
             'description' => 'Very Important People',
             'event_id' => '1',
             'created_at' => now(),
-            'updated_at' => now()
+            'created_by' => 1
         ]);
         DB::table('guest_categories')->insert([
             'name' => 'normal',
             'description' => 'normal guest',
             'event_id' => '1',
             'created_at' => now(),
-            'updated_at' => now()
+            'created_by' => 1
         ]);
     }
 }

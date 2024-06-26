@@ -61,6 +61,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="description"
+                                        class="form-control-label">{{ __('Category Description') }}</label>
+                                    <div class="@error('category-description')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="" type="text"
+                                            placeholder="i.e : Very Important People" id="description" name="description">
+                                        @error('description')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit"
                                 class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
