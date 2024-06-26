@@ -17,7 +17,7 @@ class GuestSeeder extends Seeder
         // \App\Models\Event::factory(5)->create();
         DB::table('guests')->insert(
             [
-                'eventid' => '1',
+                'event_id' => '1',
                 'salutations' => 'Dato',
                 'guesttype' => '3',
                 'created_at' => now(),

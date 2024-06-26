@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignIdFor(Event::class);
             $table->softDeletes();
             $table->timestamps();
+            $table->string('created_by');
+            $table->string('updated_by')->nullable();
         });
     }
 
