@@ -72,15 +72,11 @@ class  GuestListManagementController extends Controller
         Guest::create($attributes);
 
 
-        session()->flash('success', 'Guest added successfully.');
+        //session()->flash('success', 'Guest added successfully.');
 
         // Auth::login($user);
-        return redirect('/GuestList');
+        return redirect('/GuestList')->with('success','Guest added successfully.');
     }
-
-
-
-
 
 
     public function showEdit($id)
@@ -98,6 +94,14 @@ class  GuestListManagementController extends Controller
 
     public function edit(Request $request, $id)
     {
+        $guest = Guest::findOrFail($id);
+
+        if ($request->has('delete')) {
+            // Delete guest
+            $guest->delete();
+            return redirect('/GuestList')->with('success', 'Guest deleted successfully.');
+        }
+
         $attributes = $request->validate([
             'eventid',
             'eventname',
@@ -156,8 +160,8 @@ class  GuestListManagementController extends Controller
             ]);
     
             // Assign event details
-            $attributes['eventid'] = $guest->eventid;
-            $attributes['eventname'] = $guest->eventname;
+            //$attributes['eventid'] = $guest->eventid;
+            //$attributes['eventname'] = $guest->eventname;
     
             // Set default values if not provided
             $attributes['guesttype'] = $attributes['guesttype'] ?? 'Representative';
@@ -272,7 +276,7 @@ class  GuestListManagementController extends Controller
         return view('guest.Attendance.Thankyouform');
     }
 
-    
+
 
 
 

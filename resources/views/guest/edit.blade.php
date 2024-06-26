@@ -82,8 +82,12 @@
                     </div>
 
                     <div class="row">
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ __('Save Changes') }}</button>
+                    <div class="d-flex justify-content-end">
+                            <button type="submit" name="edit" value="0"
+                                class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
+
+                            &nbsp;&nbsp;<button type="submit" name="delete" value="1"
+                                class="btn bg-gradient-danger btn-md mt-4 mb-4">{{ 'Delete' }}</button>
                         </div>
                     </div>
                 </form>
