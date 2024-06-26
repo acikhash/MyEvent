@@ -8,9 +8,9 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Event;
+use App\Models\Guest;
 
-class MyTestEmail extends Mailable
+class SendQR extends Mailable
 {
     use Queueable, SerializesModels;
     public $data;
@@ -40,7 +40,7 @@ class MyTestEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.invitation',
+            view: 'mail.confirmationQR',
             with: [
                 'name' => $this->data['name'],
                 'eventname' => $this->data['eventname'],
@@ -48,6 +48,7 @@ class MyTestEmail extends Mailable
                 'timeStart' => $this->data['starttime'],
                 'veneu' => $this->data['eventveneu'],
                 'eventrsvp' => $this->data['eventrsvp'],
+                'qrCode' => $this->data['qrCode'],
             ],
         );
     }

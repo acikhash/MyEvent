@@ -20,10 +20,10 @@ class  QRCodeController extends Controller
 
     public function QRcode($id)
     {
-        // Fetch guest information 
+        // Fetch guest information
         $guest = Guest::findOrFail($id);
 
-        // Generate QR code content 
+        // Generate QR code content
         $qrCodeContent = url('/checkin/' . $guest->id);
 
         // Generate QR code image
@@ -35,12 +35,9 @@ class  QRCodeController extends Controller
 
     public function checkin($id)
     {
-        
+
         $guest = Guest::findOrFail($id);
 
         return view('guest.checkin', compact('guest'));
-
     }
-
- 
 }

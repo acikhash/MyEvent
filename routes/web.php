@@ -112,7 +112,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-
     Route::get('/logout', [SessionsController::class, 'destroy']);
     Route::get('/user-profile', [InfoUserController::class, 'create']);
     Route::post('/user-profile', [InfoUserController::class, 'store']);
@@ -143,7 +142,10 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 //send invitation email
-Route::get('/testroute/{guest}', [NotificationController::class, 'sendInvitation'])->name('email.send');
+Route::get('/invitation/{id}', [NotificationController::class, 'sendInvitation'])->name('email.send');
+// Sent QR code email
+Route::get('/sentQR/{id}', [NotificationController::class, 'sendQR'])->name('email.sentqr');
+
 
 
 Route::group(['middleware' => 'guest'], function () {

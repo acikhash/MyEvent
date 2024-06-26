@@ -122,16 +122,17 @@ final class EventGuestTable extends PowerGridComponent
     #[\Livewire\Attributes\On('QR')]
     public function QR($rowId): Redirector
     {
-        return redirect(route('guest.qrcode', $rowId));
+        $guest = Guest::find($rowId);
+        return redirect(route('email.sentqr', $guest));
     }
 
     #[\Livewire\Attributes\On('email')]
     public function email($rowId): Redirector
     {
         $guest = Guest::find($rowId);
-
         return redirect(route('email.send', $guest));
     }
+
     public function actions($row): array
     {
         return [
