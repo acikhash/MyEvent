@@ -11,16 +11,16 @@ class Guest extends Model
     protected $guarded = [];
 
     protected $fillable = [
-        'salutations',
-        'name',
-        'organization',
-        'address',
-        'contactNumber',
-        'email',
-        'guesttype',
-        'bringrep',
-        'attendance',
-        'checkedin',
+        // 'salutations',
+        // 'name',
+        // 'organization',
+        // 'address',
+        // 'contactNumber',
+        // 'email',
+        // 'guesttype',
+        // 'bringrep',
+        // 'attendance',
+        // 'checkedin',
 
 
     ];

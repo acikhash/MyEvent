@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Http\Controllers\NotificationController;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,8 @@ use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
+use Illuminate\Routing\Redirector;
+use App\Models\Guest;
 
 final class EventGuestTable extends PowerGridComponent
 {
@@ -38,7 +41,8 @@ final class EventGuestTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('guests')->where('eventid', '=', $this->eventid);
+        return DB::table('guests as gc')
+            ->where('event_id', '=', $this->eventid);
     }
 
     public function fields(): PowerGridFields
@@ -115,7 +119,19 @@ final class EventGuestTable extends PowerGridComponent
     {
         $this->js('alert(' . $rowId . ')');
     }
+    #[\Livewire\Attributes\On('QR')]
+    public function QR($rowId): Redirector
+    {
+        return redirect(route('guest.qrcode', $rowId));
+    }
 
+    #[\Livewire\Attributes\On('email')]
+    public function email($rowId): Redirector
+    {
+        $guest = Guest::find($rowId);
+
+        return redirect(route('email.send', $guest));
+    }
     public function actions($row): array
     {
         return [
@@ -124,11 +140,18 @@ final class EventGuestTable extends PowerGridComponent
                 ->class('fas fa-edit text-secondary')
                 ->tooltip('Edit Record')
                 ->dispatch('edit', ['rowId' => $row->id]),
-            Button::add('invitation')
-                ->id('guest')
-                ->class('fas fa-email text-secondary')
-                ->tooltip('Guest List Mangement')
-                ->dispatch('guest', ['rowId' => $row->id]),
+
+            Button::add('Send QR')
+                ->id('QR')
+                ->class('fas fa-qrcode text-secondary')
+                ->tooltip('Send QR Code Email')
+                ->dispatch('QR', ['rowId' => $row->id]),
+
+            Button::add('Send Invitation')
+                ->id('email')
+                ->class('fas fa-envelope text-secondary')
+                ->tooltip('Send Invitation Email')
+                ->dispatch('email', ['rowId' => $row->id]),
         ];
     }
 }

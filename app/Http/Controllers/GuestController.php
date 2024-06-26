@@ -3,32 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Guest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\View;
 
-
-
-class EventController extends Controller
+class GuestController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    //
+    public function index($event)
     {
-        //
-        // $list = Event::paginate(10);
-        return view('event.index');
+
+        $event = Event::find($event);
+
+        return view(
+            'guest.index',
+            ['event' => $event]
+        );
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($event)
     {
-        //
-        return view('event.create');
+        $event = Event::find($event);
+        return view('guest.create', ['event' => $event]);
     }
 
     /**
@@ -45,20 +46,12 @@ class EventController extends Controller
 
         ]);
 
-        $pieces = explode(" ", $request['dateStart']);
-        if (count($pieces) > 1) {
-            $start = $pieces[0];
-            $end = $pieces[2];
-        } else {
-            $start = $request['dateStart'];
-            $end = $request['dateStart'];
-        }
+
         // dd($request);
-        Event::create([
+        Guest::create([
             'name'    => $attributes['name'],
             'theme' => $attributes['theme'],
-            'dateStart'     => $start,
-            'dateEnd'     => $end,
+
             'veneu' => $attributes['veneu'],
             'timeStart'    => $request["timeStart"],
             'timeEnd'    => $request["timeEnd"],
@@ -68,16 +61,16 @@ class EventController extends Controller
             'created_by' => Auth::user()->id,
         ]);
 
-        return redirect('event')->with('success', 'Record Created Successfully');
+        return redirect('guest')->with('success', 'Record Created Successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show(Guest $guest)
     {
         //
-        return view('event.edit', ['event' => $event]);
+        return view('guest.edit', ['guest' => $guest]);
     }
 
     /**
@@ -88,7 +81,7 @@ class EventController extends Controller
         //dd($id);
         $event = Event::find($id);
         //dd($event->name);
-        return view('event.edit', ['event' => $event]);
+        return view('guest.edit', ['event' => $event]);
     }
 
     /**

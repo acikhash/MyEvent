@@ -17,6 +17,7 @@ use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
+use Illuminate\Routing\Redirector;
 
 final class CategoryTable extends PowerGridComponent
 {
@@ -67,8 +68,11 @@ final class CategoryTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
+            Column::make('Id', 'id')->hidden(),
             Column::make('Name', 'name')
+                ->sortable()
+                ->searchable(),
+            Column::make('Description', 'description')
                 ->sortable()
                 ->searchable(),
             // Column::make('Event', 'eventname', 'e.name')//if want to join table using eloquent table
@@ -89,9 +93,9 @@ final class CategoryTable extends PowerGridComponent
     }
 
     #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
+    public function edit($rowId): Redirector
     {
-        $this->js('alert(' . $rowId . ')');
+        return redirect(route('guestcategory.edit', $rowId));
     }
 
     public function actions($row): array
@@ -102,11 +106,7 @@ final class CategoryTable extends PowerGridComponent
                 ->class('fas fa-edit text-secondary')
                 ->tooltip('Edit Guest Category')
                 ->dispatch('edit', ['rowId' => $row->id]),
-            Button::add('delete')
-                ->id('delete')
-                ->class('fas fa-trash text-secondary')
-                ->tooltip('Delete Record')
-                ->dispatch('delete', ['rowId' => $row->id]),
+
         ];
     }
 

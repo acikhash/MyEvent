@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\GuestCategory;
-use App\Http\Requests\StoreGuestCategoryRequest;
-use App\Http\Requests\UpdateGuestCategoryRequest;
-use App\Http\Controllers\Request;
+// use App\Http\Requests\StoreGuestCategoryRequest;
+// use App\Http\Requests\UpdateGuestCategoryRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class GuestCategoryController extends Controller
@@ -33,8 +33,9 @@ class GuestCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGuestCategoryRequest $request)
+    public function store(Request $request)
     {
+        //   dd($request);
         $attributes = $request->validate([
             'name' => ['required', 'max:50'],
             'description' => ['required', 'max:150']
@@ -44,11 +45,11 @@ class GuestCategoryController extends Controller
         GuestCategory::create([
             'name'    => $attributes['name'],
             'description' => $attributes['description'],
-
+            'event_id' => $request['eventid'],
             'created_by' => Auth::user()->id,
         ]);
 
-        return redirect('guestcategory')->with('success', 'Record Created Successfully');
+        return redirect()->route('guestcategory.index', $request['eventid'])->with('success', 'Record Created Successfully');
     }
 
     /**
@@ -73,10 +74,11 @@ class GuestCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGuestCategoryRequest $request, GuestCategory $guestcategory)
+    public function update(Request $request, GuestCategory $guestcategory)
     {
+        // dd($guestcategory);
         //
-        $guestCategory = GuestCategory::find($request->id);
+        // $guestCategory = GuestCategory::find($guestcategory->id);
         if (isset($request["edit"])) {
             //
             $attributes = request()->validate([
@@ -85,26 +87,26 @@ class GuestCategoryController extends Controller
 
             ]);
 
-            $guestCategory->update([
+            $guestcategory->update([
                 'name'    => $attributes['name'],
-                'decription' => $attributes['description'],
+                'description' => $attributes['description'],
                 'updated_by' => Auth::id(),
                 'updated_at' => now(),
             ]);
 
-            return redirect('event')->with('success', 'Record Updated Successfully');
+            return redirect()->route('guestcategory.index', $guestcategory->event_id)->with('success', 'Record Updated Successfully');
         } else {
             //dd("destroy");
 
-            $guestCategory->update(
+            $guestcategory->update(
 
                 [
                     'updated_by' => Auth::id(),
                     'updated_at' => now(),
                 ]
             );
-            $guestCategory->delete();
-            return redirect()->route('guestcategory.index')->with('success', 'Record Deleted');
+            $guestcategory->delete();
+            return redirect()->route('guestcategory.index', $guestcategory->event_id)->with('success', 'Record Deleted');
         }
     }
 

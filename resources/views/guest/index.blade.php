@@ -27,19 +27,19 @@
                     <div class="card-header pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div>
-                                <h5 class="mb-0">Guest List For {{ $event->name }}</h5>
+                                <h5 class="mb-0">Guest List for {{ $event->name }}</h5>
                             </div>
                             <div class="card mb-4 mx-6">
-                                {{-- <a href={{ route('guest.create') }} class="btn bg-gradient-primary btn-sm mb-0"
+                                <a href={{ route('guestl.create', $event->id) }} class="btn bg-gradient-primary btn-sm mb-0"
                                     type="button">+&nbsp;
-                                    New Guest</a> --}}
+                                    New Guest</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="card-body px-2 pt-2 pb-2">
 
-                        <livewire:event-guest-table eventid={{ $event->id }} />
+                        <livewire:event-guest-table eventid='{{ $event->id }}' />
 
                     </div>
                 </div>

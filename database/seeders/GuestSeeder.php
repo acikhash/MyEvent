@@ -18,7 +18,31 @@ class GuestSeeder extends Seeder
         DB::table('guests')->insert(
             [
                 'event_id' => '1',
+                'guest_category_id' => '1',
+                'name' => 'Aaron',
                 'salutations' => 'Dato',
+                'guesttype' => '3',
+                'created_at' => now(),
+                'created_by' => '1',
+            ]
+        );
+        DB::table('guests')->insert(
+            [
+                'event_id' => '1',
+                'guest_category_id' => '1',
+                'name' => 'Lyu',
+                'salutations' => 'Mr',
+                'guesttype' => '3',
+                'created_at' => now(),
+                'created_by' => '1',
+            ]
+        );
+        DB::table('guests')->insert(
+            [
+                'event_id' => '1',
+                'guest_category_id' => '1',
+                'name' => 'Yang',
+                'salutations' => 'Mr',
                 'guesttype' => '3',
                 'created_at' => now(),
                 'created_by' => '1',

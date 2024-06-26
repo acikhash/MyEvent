@@ -11,7 +11,7 @@
                 <div class="row gx-4">
                     <div class="col-auto">
                     </div>
-                    <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                    <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                         <div class="nav-wrapper position-relative end-0">
                             <h6 class="mb-0">{{ $event->name }} {{ __('Event Information') }}</h6>
                         </div>

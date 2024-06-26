@@ -1,5 +1,5 @@
 @extends('layouts.user_type.auth')
-<script src="/assets/js/plugins/flatpickr.min.js"></script>
+
 @section('content')
     <div>
         <div class="container-fluid">
@@ -11,9 +11,9 @@
                 <div class="row gx-4">
                     <div class="col-auto">
                     </div>
-                    <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                    <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                         <div class="nav-wrapper position-relative end-0">
-                            <h6 class="mb-0">{{ __('Guest Category Information') }}</h6>
+                            <h6 class="mb-0">{{ $event->name }} {{ __('Guest Information') }}</h6>
                         </div>
                     </div>
                 </div>
@@ -25,8 +25,7 @@
 
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form method="post" action="{{ route('guestcategory.update', $guestcategory) }}"
-                        enctype="multipart/form-data">
+                    <form method="post" action="{{ route('guestl.store') }} " enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         @if ($errors->any())
@@ -53,9 +52,8 @@
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">{{ __('Category Name') }}</label>
                                     <div class="@error('category-name')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="text" placeholder="i.e : VIP" id="name"
-                                            name="name" onfocus="focused(this)" onfocusout="defocused(this)"
-                                            value="{{ old('name', $guestcategory->name) }}">
+                                        <input class="form-control" value="" type="text" placeholder="i.e : VIP"
+                                            id="name" name="name">
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -68,26 +66,24 @@
                                 <div class="form-group">
                                     <label for="description"
                                         class="form-control-label">{{ __('Category Description') }}</label>
-                                    <div class="@error('description')border border-danger rounded-3 @enderror">
-                                        <input class="form-control"
-                                            value="{{ old('description', $guestcategory->description) }}" type="text"
+                                    <div class="@error('category-description')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="" type="text"
                                             placeholder="i.e : Very Important People" id="description" name="description">
-                                        @error('theme')
+                                        @error('description')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
+                                        <input class="form-control" value="{{ $event->id }}" type="hidden"
+                                            id="eventid" name="eventid">
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="d-flex justify-content-end">
-                            <button type="submit" name="edit" value="0"
-                                class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
-
-                            &nbsp;&nbsp;<button type="submit" name="delete" value="1"
-                                class="btn bg-gradient-danger btn-md mt-4 mb-4">{{ 'Delete' }}</button>
+                            <button type="submit"
+                                class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

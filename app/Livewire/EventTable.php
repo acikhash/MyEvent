@@ -18,7 +18,7 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use App\Models\Event;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Redirect;
+
 
 final class EventTable extends PowerGridComponent
 {
@@ -124,7 +124,7 @@ final class EventTable extends PowerGridComponent
     #[\Livewire\Attributes\On('guest')]
     public function guest($rowId): Redirector
     {
-        return redirect(route('guest.index', $rowId));
+        return redirect(route('guestl.index', $rowId));
     }
 
     #[\Livewire\Attributes\On('category')]

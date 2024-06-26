@@ -17,7 +17,7 @@
                 <p>&nbsp;&nbsp;&nbsp;&nbsp;Time: {{ $timeStart }}</p>
                 <p>&nbsp;&nbsp;&nbsp;&nbsp;Veneu: {{ $veneu }}</p>
                 <p>3. Click the button below to confirm or reject your rsvp do not hesitate to reach out for any further
-                    information or clarification needed prior to the event.</p><a href={{ route($eventrsvp) }}
+                    information or clarification needed prior to the event.</p><a href={{ $eventrsvp }}
                     class="btn bg-gradient-primary btn-sm mb-0" type="button">&nbsp; RSVP</a>
                 <p>Best regards, MyEvent</p>
             </div>

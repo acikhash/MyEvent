@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 use App\Mail\MyTestEmail;
 use App\Models\Event;
+use App\Models\Guest;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\GuestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -93,10 +95,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/Thankyouform', [GuestListManagementController::class, 'ThankYou'])->name('guest.Thankyouform');
 
 
-    //get guestlist filter by event
-    Route::get('/guestlist/{eventid}', [GuestListManagementController::class, 'index'])->name('guest.index');
-
-
+    //get guest filter by event
+    Route::get('/guestlist/{event}', [GuestController::class, 'index'])->name('guestl.index');
+    Route::get('/guestlist/create/{event}', [GuestController::class, 'create'])->name('guestl.create');
+    Route::post('/guestlist/{guest}', [GuestController::class, 'update'])->name('guestl.update');
+    Route::get('/guestlist/{id}/edit', [GuestController::class, 'edit'])->name('guestl.edit');
+    Route::delete('/guestlist/{guest}', [GuestController::class, 'destroy'])->name('guestl.destroy');
+    Route::get('/guestlist/{guest}', [GuestController::class, 'show'])->name('guestl.show');
+    Route::post('/guestlist', [GuestController::class, 'store'])->name('guestl.store');
 
 
 
@@ -132,11 +138,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/guestcategory/{guestcategory}', [GuestCategoryController::class, 'destroy'])->name('guestcategory.destroy');
     Route::get('/guestcategory/{guestcategory}', [GuestCategoryController::class, 'show'])->name('guestcategory.show');
     Route::post('/guestcategory', [GuestCategoryController::class, 'store'])->name('guestcategory.store');
+
     //
 });
 
 //send invitation email
-Route::get('/testroute', [NotificationController::class, 'sendInvitation'])->name('email.send');
+Route::get('/testroute/{guest}', [NotificationController::class, 'sendInvitation'])->name('email.send');
 
 
 Route::group(['middleware' => 'guest'], function () {

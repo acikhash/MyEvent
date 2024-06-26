@@ -11,7 +11,7 @@
                 <div class="row gx-4">
                     <div class="col-auto">
                     </div>
-                    <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                    <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                         <div class="nav-wrapper position-relative end-0">
                             <h6 class="mb-0">{{ __('Event Information') }}</h6>
                         </div>
@@ -163,7 +163,7 @@
                             <label for="about">{{ 'Event Details' }}</label>
                             <div class="@error('event.about')border border-danger rounded-3 @enderror">
                                 <textarea class="form-control" id="about" rows="3" placeholder="Say something about the event"
-                                    name="about_me"></textarea>
+                                    name="about"></textarea>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
