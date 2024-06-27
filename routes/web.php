@@ -3,6 +3,7 @@
 use App\Http\Controllers\GuestListManagementController;
 use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GuestCategoryController;
 use App\Http\Controllers\HomeController;
@@ -35,10 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/', [HomeController::class, 'home']);
-    Route::get('dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('billing', function () {
         return view('billing');
     })->name('billing');
