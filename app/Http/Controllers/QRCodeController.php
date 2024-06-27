@@ -38,54 +38,6 @@ class  QRCodeController extends Controller
 
         $guest = Guest::findOrFail($id);
 
-<<<<<<< HEAD
         return view('guest.checkin', compact('guest'));
     }
 }
-=======
-        if ($guest->checkedin !== null) {
-            return redirect("/Thankyouform");
-        }
-        else {
-            return view('guest.Attendance.checkin', compact('guest'));
-        }
-
-    }
-
-    public function checkinupdate(Request $request, $id)
-    {
-        
-        $guest = Guest::findOrFail($id);
-
-        $guest = Guest::find($id);
-
-        $attributes = $request->validate([
-
-            'checkedin' => [],
-            
-        ]);
-
-        
-
-    
-        if ($guest->checkin !== null) {
-            return redirect("/Thankyouform");
-        }
-        else{
-
-            $attributes['checkedin'] = $attributes['checkedin'] ?? 'on';
-               
-        // Validate request data
-            $guest->fill($attributes); 
-            $guest->save();
-    
-    
-            return redirect('/Thankyouform')->with('success', 'Information updated successfully.');
-
-        }
-    
-    }
-
- 
-}
->>>>>>> 3926d69218643eba7d4fb94923d88665c61a499c
