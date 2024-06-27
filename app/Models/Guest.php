@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Guest extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
     protected $guarded = [];
 
     protected $fillable = [
@@ -29,5 +29,9 @@ class Guest extends Model
     public function event()
     {
         return $this->belongsTo(Event::class,  'event_id', 'id');
+    }
+    public function guestcategory()
+    {
+        return $this->belongsTo(GuestCategory::class, 'guest_categories_id', 'id');
     }
 }

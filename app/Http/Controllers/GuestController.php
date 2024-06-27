@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Guest;
+use App\Models\GuestCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\View;
+
+use function React\Promise\all;
 
 class GuestController extends Controller
 {
@@ -29,7 +32,8 @@ class GuestController extends Controller
     public function create($event)
     {
         $event = Event::find($event);
-        return view('guest.create', ['event' => $event]);
+        $category = GuestCategory::all()->where("event_id", "=", $event->id);
+        return view('guest.create', ['event' => $event, 'categories' => $category]);
     }
 
     /**

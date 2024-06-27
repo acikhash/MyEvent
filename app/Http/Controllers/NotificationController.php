@@ -22,7 +22,7 @@ class NotificationController extends Controller
         $data['eventdate'] = $guest->event->dateStart;
         $data['starttime'] = $guest->event->timeStart;
         $data['eventveneu'] = $guest->event->veneu;
-        $data['eventrsvp'] = "event";
+        $data['eventrsvp'] = route('guest.Updateattendancestore', $guest->id);
         $data['email'] = $guest->email; //$guest->email;
 
         // The email sending is done using the to method on the Mail facade
