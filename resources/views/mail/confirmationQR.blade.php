@@ -412,11 +412,13 @@
     <p>&nbsp;&nbsp;&nbsp;&nbsp;Time: {{ $timeStart }}</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;Veneu: {{ $veneu }}</p>
     <p></p>
-    <!-- Display QR code image -->
-    {!! $qrCode !!}
-
+    <p align='center'>
+        <!-- Display QR code image -->
+        {!! $qrCode !!}
+    </p>
     <p></p>
     <p>Please show the organizer the qrcode generated for attendance check in.
+        See you there.</p>
     <p>Best regards, MyEvent</p>
 </body>
 

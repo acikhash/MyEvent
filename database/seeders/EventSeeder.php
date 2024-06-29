@@ -15,16 +15,17 @@ class EventSeeder extends Seeder
     {
         //run factory for dummyevent
         // \App\Models\Event::factory(5)->create();
+
         DB::table('events')->insert(
             [
                 'name' => 'Jamuan Raya',
                 'theme' => 'Batik',
-                'dateStart' => fake()->date(),
-                'dateEnd' => fake()->date(),
+                'dateStart' => '2024-07-06',
+                'dateEnd' => '2024-07-09',
                 'timeStart' => fake()->time(),
                 'timeEnd' => fake()->time(),
                 'veneu' => fake()->address(),
-                'maxGuest' => fake()->numberBetween(10, 1000),
+                'maxGuest' => fake()->numberBetween(1, 500),
                 'organizer' => fake()->company(),
                 'created_at' => now(),
                 'created_by' => '1',
@@ -34,12 +35,12 @@ class EventSeeder extends Seeder
             [
                 'name' => 'Seminar AI',
                 'theme' => 'formal',
-                'dateStart' => fake()->date(),
-                'dateEnd' => fake()->date(),
+                'dateStart' => '2024-07-08',
+                'dateEnd' => '2024-07-15',
                 'timeStart' => fake()->time(),
                 'timeEnd' => fake()->time(),
                 'veneu' => fake()->address(),
-                'maxGuest' => fake()->numberBetween(10, 1000),
+                'maxGuest' => fake()->numberBetween(1, 500),
                 'organizer' => fake()->company(),
                 'created_at' => now(),
                 'created_by' => '1',
@@ -47,18 +48,35 @@ class EventSeeder extends Seeder
         );
         DB::table('events')->insert(
             [
-                'name' => 'Faculty Meeting ',
+                'name' => 'Students Registration ',
                 'theme' => 'formal',
-                'dateStart' => fake()->date(),
-                'dateEnd' => fake()->date(),
+                'dateStart' => '2024-07-06',
+                'dateEnd' => '2024-07-15',
                 'timeStart' => fake()->time(),
                 'timeEnd' => fake()->time(),
                 'veneu' => fake()->address(),
-                'maxGuest' => fake()->numberBetween(10, 1000),
+                'maxGuest' => fake()->numberBetween(1, 500),
                 'organizer' => fake()->company(),
                 'created_at' => now(),
                 'created_by' => '1',
             ]
+
+        );
+        DB::table('events')->insert(
+            [
+                'name' => 'Hands On Building Your Own AI Chatbox',
+                'theme' => 'formal',
+                'dateStart' => '2024-07-11',
+                'dateEnd' => '2024-07-20',
+                'timeStart' => fake()->time(),
+                'timeEnd' => fake()->time(),
+                'veneu' => fake()->address(),
+                'maxGuest' => fake()->numberBetween(1, 500),
+                'organizer' => fake()->company(),
+                'created_at' => now(),
+                'created_by' => '1',
+            ]
+
         );
     }
 }

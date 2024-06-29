@@ -37,38 +37,21 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', [HomeController::class, 'home']);
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('billing', function () {
-        return view('billing');
-    })->name('billing');
+    // Route::get('billing', function () {
+    //     return view('billing');
+    // })->name('billing');
 
     Route::get('profile', function () {
         return view('profile');
     })->name('profile');
 
-    Route::get('rtl', function () {
-        return view('rtl');
-    })->name('rtl');
+    // Route::get('rtl', function () {
+    //     return view('rtl');
+    // })->name('rtl');
 
     Route::get('user-management', function () {
         return view('laravel-examples/user-management');
     })->name('user-management');
-
-
-    Route::get('tables', function () {
-        return view('tables');
-    })->name('tables');
-
-    Route::get('virtual-reality', function () {
-        return view('virtual-reality');
-    })->name('virtual-reality');
-
-    Route::get('static-sign-in', function () {
-        return view('static-sign-in');
-    })->name('sign-in');
-
-    Route::get('static-sign-up', function () {
-        return view('static-sign-up');
-    })->name('sign-up');
 
 
     //Guest Management
@@ -80,13 +63,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/Edit/{id}', [GuestListManagementController::class, 'edit'])->name('guest.edit');
     Route::get('/guest/{id}/Representativeform', [GuestListManagementController::class, 'RepresentativeCreate'])->name('guest.representativeform');
     Route::post('/guest/{id}/Representativeform', [GuestListManagementController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
-
     Route::get('/guest/{id}/Updateattendanceform', [GuestListManagementController::class, 'Updateattendanceshow'])->name('guest.representativeform');
     Route::post('/guest/{id}/Updateattendanceform', [GuestListManagementController::class, 'Updateattendancestore'])->name('guest.Updateattendancestore');
-
     Route::get('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkincreate'])->name('guest.walkinregistrationform');
     Route::post('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkinstore'])->name('guest.walkinstore');
-
     Route::get('/Thankyouform', [GuestListManagementController::class, 'ThankYou'])->name('guest.Thankyouform');
 
 

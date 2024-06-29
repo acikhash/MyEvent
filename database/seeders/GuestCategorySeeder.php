@@ -35,5 +35,33 @@ class GuestCategorySeeder extends Seeder
             'created_at' => now(),
             'created_by' => 1
         ]);
+        DB::table('guest_categories')->insert([
+            'name' => 'normal',
+            'description' => 'normal guest',
+            'event_id' => '2',
+            'created_at' => now(),
+            'created_by' => 1
+        ]);
+        DB::table('guest_categories')->insert([
+            'name' => 'normal',
+            'description' => 'normal guest',
+            'event_id' => '3',
+            'created_at' => now(),
+            'created_by' => 1
+        ]);
+        DB::table('guest_categories')->insert([
+            'name' => 'VIP',
+            'description' => 'Very Important People',
+            'event_id' => '2',
+            'created_at' => now(),
+            'created_by' => 1
+        ]);
+        DB::table('guest_categories')->insert([
+            'name' => 'VIP',
+            'description' => 'Very Important People',
+            'event_id' => '3',
+            'created_at' => now(),
+            'created_by' => 1
+        ]);
     }
 }

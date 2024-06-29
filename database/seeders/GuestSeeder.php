@@ -14,7 +14,7 @@ class GuestSeeder extends Seeder
     public function run(): void
     {
         //run factory for dummyevent
-        // \App\Models\Event::factory(5)->create();
+        \App\Models\Guest::factory(25)->create();
         DB::table('guests')->insert(
             [
                 'event_id' => '1',

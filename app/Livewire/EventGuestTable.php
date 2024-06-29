@@ -115,9 +115,10 @@ final class EventGuestTable extends PowerGridComponent
 
 
     #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
+    public function edit($rowId): Redirector
     {
-        $this->js('alert(' . $rowId . ')');
+        return redirect(route('guest.edit', $rowId));
+        // $this->js('alert(' . $rowId . ')');
     }
     #[\Livewire\Attributes\On('QR')]
     public function QR($rowId): Redirector

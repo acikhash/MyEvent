@@ -55,7 +55,7 @@
             <li class="nav-item mt-2">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage Guest</h6>
 
-            <li class="nav-item pb-2">
+                {{-- <li class="nav-item pb-2">
                 <a class="nav-link {{ Request::is('Events') ? 'active' : '' }}" href="{{ url('Events') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -65,7 +65,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Invitation</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item pb-2">
                 <a class="nav-link {{ Request::is('GuestList') ? 'active' : '' }}" href="{{ url('GuestList') }}">
                     <div
@@ -74,10 +74,10 @@
                             class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('user-management') ? 'text-white' : 'text-dark' }} "
                             aria-hidden="true"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Guest List</span>
+                    <span class="nav-link-text ms-1">Check in Guest</span>
                 </a>
             </li>
-            <li class="nav-item pb-2">
+            {{-- <li class="nav-item pb-2">
                 <a class="nav-link {{ Request::is('Registrationform') ? 'active' : '' }}"
                     href="{{ url('Registrationform') }}">
                     <div
@@ -88,8 +88,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Registration Form</span>
                 </a>
-            </li>
-
+            </li> --}}
             <li class="nav-item pb-2">
                 <a class="nav-link {{ Request::is('Walk-inRegistrationform') ? 'active' : '' }}"
                     href="{{ url('Walk-inRegistrationform') }}">
@@ -99,11 +98,10 @@
                             class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('user-management') ? 'text-white' : 'text-dark' }} "
                             aria-hidden="true"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Walk-Registration </span>
+                    <span class="nav-link-text ms-1">Walk-in Registration </span>
                 </a>
             </li>
             </li>
-
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
             </li>
