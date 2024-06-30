@@ -12,8 +12,8 @@
                             </div>
                             <div class="card mb-4 mx-6">
                                 <a href={{ route('guest.registrationform') }} class="btn bg-gradient-primary btn-sm mb-0"
-                                    type="button">+&nbsp;
-                                    Add Guest</a>
+                                    type="button">&nbsp;
+                                    Check-in</a>
                             </div>
                         </div>
                     </div>
