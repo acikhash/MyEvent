@@ -77,9 +77,11 @@ class GuestController extends Controller
     public function edit(Request $request, $id)
     {
 
-        $event = Event::find($id);
+        $guest = Guest::find($id);
+        $event = Event::find($guest->event_id);
+        $category = GuestCategory::all()->where("event_id", "=", $event->id);
 
-        return view('guest.edit', ['event' => $event]);
+        return view('guest.edit', ['event' => $event, 'guest' => $guest, 'categories' => $category]);
     }
 
     /**

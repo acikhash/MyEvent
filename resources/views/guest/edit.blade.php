@@ -52,14 +52,15 @@
                                     <label for="salutations"
                                         class="form-control-label">{{ __('Guest Salutations') }}</label>
                                     <input class="form-control" type="text" placeholder="i.e: Dato/Datin"
-                                        id="salutations" name="salutations">
+                                        id="salutations" name="salutations"
+                                        value="{{ old('salutations', $guest->salutations) }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">{{ __('Guest Name') }}</label>
                                     <input class="form-control" type="text" placeholder="i.e: Will Smith" id="name"
-                                        name="name">
+                                        name="name" value="{{ old('name', $guest->name) }}">
                                 </div>
                             </div>
                         </div>
@@ -69,7 +70,8 @@
                                 <div class="form-group">
                                     <label for="organization" class="form-control-label">{{ __('Organization') }}</label>
                                     <input class="form-control" type="text" placeholder="i.e: Synergy Software House"
-                                        id="organization" name="organization">
+                                        id="organization" name="organization"
+                                        value="{{ old('organization', $guest->organization) }}">
                                     <input class="form-control" type="hidden" name="event_id" id="event_id"
                                         value="{{ $event->id }}">
                                 </div>
@@ -78,7 +80,7 @@
                                 <div class="form-group">
                                     <label for="address" class="form-control-label">{{ __('Address') }}</label>
                                     <input class="form-control" type="text" placeholder="i.e: 123 Main St" id="address"
-                                        name="address">
+                                        name="address" value="{{ old('address', $guest->address) }}">
                                 </div>
                             </div>
                         </div>
@@ -89,14 +91,14 @@
                                     <label for="contactNumber"
                                         class="form-control-label">{{ __('Contact Number') }}</label>
                                     <input class="form-control" type="tel" placeholder="0123456789" id="contactNumber"
-                                        name="contactNumber">
+                                        name="contactNumber" value="{{ old('contactNumber', $guest->contactNumber) }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="email" class="form-control-label">{{ __('Email') }}</label>
                                     <input class="form-control" type="email" placeholder="i.e: example@example.com"
-                                        id="email" name="email">
+                                        id="email" name="email" value="{{ old('email', $guest->email) }}">
                                 </div>
                             </div>
                         </div>
@@ -106,7 +108,8 @@
                                     class="form-control-label">{{ __('Guest Category') }}</label>
                                 <select name="guest_category_id" class="form-select" id="guest_category_id">
                                     @foreach ($categories as $category)
-                                        <option value={{ $category->id }}>{{ $category->name }}
+                                        <option value={{ $category->id }} {{-- @if ($guest->guestcategory->id == $category->id) Selected @endif --}}>
+                                            {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -117,7 +120,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="bringrep" name="bringrep">
+                                    <input class="form-check-input" type="checkbox" id="bringrep" name="bringrep"
+                                        @if ($guest->bringrep == 'on') checked @endif>
                                     {{ __('Bring Representative') }}
                                 </label>
                             </div>
