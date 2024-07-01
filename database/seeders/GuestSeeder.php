@@ -22,7 +22,7 @@ class GuestSeeder extends Seeder
                 'name' => 'Aaron',
                 'email' => 'aron@utm.edu',
                 'salutations' => 'Dato',
-                'guesttype' => '3',
+                'guesttype' => 'Invitation',
                 'created_at' => now(),
                 'created_by' => '1',
             ]
@@ -34,7 +34,7 @@ class GuestSeeder extends Seeder
                 'name' => 'Lyu',
                 'email' => 'lyu@utm.edu',
                 'salutations' => 'Mr',
-                'guesttype' => '3',
+                'guesttype' => 'Representative',
                 'created_at' => now(),
                 'created_by' => '1',
             ]
@@ -46,7 +46,7 @@ class GuestSeeder extends Seeder
                 'name' => 'Yang',
                 'email' => 'yang@utm.edu',
                 'salutations' => 'Mr',
-                'guesttype' => '3',
+                'guesttype' => 'Walk-in',
                 'created_at' => now(),
                 'created_by' => '1',
             ]
