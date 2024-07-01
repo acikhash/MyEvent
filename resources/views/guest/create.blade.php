@@ -25,7 +25,7 @@
 
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form method="POST" action="{{ route('guest.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('guestl.store') }}" enctype="multipart/form-data">
                         @csrf
                         @if ($errors->any())
                             <div class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">

@@ -30,7 +30,7 @@ final class RSVPTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make(), //->showSearchInput()
+            Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
@@ -66,8 +66,8 @@ final class RSVPTable extends PowerGridComponent
                 ->join('guest_categories', 'guests.guest_category_id', '=', 'guest_categories.id')
                 ->select([
                     DB::raw('COUNT(guests.id) as totalGuest'),
-                    DB::raw('SUM(CASE WHEN guests.checkedin = true THEN 1 ELSE 0 END) as checkedin'),
-                    DB::raw('SUM(CASE WHEN guests.attendance = true THEN 1 ELSE 0 END) as attendance'),
+                    DB::raw('SUM(CASE WHEN guests.checkedin is not null THEN 1 ELSE 0 END) as checkedin'),
+                    DB::raw('SUM(CASE WHEN guests.attendance is not null THEN 1 ELSE 0 END) as attendance'),
                     'guest_categories.name as category',
                     'events.name as event_name', 'events.id as id',
                     'events.maxGuest as event_max_guest'
@@ -82,8 +82,8 @@ final class RSVPTable extends PowerGridComponent
                 ->join('guest_categories', 'guests.guest_category_id', '=', 'guest_categories.id')
                 ->select([
                     DB::raw('COUNT(guests.id) as totalGuest'),
-                    DB::raw('SUM(CASE WHEN guests.checkedin = true THEN 1 ELSE 0 END) as checkedin'),
-                    DB::raw('SUM(CASE WHEN guests.attendance = true THEN 1 ELSE 0 END) as attendance'),
+                    DB::raw('SUM(CASE WHEN guests.checkedin is not null THEN 1 ELSE 0 END) as checkedin'),
+                    DB::raw('SUM(CASE WHEN guests.attendance is not null THEN 1 ELSE 0 END) as attendance'),
                     'guest_categories.name as category',
                     'events.name as event_name', 'events.id as id',
                     'events.maxGuest as event_max_guest'
@@ -117,12 +117,16 @@ final class RSVPTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Event', 'event_name'),
+            Column::make('Event', 'event_name', 'events.name')
+                ->sortable()
+                ->searchable(),
             Column::make('eventId', 'event.id')->hidden(),
             Column::make('TotalGuest', 'totalGuest'),
             Column::make('Total Checked In', 'checkedin'),
             Column::make('Total RSVP', 'attendance'),
-            Column::make('Category', 'category')->searchable(),
+            Column::make('Category', 'category', 'guest_categories.name')
+                ->sortable()
+                ->searchable(),
             // Column::add()->title('Event')->field('event_name')->searchable(),
 
             //     ->sortable()

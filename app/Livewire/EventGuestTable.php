@@ -56,18 +56,22 @@ final class EventGuestTable extends PowerGridComponent
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
-            ->add('id')
-            ->add('salutations')
-            ->add('guest.name')
-            ->add('organization')
-            ->add('address')
-            ->add('contactNumber')
-            ->add('email')
-            ->add('guesttype')
-            ->add('category')
-            ->add('bringrep')
-            ->add('attendance')
-            ->add('checkedin');
+            ->add('id')  // Adds the 'id' field
+            ->add('salutations')  // Adds the 'salutations' field
+            ->add('name')  // Adds the 'name' field
+            ->add('organization')  // Adds the 'organization' field
+            ->add('address')  // Adds the 'address' field
+            ->add('contactNumber')  // Adds the 'contactNumber' field
+            ->add('email')  // Adds the 'email' field
+            ->add('guesttype')  // Adds the 'guesttype' field
+            ->add('category')  // Adds the 'category' field
+            ->add('bringrep', fn ($guest) => $guest->bringrep ? 'Yes' : 'No')  // Adds the 'bringrep' field with a conditional display
+            ->add('attendance', fn ($guest) => match ($guest->attendance) {  // Adds the 'attendance' field with a switch-case for display values
+                'on' => 'Yes',
+                'off' => 'No',
+                default => 'No Reply',
+            })
+            ->add('checkedin', fn ($guest) => $guest->checkedin ? 'Yes' : 'No');  // Adds the 'checkedin' field
     }
 
     public function columns(): array
@@ -104,9 +108,9 @@ final class EventGuestTable extends PowerGridComponent
             Column::make('Guest Type', 'guesttype')
                 ->sortable()
                 ->searchable(),
-            Column::make('Category', 'category')
-                ->sortable()
-                ->searchable(),
+            Column::make('Category', 'category', 'guest_categories.name')
+                ->searchable()
+                ->sortable(),
             Column::make('Bring Representative', 'bringrep')
                 ->sortable()
                 ->searchable(),
@@ -128,7 +132,7 @@ final class EventGuestTable extends PowerGridComponent
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): Redirector
     {
-        return redirect(route('guest.edit', $rowId));
+        return redirect(route('guestl.edit', $rowId));
         // $this->js('alert(' . $rowId . ')');
     }
     #[\Livewire\Attributes\On('QR')]

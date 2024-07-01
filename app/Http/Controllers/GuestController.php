@@ -39,29 +39,27 @@ class GuestController extends Controller
     public function store(Request $request)
     {
 
-        // $attributes = request()->validate([
-        //     'name' => ['required', 'max:50'],
-        //     'theme' => ['required', 'max:50'],
-        //     'dateStart' => ['required'],
-        //     'veneu' => ['max:70']
+        $attributes = request()->validate([
+            'event_id' => ['required'],
+            'guest_category_id' => ['required'],
+            'salutations' => [],
+            'name' => ['required', 'max:50'],
+            'organization' => [],
+            'address' => [],
+            'contactNumber' => [],
+            'email' => ['required', 'email', 'max:50'],
+            'guesttype' => [],
+            'bringrep' => '',
+            'attendance' => [],
 
-        // ]);
+        ]);
 
+        // Assign default values
+        $attributes['guesttype'] = $attributes['guesttype'] ?? 'Invitation';
+        $attributes['created_by'] =   Auth::user()->id;
+        Guest::create($attributes);
 
-        // // dd($request);
-        // Guest::create([
-        //     'name'    => $attributes['name'],
-        //     'theme' => $attributes['theme'],
-        //     'veneu' => $attributes['veneu'],
-        //     'timeStart'    => $request["timeStart"],
-        //     'timeEnd'    => $request["timeEnd"],
-        //     'maxGuest' => $request["maxGuest"],
-        //     'organizer' => $request["organizer"],
-        //     'about' => $request["about"],
-        //     'created_by' => Auth::user()->id,
-        // ]);
-
-        // return redirect('guest')->with('success', 'Record Created Successfully');
+        return redirect()->route('guestl.index', $request['event_id'])->with('success', 'Record Created Successfully');
     }
 
     /**
@@ -78,10 +76,10 @@ class GuestController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        //dd($id);
+
         $event = Event::find($id);
-        //dd($event->name);
-        return view('guestl.edit', ['event' => $event]);
+
+        return view('guest.edit', ['event' => $event]);
     }
 
     /**

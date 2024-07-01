@@ -113,7 +113,7 @@ class GuestCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UpdateGuestCategoryRequest $request)
+    public function destroy(Request $request)
     {
         //
         GuestCategory::find($request->event)->update(
