@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', [HomeController::class, 'home']);
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    //Route::post('r_frame/{schedule}', [DashboardController::class, 'r_frame'])->name('r_frame');
     // Route::get('billing', function () {
     //     return view('billing');
     // })->name('billing');

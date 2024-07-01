@@ -3,7 +3,8 @@
 namespace App\Livewire;
 
 use App\Http\Controllers\NotificationController;
-use Illuminate\Database\Query\Builder;
+// use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -18,6 +19,7 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use Illuminate\Routing\Redirector;
 use App\Models\Guest;
+
 
 final class EventGuestTable extends PowerGridComponent
 {
@@ -41,8 +43,14 @@ final class EventGuestTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('guests as gc')
-            ->where('event_id', '=', $this->eventid);
+        return Guest::query()
+            ->where('guests.event_id', '=', $this->eventid)
+            ->join('guest_categories', function ($categories) {
+                $categories->on('guests.guest_category_id', '=', 'guest_categories.id');
+            })
+            ->select([
+                'guests.*', 'guest_categories.name as category',
+            ]);
     }
 
     public function fields(): PowerGridFields
@@ -50,12 +58,13 @@ final class EventGuestTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('salutations')
-            ->add('name')
+            ->add('guest.name')
             ->add('organization')
             ->add('address')
             ->add('contactNumber')
             ->add('email')
             ->add('guesttype')
+            ->add('category')
             ->add('bringrep')
             ->add('attendance')
             ->add('checkedin');
@@ -95,7 +104,9 @@ final class EventGuestTable extends PowerGridComponent
             Column::make('Guest Type', 'guesttype')
                 ->sortable()
                 ->searchable(),
-
+            Column::make('Category', 'category')
+                ->sortable()
+                ->searchable(),
             Column::make('Bring Representative', 'bringrep')
                 ->sortable()
                 ->searchable(),

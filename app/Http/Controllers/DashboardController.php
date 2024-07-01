@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use carbon\Carbon;
+use Illuminate\Database\Query\Builder;
 use App\Models\Event;
 use App\Models\Guest;
-use Carbon\Month;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\View;
-
-
+use PowerComponents\LivewirePowerGrid\Exportable;
+use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
 class DashboardController extends Controller
 {
+    use WithExport;
     /**
      * Display a listing of the resource.
      */
@@ -24,23 +27,68 @@ class DashboardController extends Controller
         return view('event.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function dashboard()
     {
+
         //
-        $events = Event::all();
-        $guest = Guest::all();
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+        $today = Carbon::today()->toDateString();
 
-        $todayEvent = Event::where('dateStart', '<=', date('Y-m-d'))
-            ->where('dateEnd', '>=', date('Y-m-d'))->get();
+        // Get events for today
+        $todayEvents = Event::where('dateStart', '<=', $today)
+            ->where('dateEnd', '>=', $today)
+            ->whereNull('deleted_at')
+            ->get();
 
-        $thisMonthEvent =
-            Event::where('dateStart', '<=', date('Y-m'))
-            ->where('dateEnd', '>=', date('Y-m'))->get();
+        // Get IDs of today's events
+        $todayEventIds = $todayEvents->pluck('id');
 
-        //dd($todayEvent);
-        return view('dashboard', ['todayEvent' => $todayEvent, 'thisMonthEvent' => $thisMonthEvent, 'events' => $events, 'guest' => $guest]);
+        // Get today's guests who have checked in
+        $todaysGuests = Guest::whereIn('event_id', $todayEventIds)
+            ->where('checkedin', true)
+            ->get();
+
+        // Get events for this month
+        $thisMonthEvents = Event::where(function ($query) use ($startOfMonth, $endOfMonth) {
+            $query->whereBetween('dateStart', [$startOfMonth, $endOfMonth])
+                ->orWhereBetween('dateEnd', [$startOfMonth, $endOfMonth]);
+        })
+            ->whereNull('deleted_at')
+            ->get();
+
+        // Get IDs of this month's events
+        $thisMonthEventIds = $thisMonthEvents->pluck('id');
+
+        // Get this month's guests who have checked in
+        $thisMonthGuests = Guest::whereIn('event_id', $thisMonthEventIds)
+            ->where('checkedin', true)
+            ->get();
+        $schedule = 'all';
+
+        //get count of rsvp for all event by month
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+        $trends = Event::query()
+            ->join('guests', 'guests.event_id', '=', 'events.id')
+            ->select([
+                DB::raw('COUNT(guests.id) as totalGuest'),
+                DB::raw('SUM(CASE WHEN guests.checkedin is not null THEN 1 ELSE 0 END) as checkedin'),
+                DB::raw('SUM(CASE WHEN guests.attendance is not null THEN 1 ELSE 0 END) as attendance'),
+                'events.name as event_name', 'events.id as id',
+                'events.maxGuest as event_max_guest'
+            ])
+            ->groupBy('guests.event_id',  'events.name', 'events.maxGuest')
+            ->orderBy('guests.event_id', 'ASC')->get();
+
+        return view('dashboard', [
+            'todayEvents' => $todayEvents,
+            'todayGuests' => $todaysGuests,
+            'thisMonthEvents' => $thisMonthEvents,
+            'thisMonthGuests' => $thisMonthGuests,
+            'schedule' => $schedule,
+            'trends' => $trends,
+        ]);
     }
 }
