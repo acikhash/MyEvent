@@ -43,14 +43,6 @@ final class CategoryTable extends PowerGridComponent
     {
         return DB::table('guest_categories as gc')
             ->where('event_id', '=', $this->eventid);
-
-        //if want to join table using eloquent table
-        // return GuestCategory::query()
-        //     ->where('event_id', '=', $this->eventid)
-        //     ->join('events as e', function ($event) {
-        //         $event->on('guest_categories.event_id', '=', 'e.id');
-        //     })
-        //     ->select('guest_categories.*', 'e.name as eventname');
     }
 
     public function fields(): PowerGridFields
@@ -58,7 +50,6 @@ final class CategoryTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('name')
-            // ->add('eventname', fn ($guest_categories) => e($guest_categories->event->name)) //if want to join table using eloquent table
             ->add('event_id')
             ->add('deleted_at')
             ->add('created_at')
@@ -75,12 +66,6 @@ final class CategoryTable extends PowerGridComponent
             Column::make('Description', 'description')
                 ->sortable()
                 ->searchable(),
-            // Column::make('Event', 'eventname', 'e.name')//if want to join table using eloquent table
-            //     ->searchable()
-            //     ->sortable(),
-            // Column::make('Event id', 'event_id'),
-            // Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-            //     ->sortable(),
 
             Column::action('Action'),
 

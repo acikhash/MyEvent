@@ -3,7 +3,8 @@
 namespace App\Livewire;
 
 use App\Http\Controllers\NotificationController;
-use Illuminate\Database\Query\Builder;
+// use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -18,6 +19,7 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use Illuminate\Routing\Redirector;
 use App\Models\Guest;
+
 
 final class EventGuestTable extends PowerGridComponent
 {
@@ -41,24 +43,35 @@ final class EventGuestTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('guests as gc')
-            ->where('event_id', '=', $this->eventid);
+        return Guest::query()
+            ->where('guests.event_id', '=', $this->eventid)
+            ->join('guest_categories', function ($categories) {
+                $categories->on('guests.guest_category_id', '=', 'guest_categories.id');
+            })
+            ->select([
+                'guests.*', 'guest_categories.name as category',
+            ]);
     }
 
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
-            ->add('id')
-            ->add('salutations')
-            ->add('name')
-            ->add('organization')
-            ->add('address')
-            ->add('contactNumber')
-            ->add('email')
-            ->add('guesttype')
-            ->add('bringrep')
-            ->add('attendance')
-            ->add('checkedin');
+            ->add('id')  // Adds the 'id' field
+            ->add('salutations')  // Adds the 'salutations' field
+            ->add('name')  // Adds the 'name' field
+            ->add('organization')  // Adds the 'organization' field
+            ->add('address')  // Adds the 'address' field
+            ->add('contactNumber')  // Adds the 'contactNumber' field
+            ->add('email')  // Adds the 'email' field
+            ->add('guesttype')  // Adds the 'guesttype' field
+            ->add('category')  // Adds the 'category' field
+            ->add('bringrep', fn ($guest) => $guest->bringrep ? 'Yes' : 'No')  // Adds the 'bringrep' field with a conditional display
+            ->add('attendance', fn ($guest) => match ($guest->attendance) {  // Adds the 'attendance' field with a switch-case for display values
+                'on' => 'Yes',
+                'off' => 'No',
+                default => 'No Reply',
+            })
+            ->add('checkedin', fn ($guest) => $guest->checkedin ? 'Yes' : 'No');  // Adds the 'checkedin' field
     }
 
     public function columns(): array
@@ -95,7 +108,9 @@ final class EventGuestTable extends PowerGridComponent
             Column::make('Guest Type', 'guesttype')
                 ->sortable()
                 ->searchable(),
-
+            Column::make('Category', 'category', 'guest_categories.name')
+                ->searchable()
+                ->sortable(),
             Column::make('Bring Representative', 'bringrep')
                 ->sortable()
                 ->searchable(),
@@ -117,7 +132,7 @@ final class EventGuestTable extends PowerGridComponent
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): Redirector
     {
-        return redirect(route('guest.edit', $rowId));
+        return redirect(route('guestl.edit', $rowId));
         // $this->js('alert(' . $rowId . ')');
     }
     #[\Livewire\Attributes\On('QR')]

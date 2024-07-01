@@ -7,10 +7,7 @@ use App\Models\Guest;
 use App\Models\GuestCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\View;
 
-use function React\Promise\all;
 
 class GuestController extends Controller
 {
@@ -43,29 +40,26 @@ class GuestController extends Controller
     {
 
         $attributes = request()->validate([
+            'event_id' => ['required'],
+            'guest_category_id' => ['required'],
+            'salutations' => [],
             'name' => ['required', 'max:50'],
-            'theme' => ['required', 'max:50'],
-            'dateStart' => ['required'],
-            'veneu' => ['max:70']
+            'organization' => [],
+            'address' => [],
+            'contactNumber' => [],
+            'email' => ['required', 'email', 'max:50'],
+            'guesttype' => [],
+            'bringrep' => '',
+            'attendance' => [],
 
         ]);
 
+        // Assign default values
+        $attributes['guesttype'] = $attributes['guesttype'] ?? 'Invitation';
+        $attributes['created_by'] =   Auth::user()->id;
+        Guest::create($attributes);
 
-        // dd($request);
-        Guest::create([
-            'name'    => $attributes['name'],
-            'theme' => $attributes['theme'],
-
-            'veneu' => $attributes['veneu'],
-            'timeStart'    => $request["timeStart"],
-            'timeEnd'    => $request["timeEnd"],
-            'maxGuest' => $request["maxGuest"],
-            'organizer' => $request["organizer"],
-            'about' => $request["about"],
-            'created_by' => Auth::user()->id,
-        ]);
-
-        return redirect('guest')->with('success', 'Record Created Successfully');
+        return redirect()->route('guestl.index', $request['event_id'])->with('success', 'Record Created Successfully');
     }
 
     /**
@@ -82,67 +76,65 @@ class GuestController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        //dd($id);
+
         $event = Event::find($id);
-        //dd($event->name);
+
         return view('guest.edit', ['event' => $event]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, $id)
     {
         // dd(isset($request["edit"]));
-        $event = Event::find($request->id);
+        $guest = Guest::findOrFail($id);
         if (isset($request["edit"])) {
             //
-            $attributes = request()->validate([
+            $attributes = $request->validate([
+                'salutations' => [],
+                'guest_category_id' => ['required'],
                 'name' => ['required', 'max:50'],
-                'theme' => ['required', 'max:50'],
-                'dateStart' => ['required'],
-                'veneu' => ['max:70']
-
+                'organization' => [],
+                'address' => [],
+                'contactNumber' => [],
+                'email' => ['required', 'email', 'max:50'],
+                'guesttype' => [],
+                'attendance' => [],
+                'bringrep' => [],
             ]);
 
-            $pieces = explode(" ", $request['dateStart']);
-            if (count($pieces) > 1) {
-                $start = $pieces[0];
-                $end = $pieces[2];
-            } else {
-                $start = $request['dateStart'];
-                $end = $request['dateStart'];
-            }
 
-
-            $event->update([
+            $guest->update([
                 'name'    => $attributes['name'],
-                'theme' => $attributes['theme'],
-                'dateStart'     => $start,
-                'dateEnd'     => $end,
-                'veneu' => $attributes['veneu'],
-                'timeStart'    => $request["timeStart"],
-                'timeEnd'    => $request["timeEnd"],
-                'maxGuest' => $request["maxGuest"],
-                'organizer' => $request["organizer"],
-                'about' => $request["about"],
+                'salutations' => $attributes['salutations'],
+                'organization'     => $attributes['organization'],
+                'address'     =>
+                $attributes['address'],
+                'contactNumber' => $attributes['contactNumber'],
+                'email'    =>
+                $attributes['email'],
+                'guesttype'    => $attributes['guesttype'],
+                'attendance' => $attributes['attendance'],
+                'bringrep' => $attributes['bringrep'],
+                'category_id' => $request["about"],
                 'updated_by' => Auth::id(),
                 'updated_at' => now(),
             ]);
 
-            return redirect('event')->with('success', 'Record Updated Successfully');
+            return redirect()->route('guest.index', [$guest->event_id])->with('success', 'Record Updated Successfully');
         } else {
             //dd("destroy");
 
-            $event->update(
+            $guest->update(
 
                 [
                     'updated_by' => Auth::id(),
                     'updated_at' => now(),
                 ]
             );
-            $event->delete();
-            return redirect()->route('event.index')->with('success', 'Record Deleted');
+            $guest->delete();
+            return redirect()->route('guest.index', [$guest->event_id])->with('success', 'Record Deleted');
         }
     }
 
