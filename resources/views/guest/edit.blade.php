@@ -25,7 +25,7 @@
 
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form method="POST" action="{{ route('guestl.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('guestl.update', $guest) }}" enctype="multipart/form-data">
                         @csrf
                         @if ($errors->any())
                             <div class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">
@@ -103,37 +103,51 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                                 <label for="guest_category_id"
                                     class="form-control-label">{{ __('Guest Category') }}</label>
                                 <select name="guest_category_id" class="form-select" id="guest_category_id">
                                     @foreach ($categories as $category)
-                                        <option value={{ $category->id }} {{-- @if ($guest->guestcategory->id == $category->id) Selected @endif --}}>
+                                        <option value={{ $category->id }}
+                                            @if ($guest->guest_category_id == $category->id) Selected @endif>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
-
                                 </label>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label for="guest_category_id"
+                                    class="form-control-label">{{ __('Guest Check In') }}</label>
+                                <div class="form-group">
+                                    <label class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="checkin" name="checkin"
+                                            @if ($guest->checkedin != null) checked @endif>
+                                        {{ __('Yes, Guest attend') }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="guest_category_id"
+                                    class="form-control-label">{{ __('Representative') }}</label>
                                 <label class="form-check">
                                     <input class="form-check-input" type="checkbox" id="bringrep" name="bringrep"
-                                        @if ($guest->bringrep == 'on') checked @endif>
+                                        @if ($guest->bringrep != null) checked @endif>
+
                                     {{ __('Bring Representative') }}
                                 </label>
                             </div>
-                            <div class="row">
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" name="edit" value="0"
-                                        class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
 
-                                    &nbsp;&nbsp;<button type="submit" name="delete" value="1"
-                                        class="btn bg-gradient-danger btn-md mt-4 mb-4">{{ 'Delete' }}</button>
-                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" name="edit" value="0"
+                                    class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
+
+                                &nbsp;&nbsp;<button type="submit" name="delete" value="1"
+                                    class="btn bg-gradient-danger btn-md mt-4 mb-4">{{ 'Delete' }}</button>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>

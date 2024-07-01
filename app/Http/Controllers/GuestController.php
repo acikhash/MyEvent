@@ -42,18 +42,15 @@ class GuestController extends Controller
         $attributes = request()->validate([
             'event_id' => ['required'],
             'guest_category_id' => ['required'],
-            'salutations' => [],
+            'salutations' => ['required'],
             'name' => ['required', 'max:50'],
-            'organization' => [],
-            'address' => [],
-            'contactNumber' => [],
+            'organization' => ['required'],
+            'address' => ['required'],
+            'contactNumber' => ['required'],
             'email' => ['required', 'email', 'max:50'],
-            'guesttype' => [],
-            'bringrep' => '',
-            'attendance' => [],
 
         ]);
-
+        $attributes['bringrep'] = request('bringrep');
         // Assign default values
         $attributes['guesttype'] = $attributes['guesttype'] ?? 'Invitation';
         $attributes['created_by'] =   Auth::user()->id;
@@ -94,18 +91,21 @@ class GuestController extends Controller
         if (isset($request["edit"])) {
             //
             $attributes = $request->validate([
-                'salutations' => [],
+                'event_id' => ['required'],
                 'guest_category_id' => ['required'],
+                'salutations' => ['required'],
                 'name' => ['required', 'max:50'],
-                'organization' => [],
-                'address' => [],
-                'contactNumber' => [],
+                'organization' => ['required'],
+                'address' => ['required'],
+                'contactNumber' => ['required'],
                 'email' => ['required', 'email', 'max:50'],
-                'guesttype' => [],
-                'attendance' => [],
-                'bringrep' => [],
+
             ]);
 
+
+            // Assign default values
+            // $attributes['guesttype'] = request('guesttype');
+            $attributes['created_by'] =   Auth::user()->id;
 
             $guest->update([
                 'name'    => $attributes['name'],
@@ -116,15 +116,17 @@ class GuestController extends Controller
                 'contactNumber' => $attributes['contactNumber'],
                 'email'    =>
                 $attributes['email'],
-                'guesttype'    => $attributes['guesttype'],
-                'attendance' => $attributes['attendance'],
-                'bringrep' => $attributes['bringrep'],
-                'category_id' => $request["about"],
+                //'guesttype'    => $attributes['guesttype'],
+                // Update guest attributes based on form submission
+                'checkedin' => $request['checkin'],
+                'bringrep' => $request['bringrep'], // Check if bringrep checkbox is checked
+                'guest_category_id'
+                => $attributes['guest_category_id'],
                 'updated_by' => Auth::id(),
                 'updated_at' => now(),
             ]);
 
-            return redirect()->route('guest.index', [$guest->event_id])->with('success', 'Record Updated Successfully');
+            return redirect()->route('guestl.index', [$guest->event_id])->with('success', 'Record Updated Successfully');
         } else {
             //dd("destroy");
 
@@ -136,7 +138,7 @@ class GuestController extends Controller
                 ]
             );
             $guest->delete();
-            return redirect()->route('guest.index', [$guest->event_id])->with('success', 'Record Deleted');
+            return redirect()->route('guestl.index', [$guest->event_id])->with('success', 'Record Deleted');
         }
     }
 

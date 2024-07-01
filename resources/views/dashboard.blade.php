@@ -151,13 +151,13 @@
                             <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
                         </div>
                     </div>
-                    <h6 class="ms-2 mt-4 mb-0"> Guest by Category </h6>
+                    <h6 class="ms-2 mt-4 mb-0"> Total Guest by Type </h6>
                     <p class="text-sm ms-2">
                         for today
                     </p>
                     <div class="container border-radius-lg">
                         <div class="row">
-                            <div class="col-3 py-3 ps-0">
+                            <div class="col-4 py-3 ps-0">
                                 <div class="d-flex mb-2">
                                     <div
                                         class="icon icon-shape icon-xxs shadow border-radius-sm bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
@@ -181,15 +181,15 @@
                                             </g>
                                         </svg>
                                     </div>
-                                    <p class="text-xs mt-1 mb-0 font-weight-bold">Users</p>
+                                    <p class="text-xs mt-1 mb-0 font-weight-bold">Invitation</p>
                                 </div>
-                                <h4 class="font-weight-bolder">36K</h4>
+                                <h4 class="font-weight-bolder">{{ $trends->sum('invitation') }}</h4>
                                 <div class="progress w-75">
                                     <div class="progress-bar bg-dark w-60" role="progressbar" aria-valuenow="60"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
-                            <div class="col-3 py-3 ps-0">
+                            <div class="col-4 py-3 ps-0">
                                 <div class="d-flex mb-2">
                                     <div
                                         class="icon icon-shape icon-xxs shadow border-radius-sm bg-gradient-info text-center me-2 d-flex align-items-center justify-content-center">
@@ -219,15 +219,15 @@
                                             </g>
                                         </svg>
                                     </div>
-                                    <p class="text-xs mt-1 mb-0 font-weight-bold">Clicks</p>
+                                    <p class="text-xs mt-1 mb-0 font-weight-bold">Walk In</p>
                                 </div>
-                                <h4 class="font-weight-bolder">2m</h4>
+                                <h4 class="font-weight-bolder">{{ $trends->sum('walkin') }}</h4>
                                 <div class="progress w-75">
                                     <div class="progress-bar bg-dark w-90" role="progressbar" aria-valuenow="90"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
-                            <div class="col-3 py-3 ps-0">
+                            <div class="col-4 py-3 ps-0">
                                 <div class="d-flex mb-2">
                                     <div
                                         class="icon icon-shape icon-xxs shadow border-radius-sm bg-gradient-warning text-center me-2 d-flex align-items-center justify-content-center">
@@ -251,15 +251,15 @@
                                             </g>
                                         </svg>
                                     </div>
-                                    <p class="text-xs mt-1 mb-0 font-weight-bold">Sales</p>
+                                    <p class="text-xs mt-1 mb-0 font-weight-bold">Representative</p>
                                 </div>
-                                <h4 class="font-weight-bolder">435$</h4>
+                                <h4 class="font-weight-bolder">{{ $trends->sum('representative') }}</h4>
                                 <div class="progress w-75">
                                     <div class="progress-bar bg-dark w-30" role="progressbar" aria-valuenow="30"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
-                            <div class="col-3 py-3 ps-0">
+                            {{-- <div class="col-3 py-3 ps-0">
                                 <div class="d-flex mb-2">
                                     <div
                                         class="icon icon-shape icon-xxs shadow border-radius-sm bg-gradient-danger text-center me-2 d-flex align-items-center justify-content-center">
@@ -293,7 +293,7 @@
                                     <div class="progress-bar bg-dark w-50" role="progressbar" aria-valuenow="50"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -317,6 +317,12 @@
                                 value="{{ $trend->attendance }}">
                             <input type="hidden" name="{{ 'event_name' . $i }}" id="{{ 'event_name' . $i }}"
                                 value="{{ $trend->event_name }}">
+                            <input type="hidden" name="{{ 'invitation' . $i }}" id="{{ 'invitation' . $i }}"
+                                value="{{ $trend->invitation }}">
+                            <input type="hidden" name="{{ 'representative' . $i }}" id="{{ 'representative' . $i }}"
+                                value="{{ $trend->representative }}">
+                            <input type="hidden" name="{{ 'walkin' . $i }}" id="{{ 'walkin' . $i }}"
+                                value="{{ $trend->walkin }}">
                         @endforeach
                     </p>
                 </div>
@@ -339,10 +345,7 @@
                     </div>
 
                     <div class="row">
-
                         <livewire:r-s-v-p-table schedule='' />
-
-
                     </div>
                 </div>
             @endsection
@@ -350,23 +353,69 @@
                 <script>
                     window.onload = function() {
                         var ctx = document.getElementById("chart-bars").getContext("2d");
+                        //get data from window
+                        var eventcount = parseInt(document.getElementById("countEvent").value, 10);
+                        var events = [];
 
+
+                        for (var i = 0; i < eventcount; i++) {
+                            // Use i + 1 to match the element IDs
+                            var totalGuests = document.getElementById("totalGuest" + (i + 1)).value;
+                            var checkedin = document.getElementById("checkedin" + (i + 1)).value;
+                            var attendance = document.getElementById("attendance" + (i + 1)).value;
+                            var eventName = document.getElementById("event_name" + (i + 1)).value
+                            var invitation = document.getElementById("invitation" + (i + 1)).value;
+                            var representative = document.getElementById("representative" + (i + 1)).value;
+                            var walkin = document.getElementById("walkin" + (i + 1)).value
+                            events.push({
+                                name: eventName,
+                                guests: totalGuests,
+                                checkedin: checkedin,
+                                attendance: attendance,
+                                invitation: invitation,
+                                representative: representative,
+                                walkin: walkin
+                            });
+                        }
+                        var labels = events.map(event => event.name);
+                        var walkin = events.map(event => event.walkin);
+                        var invitation = events.map(event => event.invitation);
+                        var representative = events.map(event => event.representative);
+                        //bar chart
                         new Chart(ctx, {
                             type: "bar",
                             data: {
-                                labels: ["Jan", "Feb", "Mac", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
-                                    "Dec"
-                                ],
+                                labels: labels,
                                 datasets: [{
-                                    label: "Sales",
-                                    tension: 0.4,
-                                    borderWidth: 0,
-                                    borderRadius: 4,
-                                    borderSkipped: false,
-                                    backgroundColor: "#fff",
-                                    data: [157, 233, 175, 450, 200, 100, 220, 500, 100, 400, 230, 500],
-                                    maxBarThickness: 6
-                                }, ],
+                                        label: "Invitation",
+                                        tension: 0.4,
+                                        borderWidth: 0,
+                                        borderRadius: 4,
+                                        borderSkipped: false,
+                                        backgroundColor: "#fff",
+                                        data: invitation,
+                                        maxBarThickness: 6
+                                    }, {
+                                        label: "Representative",
+                                        tension: 0.4,
+                                        borderWidth: 0,
+                                        borderRadius: 4,
+                                        borderSkipped: false,
+                                        backgroundColor: "#AAf",
+                                        data: representative,
+                                        maxBarThickness: 6
+                                    },
+                                    {
+                                        label: "Walk In",
+                                        tension: 0.4,
+                                        borderWidth: 0,
+                                        borderRadius: 4,
+                                        borderSkipped: false,
+                                        backgroundColor: "#FAA",
+                                        data: walkin,
+                                        maxBarThickness: 6
+                                    },
+                                ],
                             },
                             options: {
                                 responsive: true,
@@ -438,26 +487,10 @@
                         gradientStroke3.addColorStop(0.2, 'rgba(72,72,176,0.0)');
                         gradientStroke3.addColorStop(0, 'rgba(173, 255, 47,0)'); //green colors
                         //Trend Chart
-                        var eventcount = parseInt(document.getElementById("countEvent").value, 10);
-                        var events = [];
 
-
-                        for (var i = 0; i < eventcount; i++) {
-                            // Use i + 1 to match the element IDs
-                            var totalGuests = document.getElementById("totalGuest" + (i + 1)).value;
-                            var checkedin = document.getElementById("checkedin" + (i + 1)).value;
-                            var attendance = document.getElementById("attendance" + (i + 1)).value;
-                            var eventName = document.getElementById("event_name" + (i + 1)).value
-                            events.push({
-                                name: eventName,
-                                guests: totalGuests,
-                                checkedin: checkedin,
-                                attendance: attendance
-                            });
-                        }
 
                         // Prepare labels and data for the chart
-                        var labels = events.map(event => event.name);
+
                         var totalGuest = events.map(event => event.guests);
                         var check = events.map(event => event.checkedin);
                         var attendance = events.map(event => event.attendance);

@@ -18,14 +18,14 @@ class GuestFactory extends Factory
     {
         return [
             //
-            'event_id' => fake()->numberBetween(1, 3),
+            'event_id' => '1',
             'guest_category_id' => '1',
             'name' => fake()->name(),
             'email' => fake()->email(),
             'organization' => fake()->company(),
             'address' => fake()->address(),
             'contactNumber' => fake()->phoneNumber(),
-            'guesttype' => '3',
+            'guesttype' => 'Invitation',
             'created_at' => now(),
             'created_by' => '1',
         ];

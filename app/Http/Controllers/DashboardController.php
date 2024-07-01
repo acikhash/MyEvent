@@ -67,15 +67,16 @@ class DashboardController extends Controller
             ->get();
         $schedule = 'all';
 
-        //get count of rsvp for all event by month
-        $startOfMonth = Carbon::now()->startOfMonth();
-        $endOfMonth = Carbon::now()->endOfMonth();
+        //get count of rsvp for all event
         $trends = Event::query()
             ->join('guests', 'guests.event_id', '=', 'events.id')
             ->select([
                 DB::raw('COUNT(guests.id) as totalGuest'),
                 DB::raw('SUM(CASE WHEN guests.checkedin is not null THEN 1 ELSE 0 END) as checkedin'),
                 DB::raw('SUM(CASE WHEN guests.attendance is not null THEN 1 ELSE 0 END) as attendance'),
+                DB::raw('SUM(CASE WHEN guests.guesttype ="Invitation" THEN 1 ELSE 0 END) as invitation'),
+                DB::raw('SUM(CASE WHEN guests.guesttype="Representative" THEN 1 ELSE 0 END) as representative'),
+                DB::raw('SUM(CASE WHEN guests.guesttype="Walk-in" THEN 1 ELSE 0 END) as walkin'),
                 'events.name as event_name', 'events.id as id',
                 'events.maxGuest as event_max_guest'
             ])
@@ -89,6 +90,7 @@ class DashboardController extends Controller
             'thisMonthGuests' => $thisMonthGuests,
             'schedule' => $schedule,
             'trends' => $trends,
+
         ]);
     }
 }
