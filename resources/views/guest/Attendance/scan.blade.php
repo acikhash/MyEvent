@@ -1,46 +1,39 @@
-<!-- resources/views/scan.blade.php -->
-@extends('layouts.app')
+@extends('layouts.user_type.auth')
 
 @section('content')
-    <div id="scanner-container"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">QR Code Scanner</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/instascan"></script>
-    <script>
-        let scanner = new Instascan.Scanner({
-            video: document.getElementById('scanner-container')
-        });
+                <div class="card-body">
+                    <video id="preview"></video>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 
-        scanner.addListener('scan', function (content) {
-            // Handle scanned QR code content
-            console.log(content);
-
-            // Send the scanned content to server
-            fetch('/process-scan', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ qrCodeContent: content })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                // Handle success response
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-
-        Instascan.Camera.getCameras().then(cameras => {
-            if (cameras.length > 0) {
-                scanner.start(cameras[0]);
-            } else {
-                console.error('No cameras found.');
-            }
-        }).catch(error => {
-            console.error('Error:', error);
-        });
-    </script>
+<script>
+    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+    scanner.addListener('scan', function (content) {
+        console.log(content);
+        // Handle the scanned QR code content here
+        alert('Scanned: ' + content);
+    });
+    Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length > 0) {
+        scanner.start(cameras[0]);
+    } else {
+        console.error('No cameras found.');
+        alert('No cameras found. Please make sure you have a camera connected.');
+    }
+}).catch(function (e) {
+    console.error('Error accessing cameras:', e);
+    alert('Error accessing cameras. Please check your camera settings and try again.');
+});
+</script>
 @endsection
+1

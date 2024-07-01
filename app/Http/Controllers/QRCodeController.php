@@ -76,7 +76,6 @@ class  QRCodeController extends Controller
     
     }
 
-
     public function scan()
     {
         return view('guest.Attendance.scan');
@@ -86,9 +85,9 @@ class  QRCodeController extends Controller
     {
         // Process scanned QR code data
         $qrCodeContent = $request->input('qrCodeContent');
-
+    
         // Implement your logic to handle the scanned QR code content
-
+    
         return response()->json(['status' => 'success', 'data' => $qrCodeContent]);
     }
 
