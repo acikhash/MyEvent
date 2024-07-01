@@ -38,6 +38,58 @@ class  QRCodeController extends Controller
 
         $guest = Guest::findOrFail($id);
 
-        return view('guest.checkin', compact('guest'));
+        return view('guest.Attendance.checkin', compact('guest'));
     }
+
+
+    public function checkinupdate(Request $request, $id)
+    {
+        
+        $guest = Guest::findOrFail($id);
+
+        $guest = Guest::find($id);
+
+        $attributes = $request->validate([
+
+            'checkedin' => [],
+            
+        ]);
+
+        
+
+    
+        if ($guest->checkin == 'Yes') {
+            return redirect("/Thankyouform");
+        }
+        else{
+
+            $attributes['checkedin'] = $attributes['checkedin'] ?? 'on';
+               
+        // Validate request data
+            $guest->fill($attributes); 
+            $guest->save();
+    
+    
+            return redirect('/Thankyouform')->with('success', 'Information updated successfully.');
+
+        }
+    
+    }
+
+
+    public function scan()
+    {
+        return view('guest.Attendance.scan');
+    }
+
+    public function processScan(Request $request)
+    {
+        // Process scanned QR code data
+        $qrCodeContent = $request->input('qrCodeContent');
+
+        // Implement your logic to handle the scanned QR code content
+
+        return response()->json(['status' => 'success', 'data' => $qrCodeContent]);
+    }
+
 }

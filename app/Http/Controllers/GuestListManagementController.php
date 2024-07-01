@@ -16,6 +16,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class  GuestListManagementController extends Controller
 {
+    public $selectedEventId;
 
     /**
      * Display a listing of the resource.
@@ -29,7 +30,21 @@ class  GuestListManagementController extends Controller
 
     public function GuestList()
     {
-        return view('guest.guestlist');
+         // Fetch necessary data from your database or other sources
+         $events = Event::all(); // Fetch all events for the dropdown
+
+         $guests = Guest::query()
+             ->when($this->selectedEventId, function ($query) {
+                 $query->where('event_id', $this->selectedEventId);
+             })
+             ->get();
+ 
+         return view('guest.guestlist', [
+             'guests' => $guests,
+             'events' => $events,
+         ]);
+      
+        //return view('guest.guestlist');
     }
 
     public function EventTables()

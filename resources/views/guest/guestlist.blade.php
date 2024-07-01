@@ -11,7 +11,7 @@
                                 <h5 class="mb-0">Guest List</h5>
                             </div>
                             <div class="card mb-4 mx-6">
-                                <a href={{ route('guest.registrationform') }} class="btn bg-gradient-primary btn-sm mb-0"
+                                <a href={{ route('guest.Attendance.scan') }} class="btn bg-gradient-primary btn-sm mb-0"
                                     type="button">&nbsp;
                                     Check-in</a>
                             </div>

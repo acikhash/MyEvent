@@ -3,20 +3,23 @@
 namespace App\Livewire;
 
 use App\Models\Guest;
+
 use Illuminate\Database\Query\Builder;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection; 
 
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
-
+use Livewire\Component;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
+use Illuminate\Contracts\View\View;
 use App\Models\Event;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Redirect;
@@ -24,6 +27,8 @@ use Illuminate\Support\Facades\Redirect;
 final class GuestTable extends PowerGridComponent
 {
     use WithExport;
+
+
 
     public function setUp(): array
     {
@@ -42,32 +47,55 @@ final class GuestTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('Guests');
+        return DB::table('guests')
+        ->select(
+            'guests.id', 
+            'guests.salutations', 
+            'events.name as event_name', // Alias the events.name as event_name
+            'guests.name', 
+            'guests.organization', 
+            'guests.address', 
+            'guests.contactNumber', 
+            'guests.email', 
+            'guests.guesttype', 
+            'guests.guest_category_id', // Adjust this as per your actual implementation
+            'guests.bringrep', 
+            'guests.attendance', 
+            'guests.checkedin'
+        )
+        ->leftJoin('events', 'guests.event_id', '=', 'events.id');
     }
 
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
-            ->add('id')
-            ->add('salutations')
-            ->add('name')
-            ->add('organization')
-            ->add('address')
-            ->add('contactNumber')
-            ->add('email')
-            ->add('guesttype')
-            ->add('bringrep')
-            ->add('attendance')
-            ->add('checkedin')
-            ->add('deleted_at')
-            ->add('created_at')
-            ->add('updated_at');
+        ->add('id')  // Adds the 'id' field
+        ->add('salutations')  // Adds the 'salutations' field
+        ->add('event_name')// Adds the 'id' field
+        ->add('name')  // Adds the 'name' field
+        ->add('organization')  // Adds the 'organization' field
+        ->add('address')  // Adds the 'address' field
+        ->add('contactNumber')  // Adds the 'contactNumber' field
+        ->add('email')  // Adds the 'email' field
+        ->add('guesttype')  // Adds the 'guesttype' field
+        ->add('category')  // Adds the 'category' field
+        ->add('bringrep', fn ($guest) => $guest->bringrep ? 'Yes' : 'No')  // Adds the 'bringrep' field with a conditional display
+        ->add('attendance', fn ($guest) => match ($guest->attendance) {  // Adds the 'attendance' field with a switch-case for display values
+            'on' => 'Yes',
+            'off' => 'No',
+            default => 'No Reply',
+        })
+        ->add('checkedin', fn ($guest) => $guest->checkedin ? 'Yes' : 'No');  // Adds the 'checkedin' field
     }
 
     public function columns(): array
     {
         return [
             Column::make('Id', 'id')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Event Name', 'event_name')
                 ->sortable()
                 ->searchable(),
 
@@ -111,7 +139,7 @@ final class GuestTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::action('Action'),
+            //Column::action('Action'),
 
         ];
     }
@@ -143,7 +171,7 @@ final class GuestTable extends PowerGridComponent
     }
 
 
-    public function actions($row): array
+    /*public function actions($row): array
     {
 
         return [
@@ -166,7 +194,7 @@ final class GuestTable extends PowerGridComponent
                 ->tooltip('Send Email')
                 ->dispatch('email', ['rowId' => $row->id]),  
         ];
-    }
+    }*/
 
     /*
     public function actionRules($row): array
