@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\View;
-
-
+use App\Models\GuestCategory;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class EventController extends Controller
 {
@@ -54,7 +54,7 @@ class EventController extends Controller
             $end = $request['dateStart'];
         }
         // dd($request);
-        Event::create([
+        $e = Event::create([
             'name'    => $attributes['name'],
             'theme' => $attributes['theme'],
             'dateStart'     => $start,
@@ -67,7 +67,12 @@ class EventController extends Controller
             'about' => $request["about"],
             'created_by' => Auth::user()->id,
         ]);
-
+        GuestCategory::create([
+            'name'    => 'normal',
+            'description' => 'normal',
+            'event_id' => $e->id,
+            'created_by' => Auth::user()->id,
+        ]);
         return redirect('event')->with('success', 'Record Created Successfully');
     }
 
@@ -165,5 +170,24 @@ class EventController extends Controller
         return redirect()->route('event.index')->with('success', 'Record Deleted');
         //
         //
+    }
+    public function qr($id)
+    {
+        // Fetch guest information
+        $event = Event::find($id);
+
+        // Generate QR code content
+        $qrCodeContent = url('/Walk-inRegistrationform/' . $event->id);
+
+        // Generate QR code image
+        $qrCode = QrCode::size(200)->generate($qrCodeContent);
+        $data['id'] = $event->id;
+        $data['eventname'] = $event->name;
+        $data['eventdate'] = $event->dateStart;
+        $data['starttime'] = $event->timeStart;
+        $data['eventveneu'] = $event->veneu;
+        $data['qrCode'] = $qrCode;
+        // Pass the QR code image and guest data to the view
+        return view('event.qrcode', $data);
     }
 }

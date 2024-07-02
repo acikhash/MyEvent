@@ -30,20 +30,20 @@ class  GuestListManagementController extends Controller
 
     public function GuestList()
     {
-         // Fetch necessary data from your database or other sources
-         $events = Event::all(); // Fetch all events for the dropdown
+        // Fetch necessary data from your database or other sources
+        $events = Event::all(); // Fetch all events for the dropdown
 
-         $guests = Guest::query()
-             ->when($this->selectedEventId, function ($query) {
-                 $query->where('event_id', $this->selectedEventId);
-             })
-             ->get();
- 
-         return view('guest.guestlist', [
-             'guests' => $guests,
-             'events' => $events,
-         ]);
-      
+        $guests = Guest::query()
+            ->when($this->selectedEventId, function ($query) {
+                $query->where('event_id', $this->selectedEventId);
+            })
+            ->get();
+
+        return view('guest.guestlist', [
+            'guests' => $guests,
+            'events' => $events,
+        ]);
+
         //return view('guest.guestlist');
     }
 
@@ -86,9 +86,11 @@ class  GuestListManagementController extends Controller
         // Assign default values
         $attributes['guesttype'] = $attributes['guesttype'] ?? 'Invitation';
         //$attributes['attendance'] = $attributes['attendance'] ?? 'off';
-
-        Guest::create($attributes);
-
+        $totalGuest = Guest::all()->count();
+        $event = Event::find(request('event_id'));
+        if ($totalGuest < intval($event->maxGuest)) {
+            Guest::create($attributes);
+        }
 
         //session()->flash('success', 'Guest added successfully.');
 

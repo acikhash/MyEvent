@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/guest/{id}/Representativeform', [GuestListManagementController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
     Route::get('/guest/{id}/Updateattendanceform', [GuestListManagementController::class, 'Updateattendanceshow'])->name('guest.representativeform');
     Route::post('/guest/{id}/Updateattendanceform', [GuestListManagementController::class, 'Updateattendancestore'])->name('guest.Updateattendancestore');
-    Route::get('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkincreate'])->name('guest.walkinregistrationform');
+    Route::get('/Walk-inRegistrationform/{event_id}', [GuestListManagementController::class, 'walkincreate'])->name('guest.walkinregistrationform');
     Route::post('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkinstore'])->name('guest.walkinstore');
     Route::get('/Thankyouform', [GuestListManagementController::class, 'ThankYou'])->name('guest.Thankyouform');
 
@@ -107,7 +107,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
     Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('event.destroy');
     Route::get('/event/{id}', [EventController::class, 'show'])->name('event.show');
+    Route::get('/qr/{event_id}', [EventController::class, 'qr'])->name('event.qr');
     Route::post('/event', [EventController::class, 'store'])->name('event.store');
+    Route::get('/generate-pdf/{id}', [EventController::class, 'generatePdf'])->name('event.generatePdf');;
     //
 
     //guestcategory page
@@ -131,7 +133,7 @@ Route::get('/sentQR/{id}', [NotificationController::class, 'sendQR'])->name('ema
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [RegisterController::class, 'create']);
-    Route::post('/register', [RegisterController::class, 'store']);
+    Route::post('/static-sign-up', [RegisterController::class, 'store']);
     Route::get('/login', [SessionsController::class, 'create']);
     Route::post('/session', [SessionsController::class, 'store']);
     Route::get('/login/forgot-password', [ResetController::class, 'create']);

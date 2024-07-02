@@ -115,6 +115,11 @@ final class EventTable extends PowerGridComponent
         return [];
     }
 
+    #[\Livewire\Attributes\On('qr')]
+    public function qr($rowId): Redirector
+    {
+        return redirect(route('event.qr', $rowId));
+    }
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): Redirector
     {
@@ -136,7 +141,11 @@ final class EventTable extends PowerGridComponent
     {
 
         return [
-
+            Button::add('qr')
+                ->id('qr')
+                ->class('fas fa-qrcode text-secondary')
+                ->tooltip('Event QR')
+                ->dispatch('qr', ['rowId' => $row->id]),
             Button::add('edit')
                 ->id('edit')
                 ->class('fas fa-edit text-secondary')
