@@ -58,12 +58,12 @@ class  QRCodeController extends Controller
         
 
     
-        if ($guest->checkin == 'Yes') {
+        if ($guest->checkedin == 'Yes') {
             return redirect("/Thankyouform");
         }
         else{
 
-            $attributes['checkedin'] = $attributes['checkedin'] ?? 'on';
+            $attributes['checkedin'] = $attributes['checkedin'] ?? 'no';
                
         // Validate request data
             $guest->fill($attributes); 
@@ -83,12 +83,18 @@ class  QRCodeController extends Controller
 
     public function processScan(Request $request)
     {
-        // Process scanned QR code data
-        $qrCodeContent = $request->input('qrCodeContent');
-    
-        // Implement your logic to handle the scanned QR code content
-    
-        return response()->json(['status' => 'success', 'data' => $qrCodeContent]);
+        // Ensure it's a POST request
+        if ($request->isMethod('post')) {
+            $qrCodeContent = $request->input('qrCodeContent');
+   
+            // Implement your logic to handle the scanned QR code content here
+            // For example, you can save it to a database, perform actions, etc.
+
+            return response()->json(['status' => 'success', 'data' => $qrCodeContent]);
+        }
+        
+        // Handle other cases if necessary
+        //abort(405); // Method Not Allowed
     }
 
 }
