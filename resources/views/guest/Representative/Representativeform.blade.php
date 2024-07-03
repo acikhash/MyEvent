@@ -1,11 +1,23 @@
-@extends('layouts.user_type.auth')
+@extends('layouts.user_type.guest')
 
 @section('content')
     <script src="/assets/js/plugins/flatpickr.min.js"></script>
+    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 mx-3 border-radius-lg"
+            style="background-image: url('/assets/img/curved-images/curved14.jpg');">
+            <span class="mask bg-gradient-dark opacity-6"></span>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 text-center mx-auto">
+                        <h1 class="text-white mb-2 mt-5">Welcome!</h1>
+                        <p class="text-lead text-white">Please fill Up the Representative/Companion form.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header pb-0 px-3">
-                <h6 class="mb-0">{{ __('Representative Information') }}</h6>
+                <h6 class="mb-0">{{ __('Representative/Companion Information') }}</h6>
                 <p class="mb-0">{{ __('Please fill in all details') }}</p>
             </div>
             <div class="card-body pt-4 p-3">
@@ -39,6 +51,8 @@
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">{{ __('Guest Name') }}</label>
                                     <input class="form-control" type="text" placeholder="i.e: Will Smith" id="name" name="name">
+                                    <input class="form-control" type="hidden" name="event_id" id="event_id"
+                                    value="{{ $guest->event_id }}">
                                 </div>
                             </div>
                         </div>

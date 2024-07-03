@@ -79,7 +79,8 @@ final class GuestTable extends PowerGridComponent
         ->add('email')  // Adds the 'email' field
         ->add('guesttype')  // Adds the 'guesttype' field
         ->add('category')  // Adds the 'category' field
-        ->add('bringrep', fn ($guest) => $guest->bringrep ? 'Yes' : 'No')  // Adds the 'bringrep' field with a conditional display
+        ->add('bringrep', fn ($guest) => $guest->bringrep ? 'Yes' : 'No')
+
         ->add('attendance', fn ($guest) => match ($guest->attendance) {  // Adds the 'attendance' field with a switch-case for display values
             'on' => 'Yes',
             'off' => 'No',
