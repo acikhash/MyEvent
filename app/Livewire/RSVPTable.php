@@ -103,15 +103,6 @@ final class RSVPTable extends PowerGridComponent
             ->add('event_max_guest')
             ->add('id')
             ->add('attendance');
-        // ->add('veneu')
-        // ->add('organizer')
-        // ->add('maxGuest')
-        // ->add('about')
-        // ->add('created_by')
-        // ->add('updated_by')
-        // ->add('deleted_at')
-        // ->add('created_at')
-        // ->add('updated_at');
     }
 
     public function columns(): array
@@ -127,64 +118,7 @@ final class RSVPTable extends PowerGridComponent
             Column::make('Category', 'category', 'guest_categories.name')
                 ->sortable()
                 ->searchable(),
-            // Column::add()->title('Event')->field('event_name')->searchable(),
-
-            //     ->sortable()
-            //     ->searchable(),
-
             Column::make('event_max_guest', 'event_max_guest'),
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('TimeEnd', 'timeEnd')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Veneu', 'veneu')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Organizer', 'organizer')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('MaxGuest', 'maxGuest')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('About', 'about')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Created by', 'created_by')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Updated by', 'updated_by')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-            //     ->sortable(),
-
-            // Column::make('Deleted at', 'deleted_at')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Created at', 'created_at_formatted', 'created_at')
-            //     ->sortable(),
-
-            // Column::make('Created at', 'created_at')
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make('Updated at', 'updated_at_formatted', 'updated_at')
-            //     ->sortable(),
-
-            // Column::make('Updated at', 'updated_at')
-            //     ->sortable()
-            //     ->searchable(),
-            // Column::action(''),
 
         ];
     }
@@ -199,27 +133,4 @@ final class RSVPTable extends PowerGridComponent
     {
         $this->js('alert(' . $rowId . ')');
     }
-
-    // public function actions($row): array
-    // {
-    //     return [
-    //         Button::add('edit')
-    //             ->slot('Edit: ' . $row->id)
-    //             ->id()
-    //             ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
-    //             ->dispatch('edit', ['rowId' => $row->maxGuest])
-    //     ];
-    // }
-
-    /*
-    public function actionRules($row): array
-    {
-       return [
-            // Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($row) => $row->id === 1)
-                ->hide(),
-        ];
-    }
-    */
 }

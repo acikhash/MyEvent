@@ -89,9 +89,9 @@
                     <span class="nav-link-text ms-1">Registration Form</span>
                 </a>
             </li> --}}
-            <li class="nav-item pb-2">
+            {{-- <li class="nav-item pb-2">
                 <a class="nav-link {{ Request::is('Walk-inRegistrationform') ? 'active' : '' }}"
-                    href="{{ url('Walk-inRegistrationform') }}">
+                    href="{{ route('walkinregistration') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1rem;"
@@ -100,7 +100,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Walk-in Registration </span>
                 </a>
-            </li>
+            </li> --}}
             </li>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>

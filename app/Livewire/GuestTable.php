@@ -7,7 +7,7 @@ use App\Models\Guest;
 use Illuminate\Database\Query\Builder;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection; 
+use Illuminate\Support\Collection;
 
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
@@ -48,44 +48,44 @@ final class GuestTable extends PowerGridComponent
     public function datasource(): Builder
     {
         return DB::table('guests')
-        ->select(
-            'guests.id', 
-            'guests.salutations', 
-            'events.name as event_name', // Alias the events.name as event_name
-            'guests.name', 
-            'guests.organization', 
-            'guests.address', 
-            'guests.contactNumber', 
-            'guests.email', 
-            'guests.guesttype', 
-            'guests.guest_category_id', // Adjust this as per your actual implementation
-            'guests.bringrep', 
-            'guests.attendance', 
-            'guests.checkedin'
-        )
-        ->leftJoin('events', 'guests.event_id', '=', 'events.id');
+            ->select(
+                'guests.id',
+                'guests.salutations',
+                'events.name as event_name', // Alias the events.name as event_name
+                'guests.name',
+                'guests.organization',
+                'guests.address',
+                'guests.contactNumber',
+                'guests.email',
+                'guests.guesttype',
+                'guests.guest_category_id', // Adjust this as per your actual implementation
+                'guests.bringrep',
+                'guests.attendance',
+                'guests.checkedin'
+            )
+            ->leftJoin('events', 'guests.event_id', '=', 'events.id');
     }
 
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
-        ->add('id')  // Adds the 'id' field
-        ->add('salutations')  // Adds the 'salutations' field
-        ->add('event_name')// Adds the 'id' field
-        ->add('name')  // Adds the 'name' field
-        ->add('organization')  // Adds the 'organization' field
-        ->add('address')  // Adds the 'address' field
-        ->add('contactNumber')  // Adds the 'contactNumber' field
-        ->add('email')  // Adds the 'email' field
-        ->add('guesttype')  // Adds the 'guesttype' field
-        ->add('category')  // Adds the 'category' field
-        ->add('bringrep', fn ($guest) => $guest->bringrep ? 'Yes' : 'No')  // Adds the 'bringrep' field with a conditional display
-        ->add('attendance', fn ($guest) => match ($guest->attendance) {  // Adds the 'attendance' field with a switch-case for display values
-            'on' => 'Yes',
-            'off' => 'No',
-            default => 'No Reply',
-        })
-        ->add('checkedin', fn ($guest) => $guest->checkedin ? 'Yes' : 'No');  // Adds the 'checkedin' field
+            ->add('id')  // Adds the 'id' field
+            ->add('salutations')  // Adds the 'salutations' field
+            ->add('event_name') // Adds the 'id' field
+            ->add('name')  // Adds the 'name' field
+            ->add('organization')  // Adds the 'organization' field
+            ->add('address')  // Adds the 'address' field
+            ->add('contactNumber')  // Adds the 'contactNumber' field
+            ->add('email')  // Adds the 'email' field
+            ->add('guesttype')  // Adds the 'guesttype' field
+            ->add('category')  // Adds the 'category' field
+            ->add('bringrep', fn ($guest) => $guest->bringrep ? 'Yes' : 'No')  // Adds the 'bringrep' field with a conditional display
+            ->add('attendance', fn ($guest) => match ($guest->attendance) {  // Adds the 'attendance' field with a switch-case for display values
+                'on' => 'Yes',
+                'off' => 'No',
+                default => 'No Reply',
+            })
+            ->add('checkedin', fn ($guest) => $guest->checkedin ? 'Yes' : 'No');  // Adds the 'checkedin' field
     }
 
     public function columns(): array
@@ -169,42 +169,4 @@ final class GuestTable extends PowerGridComponent
         $guest = Guest::findOrFail($rowId);
         return redirect()->route('guest.representativeform', ['id' => $guest->id]);
     }
-
-
-    /*public function actions($row): array
-    {
-
-        return [
-
-            Button::add('edit')
-                ->id('edit')
-                ->class('fas fa-edit text-secondary')
-                ->tooltip('Edit')
-                ->dispatch('edit', ['rowId' => $row->id]),
-
-            Button::add('QR')
-                ->id('QR')
-                ->class('fas fa-qrcode text-secondary')
-                ->tooltip('View QR Code')
-                ->dispatch('QR', ['rowId' => $row->id]),    
-
-            Button::add('email')
-                ->id('email')
-                ->class('fas fa-envelope text-secondary')
-                ->tooltip('Send Email')
-                ->dispatch('email', ['rowId' => $row->id]),  
-        ];
-    }*/
-
-    /*
-    public function actionRules($row): array
-    {
-       return [
-            // Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($row) => $row->id === 1)
-                ->hide(),
-        ];
-    }
-    */
 }

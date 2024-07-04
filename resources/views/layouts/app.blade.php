@@ -43,8 +43,7 @@
     <script src="/assets/js/plugins/flatpickr.min.js"></script>
 </head>
 
-<body
-    class="g-sidenav-show  bg-gray-100 {{ \Request::is('rtl') ? 'rtl' : (Request::is('virtual-reality') ? 'virtual-reality' : '') }} ">
+<body class="g-sidenav-show  bg-gray-100 ">
     @auth
         @yield('auth')
     @endauth
@@ -66,7 +65,7 @@
     <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="/assets/js/plugins/fullcalendar.min.js"></script>
     <script src="/assets/js/plugins/chartjs.min.js"></script>
-    {{-- @stack('rtl') --}}
+
     @stack('dashboard')
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
