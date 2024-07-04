@@ -16,6 +16,7 @@ class NotificationController extends Controller
     public function sendInvitation($id)
     {
         $guest = Guest::find($id);
+
         //dd($guest);
         $data['name'] = $guest->name;
         $data['eventname'] = $guest->event->name;
@@ -28,6 +29,7 @@ class NotificationController extends Controller
         // The email sending is done using the to method on the Mail facade
         Mail::to($data['email'])->send(new SendInvite($data));
         //return redirect('guest', $guest->event_id)->with('success', 'Invitation Sent Successfully');
+        $guest->update(['invited' => now()]);
         return redirect()->route('guestl.index', $guest->event_id)->with('success', 'Invitation Sent Successfully');
     }
 

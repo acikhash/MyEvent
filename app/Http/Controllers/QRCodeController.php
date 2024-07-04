@@ -44,7 +44,7 @@ class  QRCodeController extends Controller
 
     public function checkinupdate(Request $request, $id)
     {
-        
+
         $guest = Guest::findOrFail($id);
 
         $guest = Guest::find($id);
@@ -52,28 +52,26 @@ class  QRCodeController extends Controller
         $attributes = $request->validate([
 
             'checkedin' => [],
-            
+
         ]);
 
-        
 
-    
+
+
         if ($guest->checkedin == 'Yes') {
             return redirect("/Thankyouform");
-        }
-        else{
+        } else {
 
             $attributes['checkedin'] = $attributes['checkedin'] ?? 'no';
-               
-        // Validate request data
-            $guest->fill($attributes); 
-            $guest->save();
-    
-    
-            return redirect('/Thankyouform')->with('success', 'Information updated successfully.');
 
+            // Validate request data
+            $guest->fill($attributes);
+            $guest->checked = now();
+            $guest->save();
+
+
+            return redirect('/Thankyouform')->with('success', 'Information updated successfully.');
         }
-    
     }
 
     public function scan()
@@ -86,15 +84,14 @@ class  QRCodeController extends Controller
         // Ensure it's a POST request
         if ($request->isMethod('post')) {
             $qrCodeContent = $request->input('qrCodeContent');
-   
+
             // Implement your logic to handle the scanned QR code content here
             // For example, you can save it to a database, perform actions, etc.
 
             return response()->json(['status' => 'success', 'data' => $qrCodeContent]);
         }
-        
+
         // Handle other cases if necessary
         //abort(405); // Method Not Allowed
     }
-
 }

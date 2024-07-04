@@ -30,7 +30,9 @@ return new class extends Migration
             $table->string('checkedin')->nullable();
             $table->string('created_by');
             $table->string('updated_by')->nullable();
-
+            $table->dateTime('invited')->nullable();
+            $table->dateTime('rsvp')->nullable();
+            $table->dateTime('checked')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

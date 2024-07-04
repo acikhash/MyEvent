@@ -121,7 +121,7 @@ class GuestController extends Controller
                 'contactNumber' => $attributes['contactNumber'],
                 'email'    =>
                 $attributes['email'],
-
+                'checked' => now(),
                 'checkedin' => $request['checkin'],
                 'bringrep' => $request['bringrep'], // Check if bringrep checkbox is checked
                 'guest_category_id'
@@ -300,6 +300,7 @@ class GuestController extends Controller
         // Update guest attributes based on form submission
         $guest->attendance = $request->input('attendance');
         $guest->bringrep = $request->has('bringrep') ? 'on' : 'off'; // Check if bringrep checkbox is checked
+        $guest->rsvp = now();
         $guest->save();
 
 

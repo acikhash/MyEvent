@@ -19,7 +19,7 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use Illuminate\Routing\Redirector;
 use App\Models\Guest;
-
+use PhpOffice\PhpSpreadsheet\Calculation\TextData\Format;
 
 final class EventGuestTable extends PowerGridComponent
 {
@@ -71,7 +71,11 @@ final class EventGuestTable extends PowerGridComponent
                 'off' => 'No',
                 default => 'No Reply',
             })
-            ->add('checkedin', fn ($guest) => $guest->checkedin ? 'Yes' : 'No');  // Adds the 'checkedin' field
+            ->add('checkedin', fn ($guest) => $guest->checkedin ? 'Yes' : 'No')  // Adds the 'checkedin' field
+            ->add('invited', fn ($guest) =>  $guest->invited ? Carbon::parse($guest->invited)->format('d-m-Y H:i') : '')  // Adds the 'invited' field
+            ->add('checked', fn ($guest) =>  $guest->checked ? Carbon::parse($guest->checked)->format('d-m-Y H:i') : '')  // Adds the 'checked' field
+            ->add('rsvp', fn ($guest) =>  $guest->rsvp ? Carbon::parse($guest->rsvp)->format('d-m-Y H:i') : '');  // Adds the 'rsvp' field
+
     }
 
     public function columns(): array
@@ -122,6 +126,16 @@ final class EventGuestTable extends PowerGridComponent
             Column::make('Checked In', 'checkedin')
                 ->sortable()
                 ->searchable(),
+            Column::make('Invited Date', 'invited')
+                ->sortable()
+                ->searchable(),
+            Column::make('RSVP Date', 'rsvp')
+                ->sortable()
+                ->searchable(),
+            Column::make('Checkin Date', 'checked')
+                ->sortable()
+                ->searchable(),
+
 
             Column::action('Action')
         ];
