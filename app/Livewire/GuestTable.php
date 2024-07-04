@@ -149,7 +149,7 @@ final class GuestTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Attendance', 'attendance')
+            Column::make('RSVP', 'attendance')
                 ->sortable()
                 ->searchable(),
 

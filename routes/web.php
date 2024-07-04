@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\GuestListManagementController;
+// use App\Http\Controllers\GuestListManagementController;
 use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\DashboardController;
@@ -138,16 +138,16 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
 
-    Route::get('/Walk-inRegistrationform/{event_id}', [GuestListManagementController::class, 'walkincreate'])->name('guest.walkinregistrationform');
-    Route::post('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkinstore'])->name('guest.walkinstore');
+    Route::get('/Walk-inRegistrationform/{event_id}', [GuestController::class, 'walkincreate'])->name('guest.walkinregistrationform');
+    Route::post('/Walk-inRegistrationform', [GuestController::class, 'walkinstore'])->name('guest.walkinstore');
 
-    Route::get('/guest/{id}/Representativeform', [GuestListManagementController::class, 'RepresentativeCreate'])->name('guest.representativeform');
-    Route::post('/guest/{id}/Representativeform', [GuestListManagementController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
+    Route::get('/guest/{id}/Representativeform', [GuestController::class, 'RepresentativeCreate'])->name('guest.representativeform');
+    Route::post('/guest/{id}/Representativeform', [GuestController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
 
-    Route::get('/guest/{id}/Updateattendanceform', [GuestListManagementController::class, 'Updateattendanceshow'])->name('guest.representativeform');
-    Route::post('/guest/{id}/Updateattendanceform', [GuestListManagementController::class, 'Updateattendancestore'])->name('guest.Updateattendancestore');
+    Route::get('/guest/{id}/Updateattendanceform', [GuestController::class, 'Updateattendanceshow'])->name('guest.representativeform');
+    Route::post('/guest/{id}/Updateattendanceform', [GuestController::class, 'Updateattendancestore'])->name('guest.Updateattendancestore');
 
-    Route::get('/Thankyouform', [GuestListManagementController::class, 'ThankYou'])->name('guest.Thankyouform');
+    Route::get('/Thankyouform', [GuestController::class, 'ThankYou'])->name('guest.Thankyouform');
 });
 
 Route::get('/login', function () {

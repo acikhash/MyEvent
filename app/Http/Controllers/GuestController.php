@@ -203,68 +203,67 @@ class GuestController extends Controller
 
         // Validate representative information
         $attributes = $request->validate([
-            'salutations' => [],
+
             'name' => ['required', 'max:50'],
-            'organization' => [],
-            'address' => [],
-            'contactNumber' => [],
             'email' => ['required', 'email', 'max:50'],
-            'guesttype' => [],
-            'attendance' => [],
-            'bringrep' => [],
+            'event_id' => ['required'],
+            'salutations' => ['required'],
+            'name' => ['required', 'max:50'],
+            'organization' => ['required'],
+            'address' => ['required'],
+            'contactNumber' => ['required'],
+            'email' => ['required', 'email', 'max:50'],
         ]);
 
 
         // Set default values if not provided
         $attributes['guesttype'] = $attributes['guesttype'] ?? 'Representative';
         $attributes['bringrep'] = $attributes['bringrep'] ?? 'off';
-
+        $category = GuestCategory::where('event_id', $attributes['event_id'])->first();
+        $attributes['guest_category_id'] = $category->id;
         // Create new representative record
         $representative = Guest::create($attributes);
 
-        session()->flash('success', 'Guest added successfully.');
+        session()->flash('success', $representative->name . 'added successfully.');
 
         return redirect('/Thankyouform');
     }
 
 
 
-    public function walkincreate()
+    public function walkincreate($event_id)
     {
-        return view('guest.Walk-In.walkinregistrationform');
+        return view('guest.Walk-In.walkinregistrationform', ['event_id' => $event_id]);
     }
 
     public function walkinstore()
     {
         $attributes = request()->validate([
-            'eventid',
-            'eventname',
-            'salutations' => [],
             'name' => ['required', 'max:50'],
-            'organization' => [],
-            'address' => [],
-            'contactNumber' => [],
             'email' => ['required', 'email', 'max:50'],
-            'guesttype' => [],
-            'bringrep' => '',
-            'attendance' => [],
-            'checkedin' => [],
+            'event_id' => ['required'],
+            'salutations' => ['required'],
+            'name' => ['required', 'max:50'],
+            'organization' => ['required'],
+            'address' => ['required'],
+            'contactNumber' => ['required'],
+            'email' => ['required', 'email', 'max:50'],
 
         ]);
 
         // Assign default values
         $attributes['guesttype'] = $attributes['guesttype'] ?? 'Walk-in';
-        $attributes['attendance'] = $attributes['attendance'] ?? 'on';
-        $attributes['bringrep'] = $attributes['bringrep'] ?? 'off';
-        $attributes['checkedin'] = $attributes['checkedin'] ?? 'on';
 
+        $attributes['checkedin'] = $attributes['checkedin'] ?? 'on';
+        $category = GuestCategory::where('event_id', $attributes['event_id'])->first();
+        $attributes['guest_category_id'] = $category->id;
         Guest::create($attributes);
 
 
         session()->flash('success', 'Thank you for registering.');
 
         // Auth::login($user);
-        return redirect('/Walk-inRegistrationform');
+        return redirect('/Thankyouform');
     }
 
 

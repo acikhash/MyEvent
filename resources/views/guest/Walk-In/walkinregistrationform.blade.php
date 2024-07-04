@@ -3,17 +3,17 @@
 @section('content')
     <script src="/assets/js/plugins/flatpickr.min.js"></script>
     <div class="page-header align-items-start min-vh-50 pt-5 pb-11 mx-3 border-radius-lg"
-            style="background-image: url('/assets/img/curved-images/curved14.jpg');">
-            <span class="mask bg-gradient-dark opacity-6"></span>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-5 text-center mx-auto">
-                        <h1 class="text-white mb-2 mt-5">Welcome!</h1>
-                        <p class="text-lead text-white">Please fill Up the registration form.</p>
-                    </div>
+        style="background-image: url('/assets/img/curved-images/curved14.jpg');">
+        <span class="mask bg-gradient-dark opacity-6"></span>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 text-center mx-auto">
+                    <h1 class="text-white mb-2 mt-5">Welcome!</h1>
+                    <p class="text-lead text-white">Please fill Up the registration form.</p>
                 </div>
             </div>
         </div>
+    </div>
     <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header pb-0 px-3">
@@ -86,6 +86,8 @@
                                 <label for="email" class="form-control-label">{{ __('Email') }}</label>
                                 <input class="form-control" type="email" placeholder="i.e: example@example.com"
                                     id="email" name="email">
+                                <input class="form-control" type="hidden" value={{ $event_id }} id="event_id"
+                                    name="event_id">
                             </div>
                         </div>
                     </div>
@@ -101,5 +103,3 @@
         </div>
     </div>
 @endsection
-
-

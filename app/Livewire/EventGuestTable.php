@@ -115,7 +115,7 @@ final class EventGuestTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Attendance', 'attendance')
+            Column::make('RSVP', 'attendance')
                 ->sortable()
                 ->searchable(),
 

@@ -177,7 +177,7 @@ class EventController extends Controller
         $event = Event::find($id);
 
         // Generate QR code content
-        $qrCodeContent = url('/Walk-inRegistrationform/' . $event->id);
+        $qrCodeContent = route('guest.walkinregistrationform', $event->id);
 
         // Generate QR code image
         $qrCode = QrCode::size(200)->generate($qrCodeContent);
