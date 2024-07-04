@@ -1,6 +1,17 @@
-@extends('layouts.user_type.auth')
+@extends('layouts.user_type.guest')
 
 @section('content')
+<div class="page-header align-items-start min-vh-20 pt-5 pb-11 mx-3 border-radius-lg"
+            style="background-image: url('/assets/img/curved-images/curved14.jpg');">
+            <span class="mask bg-gradient-dark opacity-6"></span>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 text-center mx-auto">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header pb-0 px-3">

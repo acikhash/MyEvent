@@ -156,18 +156,21 @@ class  GuestListManagementController extends Controller
     public function RepresentativeCreate($id)
     {
         $guest = Guest::find($id);
-        return view('guest.Representative.representativeform', compact('guest'));
+        $event = Event::find($id);
+        return view('guest.Representative.representativeform', compact('guest','event'));
     }
 
     public function RepresentativeStore(Request $request, $id)
     {
         $guest = Guest::findOrFail($id); // Find the guest by ID
+        //$event = Event::find($guest->event_id);
 
         $valid = $guest->bringrep;
 
 
         // Validate representative information
         $attributes = $request->validate([
+            'event_id',
             'salutations' => [],
             'name' => ['required', 'max:50'],
             'organization' => [],
@@ -179,13 +182,17 @@ class  GuestListManagementController extends Controller
             'bringrep' => [],
         ]);
 
+        
+
         // Assign event details
         //$attributes['eventid'] = $guest->eventid;
         //$attributes['eventname'] = $guest->eventname;
 
         // Set default values if not provided
         $attributes['guesttype'] = $attributes['guesttype'] ?? 'Representative';
-        $attributes['bringrep'] = $attributes['bringrep'] ?? 'off';
+        $attributes['bringrep'] = $attributes['bringrep'] ?? 'No';
+        $attributes['event_id'] = $guest->event_id;
+        //dd($attributes);
 
         // Create new representative record
         $representative = Guest::create($attributes);

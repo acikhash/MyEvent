@@ -137,6 +137,17 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
+
+    Route::get('/Walk-inRegistrationform/{event_id}', [GuestListManagementController::class, 'walkincreate'])->name('guest.walkinregistrationform');
+    Route::post('/Walk-inRegistrationform', [GuestListManagementController::class, 'walkinstore'])->name('guest.walkinstore');
+
+    Route::get('/guest/{id}/Representativeform', [GuestListManagementController::class, 'RepresentativeCreate'])->name('guest.representativeform');
+    Route::post('/guest/{id}/Representativeform', [GuestListManagementController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
+
+    Route::get('/guest/{id}/Updateattendanceform', [GuestListManagementController::class, 'Updateattendanceshow'])->name('guest.representativeform');
+    Route::post('/guest/{id}/Updateattendanceform', [GuestListManagementController::class, 'Updateattendancestore'])->name('guest.Updateattendancestore');
+
+    Route::get('/Thankyouform', [GuestListManagementController::class, 'ThankYou'])->name('guest.Thankyouform');
 });
 
 Route::get('/login', function () {

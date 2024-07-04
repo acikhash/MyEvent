@@ -85,6 +85,24 @@ final class GuestTable extends PowerGridComponent
                 'off' => 'No',
                 default => 'No Reply',
             })
+            ->add('checkedin', fn ($guest) => $guest->checkedin ? 'Yes' : 'No')  // Adds the 'checkedin' field
+            ->add('id')  // Adds the 'id' field
+            ->add('salutations')  // Adds the 'salutations' field
+            ->add('event_name') // Adds the 'id' field
+            ->add('name')  // Adds the 'name' field
+            ->add('organization')  // Adds the 'organization' field
+            ->add('address')  // Adds the 'address' field
+            ->add('contactNumber')  // Adds the 'contactNumber' field
+            ->add('email')  // Adds the 'email' field
+            ->add('guesttype')  // Adds the 'guesttype' field
+            ->add('category')  // Adds the 'category' field
+            ->add('bringrep', fn ($guest) => $guest->bringrep ? 'Yes' : 'No')
+
+            ->add('attendance', fn ($guest) => match ($guest->attendance) {  // Adds the 'attendance' field with a switch-case for display values
+                'on' => 'Yes',
+                'off' => 'No',
+                default => 'No Reply',
+            })
             ->add('checkedin', fn ($guest) => $guest->checkedin ? 'Yes' : 'No');  // Adds the 'checkedin' field
     }
 
@@ -153,20 +171,20 @@ final class GuestTable extends PowerGridComponent
     public function edit($rowId): Redirector
     {
         $guest = Guest::findOrFail($rowId);
-        return redirect()->route('guest.edit', ['id' => $guest->id]);
+        return redirect(route('guest.edit', ['id' => $guest->id]));
     }
 
     #[\Livewire\Attributes\On('QR')]
     public function QR($rowId): Redirector
     {
         $guest = Guest::findOrFail($rowId);
-        return redirect()->route('guest.qrcode', ['id' => $guest->id]);
+        return redirect(route('guest.qrcode', ['id' => $guest->id]));
     }
 
     #[\Livewire\Attributes\On('email')]
     public function email($rowId): Redirector
     {
         $guest = Guest::findOrFail($rowId);
-        return redirect()->route('guest.representativeform', ['id' => $guest->id]);
+        return redirect(route('guest.representativeform', ['id' => $guest->id]));
     }
 }
