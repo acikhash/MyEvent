@@ -15,7 +15,7 @@ class GuestCategorySeeder extends Seeder
     {
         //
         DB::table('guest_categories')->insert([
-            'name' => 'staff',
+            'name' => 'normal',
             'description' => 'organizer staff',
             'event_id' => '1',
             'created_at' => now(),
