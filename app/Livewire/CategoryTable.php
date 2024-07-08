@@ -51,6 +51,7 @@ final class CategoryTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('event_id')
+            ->add('description')
             ->add('deleted_at')
             ->add('created_at')
             ->add('updated_at');
