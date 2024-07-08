@@ -39,58 +39,19 @@ final class RSVPTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        if ($this->schedule == "monthly") {
-            $startOfMonth = Carbon::now()->startOfMonth();
-            $endOfMonth = Carbon::now()->endOfMonth();
-            return Event::query()
-                ->join('guests', 'guests.event_id', '=', 'events.id')
-                ->join('guest_categories', 'guests.guest_category_id', '=', 'guest_categories.id')
-                ->select([
-                    DB::raw('COUNT(guests.id) as totalGuest'),
-                    DB::raw('SUM(CASE WHEN guests.checkedin is not null THEN 1 ELSE 0 END) as checkedin'),
-                    DB::raw('SUM(CASE WHEN guests.attendance is not null THEN 1 ELSE 0 END) as attendance'),
-                    'guest_categories.name as category',
-                    'events.name as event_name', 'events.id as id',
-                    'events.maxGuest as event_max_guest'
-                ])
-                ->where(function ($query) use ($startOfMonth, $endOfMonth) {
-                    $query->whereBetween('dateStart', [$startOfMonth, $endOfMonth])
-                        ->orWhereBetween('dateEnd', [$startOfMonth, $endOfMonth]);
-                })
-                ->groupBy('guests.event_id', 'guest_categories.name', 'events.name', 'events.maxGuest')
-                ->orderBy('guests.event_id', 'ASC');
-        } elseif ($this->schedule == "daily") {
-            $today = Carbon::today()->toDateString();
-            return Event::query()
-                ->join('guests', 'guests.event_id', '=', 'events.id')
-                ->join('guest_categories', 'guests.guest_category_id', '=', 'guest_categories.id')
-                ->select([
-                    DB::raw('COUNT(guests.id) as totalGuest'),
-                    DB::raw('SUM(CASE WHEN guests.checkedin is not null THEN 1 ELSE 0 END) as checkedin'),
-                    DB::raw('SUM(CASE WHEN guests.attendance is not null THEN 1 ELSE 0 END) as attendance'),
-                    'guest_categories.name as category',
-                    'events.name as event_name', 'events.id as id',
-                    'events.maxGuest as event_max_guest'
-                ])
-                ->where('dateStart', '<=', $today)
-                ->where('dateEnd', '>=', $today)
-                ->groupBy('guests.event_id', 'guest_categories.name', 'events.name', 'events.maxGuest')
-                ->orderBy('guests.event_id', 'ASC');
-        } else {
-            return Event::query()
-                ->join('guests', 'guests.event_id', '=', 'events.id')
-                ->join('guest_categories', 'guests.guest_category_id', '=', 'guest_categories.id')
-                ->select([
-                    DB::raw('COUNT(guests.id) as totalGuest'),
-                    DB::raw('SUM(CASE WHEN guests.checkedin is not null THEN 1 ELSE 0 END) as checkedin'),
-                    DB::raw('SUM(CASE WHEN guests.attendance is not null THEN 1 ELSE 0 END) as attendance'),
-                    'guest_categories.name as category',
-                    'events.name as event_name', 'events.id as id',
-                    'events.maxGuest as event_max_guest'
-                ])
-                ->groupBy('guests.event_id', 'guest_categories.name', 'events.name', 'events.maxGuest')
-                ->orderBy('guests.event_id', 'ASC');
-        }
+        return Event::query()
+            ->join('guests', 'guests.event_id', '=', 'events.id')
+            ->join('guest_categories', 'guests.guest_category_id', '=', 'guest_categories.id')
+            ->select([
+                DB::raw('COUNT(guests.id) as totalGuest'),
+                DB::raw('SUM(CASE WHEN guests.checkedin is not null THEN 1 ELSE 0 END) as checkedin'),
+                DB::raw('SUM(CASE WHEN guests.attendance is not null THEN 1 ELSE 0 END) as attendance'),
+                'guest_categories.name as category',
+                'events.name as event_name', 'events.id as id',
+                'events.maxGuest as event_max_guest'
+            ])
+            ->groupBy('guests.event_id', 'guest_categories.name', 'events.name', 'events.maxGuest')
+            ->orderBy('guests.event_id', 'ASC');
     }
 
     public function fields(): PowerGridFields

@@ -17,15 +17,14 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Event::class); //$table->foreignIdFor(Event::class);
             $table->foreignIdFor(GuestCategory::class); //guestcategory
-            // $table->string('eventname')->nullable(); // x perlu kalau buat foreign id ke event $table->foreignIdFor(Event::class);
             $table->string('salutations')->default('Mr');
             $table->string('name')->nullable();
             $table->string('organization')->nullable();
             $table->string('address')->nullable();
             $table->string('contactNumber')->nullable();
-            $table->string('email')->nullable();
+            $table->string('email');
             $table->string('guesttype')->nullable();
-            $table->string('bringrep')->nullable();;
+            $table->string('bringrep')->nullable();
             $table->string('attendance')->nullable();
             $table->string('checkedin')->nullable();
             $table->string('created_by');

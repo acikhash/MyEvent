@@ -53,8 +53,9 @@ class GuestController extends Controller
             'contactNumber' => ['required'],
             'email' => ['required', 'email', 'max:50'],
 
+
         ]);
-        $attributes['bringrep'] = request('bringrep');
+        $attributes['bringrep'] = isset($request['bringrep']) ? 'on' : null;
         // Assign default values
         $attributes['guesttype'] = $attributes['guesttype'] ?? 'Invitation';
         $attributes['created_by'] =   Auth::user()->id;
@@ -113,19 +114,16 @@ class GuestController extends Controller
             $attributes['created_by'] =   Auth::user()->id;
 
             $guest->update([
-                'name'    => $attributes['name'],
+                'name' => $attributes['name'],
                 'salutations' => $attributes['salutations'],
-                'organization'     => $attributes['organization'],
-                'address'     =>
-                $attributes['address'],
+                'organization' => $attributes['organization'],
+                'address' =>  $attributes['address'],
                 'contactNumber' => $attributes['contactNumber'],
-                'email'    =>
-                $attributes['email'],
-                'checked' => now(),
-                'checkedin' => $request['checkin'],
-                'bringrep' => $request['bringrep'], // Check if bringrep checkbox is checked
-                'guest_category_id'
-                => $attributes['guest_category_id'],
+                'email' => $attributes['email'],
+                'checked' => isset($request['checkin']) ? now() : null,
+                'checkedin' => isset($request['checkin']) ? 'on' : null,
+                'bringrep' => isset($request['bringrep']) ? 'on' : null, // Check if bringrep checkbox is checked
+                'guest_category_id' => $attributes['guest_category_id'],
                 'updated_by' => Auth::id(),
                 'updated_at' => now(),
             ]);

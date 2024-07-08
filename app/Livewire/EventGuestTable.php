@@ -72,9 +72,9 @@ final class EventGuestTable extends PowerGridComponent
                 default => 'No Reply',
             })
             ->add('checkedin', fn ($guest) => $guest->checkedin ? 'Yes' : 'No')  // Adds the 'checkedin' field
-            ->add('invited', fn ($guest) =>  $guest->invited ? Carbon::parse($guest->invited)->format('d-m-Y H:i') : '')  // Adds the 'invited' field
-            ->add('checked', fn ($guest) =>  $guest->checked ? Carbon::parse($guest->checked)->format('d-m-Y H:i') : '')  // Adds the 'checked' field
-            ->add('rsvp', fn ($guest) =>  $guest->rsvp ? Carbon::parse($guest->rsvp)->format('d-m-Y H:i') : '');  // Adds the 'rsvp' field
+            ->add('invited', fn ($guest) =>  $guest->invited ? Carbon::parse($guest->invited)->format('d-m-Y') : '')  // Adds the 'invited' field
+            ->add('checked', fn ($guest) =>  $guest->checked ? Carbon::parse($guest->checked)->format('d-m-Y') : '')  // Adds the 'checked' field
+            ->add('rsvp', fn ($guest) =>  $guest->rsvp ? Carbon::parse($guest->rsvp)->format('d-m-Y') : '');  // Adds the 'rsvp' field
 
     }
 

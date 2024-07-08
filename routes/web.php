@@ -34,7 +34,8 @@ use App\Http\Controllers\GuestController;
 
 Route::group(['middleware' => 'auth'], function () {
 
-
+    Route::get('/register', [RegisterController::class, 'create'])->name('register');
+    Route::post('/static-sign-up', [RegisterController::class, 'store'])->name('signup');
     Route::get('/', [HomeController::class, 'home']);
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     //Route::post('r_frame/{schedule}', [DashboardController::class, 'r_frame'])->name('r_frame');
@@ -129,8 +130,7 @@ Route::get('/sentQR/{id}', [NotificationController::class, 'sendQR'])->name('ema
 
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/register', [RegisterController::class, 'create']);
-    Route::post('/static-sign-up', [RegisterController::class, 'store']);
+
     Route::get('/login', [SessionsController::class, 'create']);
     Route::post('/session', [SessionsController::class, 'store']);
     Route::get('/login/forgot-password', [ResetController::class, 'create']);
