@@ -206,17 +206,17 @@ class GuestController extends Controller
             'email' => ['required', 'email', 'max:50'],
             'event_id' => ['required'],
             'salutations' => ['required'],
-            'name' => ['required', 'max:50'],
+            //'name' => ['required', 'max:50'],
             'organization' => ['required'],
             'address' => ['required'],
             'contactNumber' => ['required'],
-            'email' => ['required', 'email', 'max:50'],
+            //'email' => ['required', 'email', 'max:50'],
         ]);
 
 
         // Set default values if not provided
         $attributes['guesttype'] = $attributes['guesttype'] ?? 'Representative';
-        $attributes['bringrep'] = $attributes['bringrep'] ?? 'off';
+        $attributes['bringrep'] = $attributes['bringrep'] ?? '';
         $category = GuestCategory::where('event_id', $attributes['event_id'])->first();
         $attributes['guest_category_id'] = $category->id;
         // Create new representative record
@@ -241,11 +241,11 @@ class GuestController extends Controller
             'email' => ['required', 'email', 'max:50'],
             'event_id' => ['required'],
             'salutations' => ['required'],
-            'name' => ['required', 'max:50'],
+            //'name' => ['required', 'max:50'],
             'organization' => ['required'],
             'address' => ['required'],
             'contactNumber' => ['required'],
-            'email' => ['required', 'email', 'max:50'],
+            //'email' => ['required', 'email', 'max:50'],
 
         ]);
 
