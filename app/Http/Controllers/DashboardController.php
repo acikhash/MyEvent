@@ -46,8 +46,8 @@ class DashboardController extends Controller
         $todayEventIds = $todayEvents->pluck('id');
 
         // Get today's guests who have checked in
-        $todaysGuests = Guest::whereIn('event_id', $todayEventIds)
-            ->where('checkedin', true)
+        $todaysGuests = Guest::whereDate('checked', '=', now()->toDateString())
+            ->whereNotNull('checked')
             ->get();
 
         // Get events for this month
@@ -62,8 +62,8 @@ class DashboardController extends Controller
         $thisMonthEventIds = $thisMonthEvents->pluck('id');
 
         // Get this month's guests who have checked in
-        $thisMonthGuests = Guest::whereIn('event_id', $thisMonthEventIds)
-            ->where('checkedin', true)
+        $thisMonthGuests = Guest::whereMonth('checked', '=', now()->month)
+            ->whereNotNull('checked')
             ->get();
         $schedule = 'all';
 

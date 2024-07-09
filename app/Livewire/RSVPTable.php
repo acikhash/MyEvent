@@ -62,7 +62,7 @@ final class RSVPTable extends PowerGridComponent
             ->add('category')
             ->add('event_name')
             ->add('event_max_guest')
-            ->add('id')
+            ->add('events.id')
             ->add('attendance');
     }
 
@@ -72,7 +72,7 @@ final class RSVPTable extends PowerGridComponent
             Column::make('Event', 'event_name', 'events.name')
                 ->sortable()
                 ->searchable(),
-            Column::make('eventId', 'event.id')->hidden(),
+            Column::make('eventId', 'events.id')->hidden(),
             Column::make('TotalGuest', 'totalGuest'),
             Column::make('Total Checked In', 'checkedin'),
             Column::make('Total RSVP', 'attendance'),
