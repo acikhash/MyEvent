@@ -216,13 +216,13 @@ class GuestController extends Controller
 
         // Set default values if not provided
         $attributes['guesttype'] = $attributes['guesttype'] ?? 'Representative';
-        $attributes['bringrep'] = $attributes['bringrep'] ?? '';
+        $attributes['bringrep'] = $attributes['bringrep'] = '';
         $category = GuestCategory::where('event_id', $attributes['event_id'])->first();
         $attributes['guest_category_id'] = $category->id;
         // Create new representative record
         $representative = Guest::create($attributes);
 
-        session()->flash('success', $representative->name . 'added successfully.');
+        session()->flash('success', $representative->name . ' added successfully.');
 
         return redirect('/Thankyouform');
     }
