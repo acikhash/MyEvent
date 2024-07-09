@@ -1,12 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Laravel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
     <style>
         /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
         html {
@@ -392,6 +396,7 @@
             }
         }
     </style>
+
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -401,14 +406,19 @@
 
 <body>
     <p>Dear {{ $name }},</p>
-    <p>Please be informed that you have confirm to attend {{ $eventname }}.</p>
+    <p>Please be informed that you have confirm to attend {{ $eventname }} .</p>
     <p>as per the details below:</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;Date: {{ $dateStart }}</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;Time: {{ $timeStart }}</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;Veneu: {{ $veneu }}</p>
-    <p align='center'> <!-- Display QR code image -->
-        {!! $qrCode !!}</p>
-    <p>Please show the organizer the qrcode generated for attendance check in. See you there.</p>
+    <p></p>
+    <p align='center'>
+        <!-- Display QR code image -->
+        {!! $qrCode !!}
+    </p>
+    <p></p>
+    <p>Please show the organizer the qrcode generated for attendance check in.
+        See you there.</p>
     <p>Best regards, MyEvent</p>
 </body>
 
