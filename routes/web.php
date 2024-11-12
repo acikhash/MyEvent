@@ -1,25 +1,22 @@
 <?php
 
-// use App\Http\Controllers\GuestListManagementController;
-use App\Http\Controllers\QRCodeController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\GuestCategoryController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
-use App\Mail\MyTestEmail;
-use App\Models\Event;
-use App\Models\Guest;
-use Illuminate\Support\Facades\Mail;
-use App\Http\Controllers\GuestController;
+use App\Http\Controllers\MajorController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\StaffController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,57 +35,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/static-sign-up', [RegisterController::class, 'store'])->name('signup');
     Route::get('/', [HomeController::class, 'home']);
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    //Route::post('r_frame/{schedule}', [DashboardController::class, 'r_frame'])->name('r_frame');
-    // Route::get('billing', function () {
-    //     return view('billing');
-    // })->name('billing');
+
 
     Route::get('profile', function () {
         return view('profile');
     })->name('profile');
 
-    // Route::get('rtl', function () {
-    //     return view('rtl');
-    // })->name('rtl');
+
 
     Route::get('user-management', function () {
         return view('laravel-examples/user-management');
     })->name('user-management');
-
-
-    //Guest Management
-
-    Route::get('/guest/{id}/Representativeform', [GuestController::class, 'RepresentativeCreate'])->name('guest.representativeform');
-    Route::post('/guest/{id}/Representativeform', [GuestController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
-    Route::get('/guest/{id}/Updateattendanceform', [GuestController::class, 'Updateattendanceshow'])->name('guest.representativeform');
-    Route::post('/guest/{id}/Updateattendanceform', [GuestController::class, 'Updateattendancestore'])->name('guest.Updateattendancestore');
-    Route::get('/Walk-inRegistrationform/{event_id}', [GuestController::class, 'walkincreate'])->name('guest.walkinregistrationform');
-    Route::post('/Walk-inRegistrationform', [GuestController::class, 'walkinstore'])->name('guest.walkinstore');
-    Route::get('/Thankyouform', [GuestController::class, 'ThankYou'])->name('guest.Thankyouform');
-
-
-    //get guest filter by event
-    Route::get('/guestlist/{event}', [GuestController::class, 'index'])->name('guestl.index');
-    Route::get('/guestlist/create/{event}', [GuestController::class, 'create'])->name('guestl.create');
-    Route::post('/guestlist/{guest}', [GuestController::class, 'update'])->name('guestl.update');
-    Route::get('/guestlist/{id}/edit', [GuestController::class, 'edit'])->name('guestl.edit');
-    Route::delete('/guestlist/{guest}', [GuestController::class, 'destroy'])->name('guestl.destroy');
-    Route::get('/guestlist/{guest}', [GuestController::class, 'show'])->name('guestl.show');
-    Route::post('/guestlist', [GuestController::class, 'store'])->name('guestl.store');
-
-    /** guestlist */
-    Route::get('/GuestList', [GuestController::class, 'GuestList']);
-    /** */
-
-    //Qr Code
-    Route::get('/QRcode/{id}', [QRCodeController::class, 'QRcode'])->name('guest.qrcode');
-    Route::get('/checkin/{id}', [QRCodeController::class, 'checkin'])->name('guest.checkin');
-    Route::post('/checkin/{id}', [QRCodeController::class, 'checkinupdate'])->name('guest.checkinupdate');
-    Route::get('/guest/attendance/scan', [QRCodeController::class, 'scan'])->name('guest.Attendance.scan');
-    Route::post('/guest/attendance/scan', [QRCodeController::class, 'processScan'])->name('guest.Attendance.scan');
-
-    //Route::post('/process-scan', [QRCodeController::class, 'processScan']);
-
 
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
@@ -98,28 +55,75 @@ Route::group(['middleware' => 'auth'], function () {
         return view('dashboard');
     })->name('sign-up');
 
-    //event page
-    Route::get('event', [EventController::class, 'index'])->name('event.index');
-    Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
-    Route::post('/event/{event}', [EventController::class, 'update'])->name('event.update');
-    Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
-    Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('event.destroy');
-    Route::get('/event/{id}', [EventController::class, 'show'])->name('event.show');
-    Route::get('/qr/{event_id}', [EventController::class, 'qr'])->name('event.qr');
-    Route::post('/event', [EventController::class, 'store'])->name('event.store');
-    Route::get('/generate-pdf/{id}', [EventController::class, 'generatePdf'])->name('event.generatePdf');;
+
+
+    //staff page
+    Route::get('staff', [StaffController::class, 'index'])->name('staff.index');
+    Route::get('/staff/create', [StaffController::class, 'create'])->name('staff.create');
+    Route::post('/staff/{staff}', [StaffController::class, 'update'])->name('staff.update');
+    Route::get('/staff/{id}/edit', [StaffController::class, 'edit'])->name('staff.edit');
+    Route::delete('/staff/{staff}', [StaffController::class, 'destroy'])->name('staff.destroy');
+    Route::get('/staff/{id}', [StaffController::class, 'show'])->name('staff.show');
+    Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
     //
 
-    //guestcategory page
-    Route::get('guestcategory/{event}', [GuestCategoryController::class, 'index'])->name('guestcategory.index');
-    Route::get('/guestcategory/create/{event}', [GuestCategoryController::class, 'create'])->name('guestcategory.create');
-    Route::post('/guestcategory/{guestcategory}', [GuestCategoryController::class, 'update'])->name('guestcategory.update');
-    Route::get('/guestcategory/{id}/edit', [GuestCategoryController::class, 'edit'])->name('guestcategory.edit');
-    Route::delete('/guestcategory/{guestcategory}', [GuestCategoryController::class, 'destroy'])->name('guestcategory.destroy');
-    Route::get('/guestcategory/{guestcategory}', [GuestCategoryController::class, 'show'])->name('guestcategory.show');
-    Route::post('/guestcategory', [GuestCategoryController::class, 'store'])->name('guestcategory.store');
-
+    // Department routes
+    Route::get('departments', [DepartmentController::class, 'index'])->name('departments.index');
+    Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
+    Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
+    Route::get('/departments/{id}', [DepartmentController::class, 'show'])->name('departments.show');
+    Route::get('/departments/{id}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
+    Route::post('/departments/{department}', [DepartmentController::class, 'update'])->name('departments.update');
+    Route::delete('/departments/{department}', [DepartmentController::class, 'destroy'])->name('departments.destroy');
     //
+
+    // Faculty routes
+    Route::get('faculties', [FacultyController::class, 'index'])->name('faculties.index');
+    Route::get('/faculties/create', [FacultyController::class, 'create'])->name('faculties.create');
+    Route::post('/faculties', [FacultyController::class, 'store'])->name('faculties.store');
+    Route::get('/faculties/{id}', [FacultyController::class, 'show'])->name('faculties.show');
+    Route::get('/faculties/{id}/edit', [FacultyController::class, 'edit'])->name('faculties.edit');
+    Route::post('/faculties/{faculty}', [FacultyController::class, 'update'])->name('faculties.update');
+    Route::delete('/faculties/{faculty}', [FacultyController::class, 'destroy'])->name('faculties.destroy');
+    //
+
+    // Major routes
+    Route::get('majors', [MajorController::class, 'index'])->name('majors.index');
+    Route::get('/majors/create', [MajorController::class, 'create'])->name('majors.create');
+    Route::post('/majors', [MajorController::class, 'store'])->name('majors.store');
+    Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
+    Route::get('/majors/{id}/edit', [MajorController::class, 'edit'])->name('majors.edit');
+    Route::post('/majors/{major}', [MajorController::class, 'update'])->name('majors.update');
+    Route::delete('/majors/{major}', [MajorController::class, 'destroy'])->name('majors.destroy');
+    //
+
+    // Program routes
+    Route::get('programs', [ProgramController::class, 'index'])->name('programs.index');
+    Route::get('/programs/create', [ProgramController::class, 'create'])->name('programs.create');
+    Route::post('/programs', [ProgramController::class, 'store'])->name('programs.store');
+    Route::get('/programs/{id}', [ProgramController::class, 'show'])->name('programs.show');
+    Route::get('/programs/{id}/edit', [ProgramController::class, 'edit'])->name('programs.edit');
+    Route::post('/programs/{program}', [ProgramController::class, 'update'])->name('programs.update');
+    Route::delete('/programs/{program}', [ProgramController::class, 'destroy'])->name('programs.destroy');
+
+    // Course routes
+    Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
+    Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
+    Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
+    Route::get('/courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
+    Route::post('/courses/{course}', [CourseController::class, 'update'])->name('courses.update');
+    Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
+    //
+
+    // Assignment routes
+    Route::get('assignments', [AssignmentController::class, 'index'])->name('assignments.index');
+    Route::get('/assignments/create', [AssignmentController::class, 'create'])->name('assignments.create');
+    Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
+    Route::get('/assignments/{id}', [AssignmentController::class, 'show'])->name('assignments.show');
+    Route::get('/assignments/{id}/edit', [AssignmentController::class, 'edit'])->name('assignments.edit');
+    Route::post('/assignments/{assignment}', [AssignmentController::class, 'update'])->name('assignments.update');
+    Route::delete('/assignments/{assignment}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
 });
 
 //send invitation email
@@ -137,17 +141,6 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-
-    Route::get('/Walk-inRegistrationform/{event_id}', [GuestController::class, 'walkincreate'])->name('guest.walkinregistrationform');
-    Route::post('/Walk-inRegistrationform', [GuestController::class, 'walkinstore'])->name('guest.walkinstore');
-
-    Route::get('/guest/{id}/Representativeform', [GuestController::class, 'RepresentativeCreate'])->name('guest.representativeform');
-    Route::post('/guest/{id}/Representativeform', [GuestController::class, 'RepresentativeStore'])->name('guest.RepresentativeStore');
-
-    Route::get('/guest/{id}/Updateattendanceform', [GuestController::class, 'Updateattendanceshow'])->name('guest.representativeform');
-    Route::post('/guest/{id}/Updateattendanceform', [GuestController::class, 'Updateattendancestore'])->name('guest.Updateattendancestore');
-
-    Route::get('/Thankyouform', [GuestController::class, 'ThankYou'])->name('guest.Thankyouform');
 });
 
 Route::get('/login', function () {
