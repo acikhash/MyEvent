@@ -39,7 +39,7 @@
 
                     <div class="card-body px-2 pt-2 pb-2">
 
-                        {{-- <livewire:category-table eventid='{{ $event->id }}' /> --}}
+                        <livewire:staff-table department_id='{{ Auth::user()->department_id }}' />
 
                     </div>
                 </div>

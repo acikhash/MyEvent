@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('titles', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('code')->unique();
+            $table->string('created_by');
+            $table->string('updated_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

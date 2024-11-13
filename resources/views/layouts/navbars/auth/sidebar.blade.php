@@ -5,7 +5,7 @@
             aria-hidden="true" id="iconSidenav"></i>
         <a class="align-items-center d-flex m-0 navbar-brand text-wrap" href="{{ route('dashboard') }}">
             <img src="/assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="...">
-            <span class="ms-3 font-weight-bold">Event Management System (MyEvent)</span>
+            <span class="ms-3 font-weight-bold">Teaching Load Assignment System (TLAS)</span>
         </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -38,69 +38,82 @@
                 </a>
             </li>
             <li class="nav-item mt-2">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage Event</h6>
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage Staff</h6>
 
             <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('event') ? 'active' : '' }}" href="{{ route('event.index') }}">
+                <a class="nav-link {{ Request::is('Staff') ? 'active' : '' }}" href="{{ route('staff.index') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('/event') ? 'text-white' : 'text-dark' }} "
+                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('/staff') ? 'text-white' : 'text-dark' }} "
                             aria-hidden="true"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Event List</span>
+                    <span class="nav-link-text ms-1">Staff List</span>
+                </a>
+            </li>
+            <li class="nav-item pb-2">
+                <a class="nav-link {{ Request::is('Department') ? 'active' : '' }}" href="{{ url('Department') }}">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1rem;"
+                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('department') ? 'text-white' : 'text-dark' }} "
+                            aria-hidden="true"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Department List</span>
                 </a>
             </li>
 
             <li class="nav-item mt-2">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage Guest</h6>
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage Course</h6>
 
-                {{-- <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('Events') ? 'active' : '' }}" href="{{ url('Events') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('tables') ? 'text-white' : 'text-dark' }} "
-                            aria-hidden="true"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Invitation</span>
-                </a>
-            </li> --}}
             <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('GuestList') ? 'active' : '' }}" href="{{ url('GuestList') }}">
+                <a class="nav-link {{ Request::is('Course') ? 'active' : '' }}" href="{{ url('Course') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('user-management') ? 'text-white' : 'text-dark' }} "
+                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('/course') ? 'text-white' : 'text-dark' }} "
                             aria-hidden="true"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Check in Guest</span>
+                    <span class="nav-link-text ms-1">Course List</span>
                 </a>
             </li>
-            {{-- <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('Registrationform') ? 'active' : '' }}"
-                    href="{{ url('Registrationform') }}">
+            <li class="nav-item pb-2">
+                <a class="nav-link {{ Request::is('Program') ? 'active' : '' }}" href="{{ url('Program') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('user-management') ? 'text-white' : 'text-dark' }} "
+                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('program') ? 'text-white' : 'text-dark' }} "
                             aria-hidden="true"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Registration Form</span>
+                    <span class="nav-link-text ms-1">Program List</span>
                 </a>
-            </li> --}}
-            {{-- <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('Walk-inRegistrationform') ? 'active' : '' }}"
-                    href="{{ route('walkinregistration') }}">
+            </li>
+
+            <li class="nav-item mt-2">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Assign Course</h6>
+
+            <li class="nav-item pb-2">
+                <a class="nav-link {{ Request::is('Assignment') ? 'active' : '' }}" href="{{ url('Assignment') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('user-management') ? 'text-white' : 'text-dark' }} "
+                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('/assignment') ? 'text-white' : 'text-dark' }} "
                             aria-hidden="true"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Walk-in Registration </span>
+                    <span class="nav-link-text ms-1">Assign Course</span>
                 </a>
-            </li> --}}
+            </li>
+            <li class="nav-item pb-2">
+                <a class="nav-link {{ Request::is('Semester') ? 'active' : '' }}" href="{{ url('Semester') }}">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1rem;"
+                            class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ Request::is('semester') ? 'text-white' : 'text-dark' }} "
+                            aria-hidden="true"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Semester List</span>
+                </a>
+            </li>
             </li>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
@@ -113,7 +126,8 @@
                         <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>customer-support</title>
-                            <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none"
+                                fill-rule="evenodd">
                                 <g id="Rounded-Icons" transform="translate(-1717.000000, -291.000000)" fill="#FFFFFF"
                                     fill-rule="nonzero">
                                     <g id="Icons-with-opacity" transform="translate(1716.000000, 291.000000)">

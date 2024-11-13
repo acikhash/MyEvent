@@ -17,17 +17,37 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'id' => 1,
-            'name' => 'admin',
+            'name' => 'PGAM',
             'email' => 'admin@softui.com',
             'password' => Hash::make('secret'),
+            'role' => 'PGAM',
             'created_at' => now(),
             'updated_at' => now()
         ]);
         DB::table('users')->insert([
             'id' => 2,
-            'name' => 'test',
+            'name' => 'Director1',
             'email' => 'test@utm.com',
             'password' => Hash::make('secret'),
+            'role' => 'Director',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('users')->insert([
+            'id' => 3,
+            'name' => 'Coordinator1',
+            'email' => 'test1@utm.com',
+            'password' => Hash::make('secret'),
+            'role' => 'Coordinator',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('users')->insert([
+            'id' => 4,
+            'name' => 'Coordinator2',
+            'email' => 'tes2t@utm.com',
+            'password' => Hash::make('secret'),
+            'role' => 'Coordinator',
             'created_at' => now(),
             'updated_at' => now()
         ]);

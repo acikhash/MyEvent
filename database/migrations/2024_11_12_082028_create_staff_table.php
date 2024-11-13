@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Department;
+use App\Models\Gred;
 use App\Models\Major;
 use App\Models\Title;
 use Illuminate\Database\Migrations\Migration;
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignIdFor(Department::class);
             $table->foreignIdFor(Major::class);
+            $table->foreignIdFor(Gred::class);
             $table->string('contactNumber')->nullable();
             $table->string('email');
             $table->string('created_by');

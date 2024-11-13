@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('faculties', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('code');
+            $table->string('created_by');
+            $table->string('updated_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

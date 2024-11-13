@@ -15,6 +15,7 @@ use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\StaffController;
 
 /*
@@ -124,6 +125,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/assignments/{id}/edit', [AssignmentController::class, 'edit'])->name('assignments.edit');
     Route::post('/assignments/{assignment}', [AssignmentController::class, 'update'])->name('assignments.update');
     Route::delete('/assignments/{assignment}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
+
+    // Semester routes
+    Route::get('semesters', [SemesterController::class, 'index'])->name('semesters.index');
+    Route::get('/semesters/create', [SemesterController::class, 'create'])->name('semesters.create');
+    Route::post('/semesters', [SemesterController::class, 'store'])->name('semesters.store');
+    Route::get('/semesters/{id}', [SemesterController::class, 'show'])->name('semesters.show');
+    Route::get('/semesters/{id}/edit', [SemesterController::class, 'edit'])->name('semesters.edit');
+    Route::post('/semesters/{semester}', [SemesterController::class, 'update'])->name('semesters.update');
+    Route::delete('/semesters/{semester}', [SemesterController::class, 'destroy'])->name('semesters.destroy');
 });
 
 //send invitation email
