@@ -21,6 +21,8 @@ class ProgramSeeder extends Seeder
             'code' => 'SAIAH',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -30,6 +32,8 @@ class ProgramSeeder extends Seeder
             'code' => 'SRTIH',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -39,6 +43,8 @@ class ProgramSeeder extends Seeder
             'code' => 'ERSA2',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -48,6 +54,8 @@ class ProgramSeeder extends Seeder
             'code' => 'ERTE2',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -57,6 +65,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRSA1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -66,6 +76,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRTH1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -75,6 +87,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MFFT1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -84,6 +98,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRTT1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -93,6 +109,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRSQ1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -102,6 +120,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MANB1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -111,6 +131,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRTB1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -120,6 +142,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRTB4',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -129,6 +153,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MANS1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -138,6 +164,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRSE1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -147,6 +175,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRTE1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -156,6 +186,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRSD1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -166,6 +198,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRSF1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -175,6 +209,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRST1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -184,6 +220,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MANQ1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -193,6 +231,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MANA1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -202,6 +242,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRSC1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -211,6 +253,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRSS1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -220,6 +264,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRSL1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -229,6 +275,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRTL1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -238,6 +286,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRTS1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -247,6 +297,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRTQ1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -256,6 +308,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MRTA1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -265,6 +319,8 @@ class ProgramSeeder extends Seeder
             'code' => 'MANP1',
             'department_id' => 1,
             'staff_id' => 1,
+            'department' => 'II',
+            'coordinator' => 'PM. Ts. DR. NOR ZAIRAH BINTI AB RAHIM',
             'created_by' => 'admin',
             'created_at' => now()
         ]);

@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Department;
-use App\Models\Staff;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('programs', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code')->unique();
-            $table->foreignIdFor(Department::class);
-            $table->foreignIdFor(Staff::class);
-            $table->string('department')->nullable();
-            $table->string('coordinator')->nullable();
+            $table->string('theme')->nullable();
+            $table->string('dateStart');
+            $table->string('timeStart')->nullable();
+            $table->string('dateEnd')->nullable();
+            $table->string('timeEnd')->nullable();
+            $table->string('veneu')->nullable();
+            $table->string('organizer')->nullable();
+            $table->string('maxGuest')->nullable();
+            $table->string('about')->nullable();
             $table->string('created_by');
             $table->string('updated_by')->nullable();
             $table->softDeletes();
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('programs');
+        Schema::dropIfExists('events');
     }
 };

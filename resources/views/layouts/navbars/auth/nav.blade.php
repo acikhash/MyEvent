@@ -11,7 +11,7 @@
             <h6 class="font-weight-bolder mb-0 text-capitalize">{{ str_replace('-', ' ', Request::path()) }}</h6>
         </nav> --}}
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 d-flex justify-content-end" id="navbar">
-            {{ Auth::user()->name }} &nbsp;
+            {{ Auth::user()->name }}&nbsp; {{ Auth::user()->role }} &nbsp;
             <ul class="navbar-nav  justify-content-end">
                 <li class="nav-item d-flex align-items-center">
                     <a href="{{ url('/logout') }}" class="nav-link text-body font-weight-bold px-0">

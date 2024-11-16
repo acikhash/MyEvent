@@ -63,4 +63,12 @@ class AssignmentController extends Controller
     {
         //
     }
+
+    /**
+     * Display the workload of staff.
+     */
+    public function workload(Assignment $assignment)
+    {
+        //
+    }
 }

@@ -6,7 +6,7 @@
                     ©
                     <script>
                         document.write(new Date().getFullYear())
-                    </script>, by SSH & UTM
+                    </script>, by UTM & HASNI
 
                 </div>
             </div>

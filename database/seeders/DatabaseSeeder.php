@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             ProgramSeeder::class,
             CourseSeeder::class,
             SemesterSeeder::class,
-            AssignmentSeeder::class
+            AssignmentSeeder::class,
+            EventSeeder::class
         ]);
     }
 }

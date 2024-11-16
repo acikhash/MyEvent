@@ -20,7 +20,8 @@ class UserSeeder extends Seeder
             'name' => 'PGAM',
             'email' => 'admin@softui.com',
             'password' => Hash::make('secret'),
-            'role' => 'PGAM',
+            'department_id' => 1,
+            'role' => 'pgam',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -29,7 +30,8 @@ class UserSeeder extends Seeder
             'name' => 'Director1',
             'email' => 'test@utm.com',
             'password' => Hash::make('secret'),
-            'role' => 'Director',
+            'role' => 'director',
+            'department_id' => 1,
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -38,7 +40,8 @@ class UserSeeder extends Seeder
             'name' => 'Coordinator1',
             'email' => 'test1@utm.com',
             'password' => Hash::make('secret'),
-            'role' => 'Coordinator',
+            'department_id' => 1,
+            'role' => 'coordinator',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -47,7 +50,8 @@ class UserSeeder extends Seeder
             'name' => 'Coordinator2',
             'email' => 'tes2t@utm.com',
             'password' => Hash::make('secret'),
-            'role' => 'Coordinator',
+            'department_id' => 3,
+            'role' => 'coordinator',
             'created_at' => now(),
             'updated_at' => now()
         ]);

@@ -6,7 +6,7 @@
         <div class="container-fluid {{ Request::is('static-sign-up') ? 'container' : 'container-fluid' }}">
             <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 {{ Request::is('static-sign-up') ? 'text-white' : '' }}"
                 href="{{ url('dashboard') }}">
-                Event Management System (MyEvent)
+                Teaching Load Assignment System (TLAS)
             </a>
             <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">

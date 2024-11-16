@@ -22,4 +22,8 @@ class Staff extends Model
     {
         return $this->belongsTo(Major::class);
     }
+    public function title()
+    {
+        return $this->belongsTo(Title::class);
+    }
 }

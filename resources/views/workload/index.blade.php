@@ -27,19 +27,15 @@
                     <div class="card-header pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div>
-                                <h5 class="mb-0">Department List </h5>
+                                <h5 class="mb-0">Staff Workload </h5>
                             </div>
-                            <div class="card mb-4 mx-6">
-                                <a href={{ route('staff.create') }} class="btn bg-gradient-primary btn-sm mb-0"
-                                    type="button">+&nbsp;
-                                    New Department</a>
-                            </div>
+
                         </div>
                     </div>
 
                     <div class="card-body px-2 pt-2 pb-2">
 
-                        <livewire:department-table />
+                        <livewire:workload />
 
                     </div>
                 </div>

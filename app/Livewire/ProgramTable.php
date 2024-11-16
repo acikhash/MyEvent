@@ -2,13 +2,11 @@
 
 namespace App\Livewire;
 
-use App\Models\Course;
-use App\Models\Program;
+use App\Models\Department;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -20,11 +18,10 @@ use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class CourseTable extends PowerGridComponent
+final class ProgramTable extends PowerGridComponent
 {
-    public string $tableName = 'coursetable';
-    public bool $showFilters = true;
     use WithExport;
+    public bool $showFilters = true;
 
     public function setUp(): array
     {
@@ -43,18 +40,16 @@ final class CourseTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('Courses')->select(
-            'Programs.name as program_name',
-            'Programs.code as program_code',
-            'Courses.id',
-            'Courses.name',
-            'Courses.code',
-            'Courses.credit',
-            'Courses.no_of_student',
-            'Courses.section',
-            'Courses.program_id'
+        return DB::table('Programs')->select(
+            'Programs.id',
+            'Programs.coordinator',
+            'Programs.code',
+            'Programs.name',
+            'Programs.staff_id',
+            'Departments.code as department_code'
+
         )
-            ->join('Programs', 'Programs.id', '=', 'Courses.program_id');;
+            ->join('Departments', 'Departments.id', '=', 'Programs.department_id');
     }
 
     public function fields(): PowerGridFields
@@ -63,49 +58,31 @@ final class CourseTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('code')
-            ->add('credit')
-            ->add('no_of_student')
-            ->add('section')
-            ->add('program_id')
-            ->add('program_code')
-            ->add('program_name')
-            ->add('created_by')
-            ->add('updated_by')
+            ->add('department_id')
+            ->add('staff_id')
+            ->add('coordinator')
+            ->add('department_code')
             ->add('deleted_at')
-            ->add('created_at')
-            ->add('updated_at');
+        ;
     }
 
     public function columns(): array
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Program', 'program_code', 'program_code')->sortable(),
-            // Column::make('Program', 'program_name', 'program_name')->sortable(),
-            Column::make('Code', 'code', 'code')
-                ->sortable(),
-            // ->searchable(),
+            Column::make('Department', 'department_code', 'department_code')->sortable(),
+            Column::make('Code', 'code')
+                ->sortable()
+                ->searchable(),
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Section', 'section')
+            Column::make('Coordinator', 'coordinator')
                 ->sortable()
                 ->searchable(),
-            Column::make('Credit', 'credit')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('No of student', 'no_of_student')
-                ->sortable()
-                ->searchable(),
-
-
-            Column::make('Program id', 'program_id')->hidden(),
-
-
-            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-                ->sortable(),
-
+            Column::make('Department id', 'department_id')->hidden(),
+            Column::make('Staff id', 'staff_id')->hidden(),
+            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')->sortable(),
             Column::action('Action'),
         ];
     }
@@ -113,19 +90,18 @@ final class CourseTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::select('program_code', 'program_id')
-                ->dataSource(Program::all())
+            Filter::select('department_code', 'department_id')
+                ->dataSource(Department::all())
                 ->optionLabel('code')
                 ->optionValue('id'),
-
-
+            Filter::inputText('coordinator')->placeholder('Coordinator'),
         ];
     }
 
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): Redirector
     {
-        return redirect(route('course.edit', $rowId));
+        return redirect(route('program.edit', $rowId));
     }
 
     public function actions($row): array
@@ -138,7 +114,6 @@ final class CourseTable extends PowerGridComponent
                 ->dispatch('edit', ['rowId' => $row->id]),
         ];
     }
-
     /*
     public function actionRules($row): array
     {

@@ -3,7 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Department;
+use App\Models\Gred;
+use App\Models\Major;
 use App\Models\Staff;
+use App\Models\Title;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Carbon;
@@ -24,13 +27,14 @@ final class StaffTable extends PowerGridComponent
     public string  $department_id;
     public string $tableName = 'stafftable';
 
-    public string $sortField = 'departments.id';
+    public string $sortField = 'Staff.id';
     public bool $showFilters = true;
 
     use WithExport;
-    public function boot(): void
+
+    protected function queryString()
     {
-        config(['livewire-powergrid.filter' => 'outside']);
+        return $this->powerGridQueryString();
     }
     public function setUp(): array
     {
@@ -51,60 +55,52 @@ final class StaffTable extends PowerGridComponent
     {
         return DB::table('Staff')->select(
             'Staff.id',
-            'Titles.name as salutation',
+            'Staff.title',
             'Staff.name',
-            'Departments.code as department',
-            'Majors.name as major',
-            'Greds.name as grade'
+            'Staff.department',
+            'Staff.major',
+            'Staff.gred',
+            'Departments.name as department_name',
+            'Majors.name as major_name',
+            'Titles.name as title_name',
+            'Greds.name as gred_name'
         )
-
-            ->leftJoin('Titles', 'Staff.title_id', '=', 'Titles.id')
-            ->leftJoin('Departments', 'Staff.department_id', '=', 'Departments.id')
-            ->leftJoin('Majors', 'Staff.major_id', '=', 'Majors.id')
-            ->leftJoin('Greds', 'Staff.gred_id', '=', 'Greds.id')
-            ->where('Departments.id', '=', $this->department_id);
+            ->join('Departments', 'Departments.code', '=', 'Staff.department')
+            ->join('Majors', 'Majors.name', '=', 'Staff.major')
+            ->join('Titles', 'Titles.name', '=', 'Staff.title')
+            ->join('Greds', 'Greds.name', '=', 'Staff.gred');
+        // ->where('Departments.id', '=', $this->department_id);
     }
     public function relationSearch(): array
     {
-        return [
-            'Departments' => [
-                'code',
-            ],
-
-            'Titles' => [
-                'name',
-            ],
-        ];
+        return [];
     }
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
             ->add('no')
             ->add('id')
-            ->add('salutation')
+            ->add('title')
             ->add('name')
             ->add('department')
             ->add('major')
-            ->add('grade')
+            ->add('gred')
+            ->add('department_name', fn($staff) => e($staff->department_name))
         ;
     }
 
     public function columns(): array
     {
         return [
-            Column::make('No', 'no'),
-            Column::make('Id', 'id')->hidden(),
-            Column::make('Title', 'salutation')->searchable(),
+            Column::make('Id', 'id'),
+            Column::make('Title', 'title', 'title_name')->sortable(),
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
-
-            Column::make('Department', 'department', 'department.id')->searchable(),
-            Column::make('Major', 'major'),
-            Column::make('Grade', 'grade'),
+            Column::make('Department', 'department', 'department_name')->sortable(),
+            Column::make('Major', 'major', 'major_name')->sortable(),
+            Column::make('Grade', 'gred', 'gred_name')->sortable(),
             Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-                ->sortable(),
-            Column::make('Deleted at', 'deleted_at')
                 ->sortable()
                 ->searchable(),
             Column::action('Action'),
@@ -114,10 +110,22 @@ final class StaffTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::select('code', 'id')
+            Filter::select('department_name', 'department')
                 ->dataSource(Department::all())
                 ->optionLabel('code')
-                ->optionValue('id'),
+                ->optionValue('code'),
+            Filter::select('major_name', 'major')
+                ->dataSource(Major::all())
+                ->optionLabel('name')
+                ->optionValue('name'),
+            Filter::select('title_name', 'title')
+                ->dataSource(Title::all())
+                ->optionLabel('name')
+                ->optionValue('name'),
+            Filter::select('gred_name', 'gred')
+                ->dataSource(Gred::all())
+                ->optionLabel('name')
+                ->optionValue('name'),
 
         ];
     }
@@ -134,7 +142,7 @@ final class StaffTable extends PowerGridComponent
             Button::add('edit')
                 ->id('edit')
                 ->class('fas fa-edit text-secondary')
-                ->tooltip('Edit Event')
+                ->tooltip('Edit Staff Info')
                 ->dispatch('edit', ['rowId' => $row->id]),
         ];
     }

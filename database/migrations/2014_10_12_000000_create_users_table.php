@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->foreignIdFor(Department::class);
-            $table->string('role');
+            $table->string('role')->default('Coordinator');
             $table->string('about_me')->nullable();
             $table->rememberToken();
             $table->timestamps();

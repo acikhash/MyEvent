@@ -2,13 +2,12 @@
 
 namespace App\Livewire;
 
-use App\Models\Course;
-use App\Models\Program;
+use App\Models\Department;
+use App\Models\Faculty;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -20,12 +19,10 @@ use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class CourseTable extends PowerGridComponent
+final class DepartmentTable extends PowerGridComponent
 {
-    public string $tableName = 'coursetable';
-    public bool $showFilters = true;
     use WithExport;
-
+    public bool $showFilters = true;
     public function setUp(): array
     {
         $this->showCheckBox();
@@ -34,7 +31,9 @@ final class CourseTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()->showSearchInput(),
+            Header::make()
+                ->showToggleColumns()
+                ->showSearchInput(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
@@ -43,18 +42,17 @@ final class CourseTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('Courses')->select(
-            'Programs.name as program_name',
-            'Programs.code as program_code',
-            'Courses.id',
-            'Courses.name',
-            'Courses.code',
-            'Courses.credit',
-            'Courses.no_of_student',
-            'Courses.section',
-            'Courses.program_id'
-        )
-            ->join('Programs', 'Programs.id', '=', 'Courses.program_id');;
+        return DB::table('Departments')
+            ->select(
+                'Departments.id',
+                'Departments.code',
+                'Departments.name',
+                'Departments.code as department_code',
+                'Departments.faculty_id',
+                'Faculties.name as faculty_name',
+                'Faculties.code as faculty_code'
+            )
+            ->join('Faculties', 'Faculties.id', '=', 'Departments.faculty_id');
     }
 
     public function fields(): PowerGridFields
@@ -63,70 +61,63 @@ final class CourseTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('code')
-            ->add('credit')
-            ->add('no_of_student')
-            ->add('section')
-            ->add('program_id')
-            ->add('program_code')
-            ->add('program_name')
-            ->add('created_by')
-            ->add('updated_by')
-            ->add('deleted_at')
-            ->add('created_at')
-            ->add('updated_at');
+            ->add('faculty_id')
+            ->add('faculty_name')
+            ->add('faculty_code')
+            ->add('deleted_at');
     }
 
     public function columns(): array
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Program', 'program_code', 'program_code')->sortable(),
-            // Column::make('Program', 'program_name', 'program_name')->sortable(),
-            Column::make('Code', 'code', 'code')
-                ->sortable(),
-            // ->searchable(),
+            Column::make('Faculty', 'faculty_code', 'faculty_code')->sortable(),
+
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Section', 'section')
-                ->sortable()
-                ->searchable(),
-            Column::make('Credit', 'credit')
-                ->sortable()
-                ->searchable(),
 
-            Column::make('No of student', 'no_of_student')
+            Column::make('Code', 'code')
                 ->sortable()
                 ->searchable(),
 
+            Column::make('Faculty id', 'faculty_id')->hidden(),
 
-            Column::make('Program id', 'program_id')->hidden(),
-
-
-            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-                ->sortable(),
+            // Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
+            //     ->sortable(),
 
             Column::action('Action'),
+
         ];
     }
 
     public function filters(): array
     {
         return [
-            Filter::select('program_code', 'program_id')
-                ->dataSource(Program::all())
+            Filter::select('faculty_code', 'faculty_id')
+                ->dataSource(Faculty::all())
                 ->optionLabel('code')
                 ->optionValue('id'),
-
-
         ];
     }
 
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): Redirector
     {
-        return redirect(route('course.edit', $rowId));
+        return redirect(route('department.edit', $rowId));
     }
+
+    // #[\Livewire\Attributes\On('delete')]
+    // public function delete($rowId): string
+    // {
+    //     $message = "You are about to delete row with ID:" . $rowId;
+    //     if ($this->js("confirm('{$message}')") == 'true') {
+    //         return "redirect(route('department.edit', $rowId))";
+    //     } else {
+    //         return "redirect(route('department.create'))";
+    //     }
+    // }
+
 
     public function actions($row): array
     {
@@ -134,8 +125,13 @@ final class CourseTable extends PowerGridComponent
             Button::add('edit')
                 ->id('edit')
                 ->class('fas fa-edit text-secondary')
-                ->tooltip('Edit Program')
+                ->tooltip('Edit Department Info')
                 ->dispatch('edit', ['rowId' => $row->id]),
+            // Button::add('delete')
+            //     ->id('delete')
+            //     ->class('fas fa-trash text-secondary')
+            //     ->tooltip('delete Department Info')
+            //     ->dispatch('delete', ['rowId' => $row->id]),
         ];
     }
 

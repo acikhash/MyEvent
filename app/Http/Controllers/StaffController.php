@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Staff;
-use App\Http\Requests\StoreStaffRequest;
-use App\Http\Requests\UpdateStaffRequest;
+use Illuminate\Http\Request;
+use App\Models\Department;
+use App\Models\Gred;
+use App\Models\Major;
+use App\Models\Title;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class StaffController extends Controller
 {
@@ -22,16 +28,45 @@ class StaffController extends Controller
      */
     public function create()
     {
-        return view('staff.create');
+        $departments = Department::all();
+        $titles = Title::all();
+        $greds = Gred::all();
+        $majors = Major::all();
+        return view('staff.create', ['departments' => $departments, 'greds' => $greds, 'titles' => $titles, 'majors' => $majors]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStaffRequest $request)
+    public function store(Request $request)
     {
-        Staff::create($request->validated());
-        return redirect()->route('staff.index')->with('success', 'Staff member created successfully.');
+
+        $attributes = request()->validate([
+            'name' => ['required', 'max:50'],
+            'email' => ['required']
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $e = Staff::create([
+                'name'    => $attributes['name'],
+                'email' => $attributes['email'],
+                'department_id' => $request->department_id,
+                'title_id' => $request->title_id,
+                'major_id' => $request->major_id,
+                'created_by' => Auth::user()->name,
+            ]);
+
+            DB::commit();
+
+            return redirect('staff')->with('success', 'Record Created Successfully');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error creating staff record: ' . $e->getMessage());
+
+            return redirect('staff')->with('error', 'Failed to create record. Please try again.');
+        }
     }
 
     /**
