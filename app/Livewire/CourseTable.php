@@ -81,10 +81,7 @@ final class CourseTable extends PowerGridComponent
         return [
             Column::make('Id', 'id'),
             Column::make('Program', 'program_code', 'program_code')->sortable(),
-            // Column::make('Program', 'program_name', 'program_name')->sortable(),
-            Column::make('Code', 'code', 'code')
-                ->sortable(),
-            // ->searchable(),
+            Column::make('Code', 'code', 'code')->sortable(),
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
@@ -98,14 +95,7 @@ final class CourseTable extends PowerGridComponent
             Column::make('No of student', 'no_of_student')
                 ->sortable()
                 ->searchable(),
-
-
             Column::make('Program id', 'program_id')->hidden(),
-
-
-            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-                ->sortable(),
-
             Column::action('Action'),
         ];
     }

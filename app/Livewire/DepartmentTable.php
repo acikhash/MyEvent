@@ -47,7 +47,6 @@ final class DepartmentTable extends PowerGridComponent
                 'Departments.id',
                 'Departments.code',
                 'Departments.name',
-                'Departments.code as department_code',
                 'Departments.faculty_id',
                 'Faculties.name as faculty_name',
                 'Faculties.code as faculty_code'
@@ -107,16 +106,7 @@ final class DepartmentTable extends PowerGridComponent
         return redirect(route('department.edit', $rowId));
     }
 
-    // #[\Livewire\Attributes\On('delete')]
-    // public function delete($rowId): string
-    // {
-    //     $message = "You are about to delete row with ID:" . $rowId;
-    //     if ($this->js("confirm('{$message}')") == 'true') {
-    //         return "redirect(route('department.edit', $rowId))";
-    //     } else {
-    //         return "redirect(route('department.create'))";
-    //     }
-    // }
+
 
 
     public function actions($row): array
@@ -127,11 +117,7 @@ final class DepartmentTable extends PowerGridComponent
                 ->class('fas fa-edit text-secondary')
                 ->tooltip('Edit Department Info')
                 ->dispatch('edit', ['rowId' => $row->id]),
-            // Button::add('delete')
-            //     ->id('delete')
-            //     ->class('fas fa-trash text-secondary')
-            //     ->tooltip('delete Department Info')
-            //     ->dispatch('delete', ['rowId' => $row->id]),
+
         ];
     }
 

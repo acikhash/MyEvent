@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Program;
 use App\Http\Requests\StoreProgramRequest;
 use App\Http\Requests\UpdateProgramRequest;
+use App\Models\Department;
+use App\Models\Staff;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProgramController extends Controller
 {
@@ -22,7 +27,9 @@ class ProgramController extends Controller
      */
     public function create()
     {
-        return view('program.create');
+        $staffs = Staff::all();
+        $departments = Department::all();
+        return view('program.create', compact('staffs', 'departments'));
     }
 
     /**
@@ -30,8 +37,38 @@ class ProgramController extends Controller
      */
     public function store(StoreProgramRequest $request)
     {
-        Program::create($request->validated());
-        return redirect()->route('program.index')->with('success', 'Program created successfully.');
+        $attributes = request()->validate([
+            'name' => ['required', 'max:50'],
+            'code' => ['required', 'email'],
+            'department_id' => ['required'],
+            'staff_id' => ['required']
+        ]);
+        $attributes['name'] = strtoupper($attributes['name']); // Transform name to uppercase
+        $attributes['code'] = strtoupper($attributes['code']);
+        $department = Department::find($attributes['department_id']);
+        $coordinator = Staff::find($attributes['staff_id']);
+        DB::beginTransaction();
+
+        try {
+            $e = Program::create([
+                'name'    => $attributes['name'],
+                'code' => $attributes['code'],
+                'department_id' => $attributes['department_id'],
+                'department' => $department->code,
+                'staff_id' => $attributes['staff_id'],
+                'coordinator' => $coordinator->name,
+                'created_by' => Auth::user()->name,
+            ]);
+
+            DB::commit();
+
+            return redirect('staff')->with('success', 'Record Created Successfully');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error creating program record: ' . $e->getMessage());
+
+            return redirect('program')->with('error', 'Failed to create record. Please try again.');
+        }
     }
 
     /**
@@ -39,7 +76,9 @@ class ProgramController extends Controller
      */
     public function show(Program $program)
     {
-        return view('program.show', compact('program'));
+        $staffs = Staff::all();
+        $departments = Department::all();
+        return view('program.show', compact('program', 'staffs', 'departments'));
     }
 
     /**
@@ -47,7 +86,9 @@ class ProgramController extends Controller
      */
     public function edit(Program $program)
     {
-        return view('program.edit', compact('program'));
+        $staffs = Staff::all();
+        $departments = Department::all();
+        return view('program.show', compact('program', 'staffs', 'departments'));
     }
 
     /**
@@ -55,8 +96,61 @@ class ProgramController extends Controller
      */
     public function update(UpdateProgramRequest $request, Program $program)
     {
-        $program->update($request->validated());
-        return redirect()->route('program.index')->with('success', 'Program updated successfully.');
+        if (isset($request["edit"])) {
+            $attributes = request()->validate([
+                'name' => ['required', 'max:50'],
+                'code' => ['required', 'email'],
+                'department_id' => ['required'],
+                'staff_id' => ['required']
+            ]);
+            $attributes['name'] = strtoupper($attributes['name']); // Transform name to uppercase
+            $attributes['code'] = strtoupper($attributes['code']);
+            $department = Department::find($attributes['department_id']);
+            $coordinator = Staff::find($attributes['staff_id']);
+            DB::beginTransaction();
+
+            try {
+                $e = $program->update([
+                    'name'    => $attributes['name'],
+                    'code' => $attributes['code'],
+                    'department_id' => $attributes['department_id'],
+                    'department' => $department->code,
+                    'staff_id' => $attributes['staff_id'],
+                    'coordinator' => $coordinator->name,
+                    'updated_by' => Auth::user()->name,
+                ]);
+
+                DB::commit();
+
+                return redirect('program')->with('success', 'Record Updated Successfully');
+            } catch (\Exception $e) {
+                DB::rollback();
+                Log::error('Error updating program record: ' . $e->getMessage());
+
+                return redirect('program')->with('error', 'Failed to update record. Please try again.');
+            }
+        } else {
+            //dd("destroy");
+
+            try {
+                $e = $program->update(
+
+                    [
+                        'updated_by' => Auth::id(),
+                        'updated_at' => now(),
+                    ]
+                );
+                $program->delete();
+                DB::commit();
+
+                return redirect('program')->with('success', 'Record Deleted Successfully');
+            } catch (\Exception $e) {
+                DB::rollback();
+                Log::error('Error deleting program record: ' . $e->getMessage());
+
+                return redirect('program')->with('error', 'Failed to delete record. Please try again.');
+            }
+        }
     }
 
     /**

@@ -46,7 +46,7 @@ final class ProgramTable extends PowerGridComponent
             'Programs.code',
             'Programs.name',
             'Programs.staff_id',
-            'Departments.code as department_code'
+            'Programs.department'
 
         )
             ->join('Departments', 'Departments.id', '=', 'Programs.department_id');
@@ -61,7 +61,7 @@ final class ProgramTable extends PowerGridComponent
             ->add('department_id')
             ->add('staff_id')
             ->add('coordinator')
-            ->add('department_code')
+            ->add('department')
             ->add('deleted_at')
         ;
     }
@@ -70,7 +70,7 @@ final class ProgramTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Department', 'department_code', 'department_code')->sortable(),
+            Column::make('Department', 'department', 'department')->sortable(),
             Column::make('Code', 'code')
                 ->sortable()
                 ->searchable(),
@@ -90,7 +90,7 @@ final class ProgramTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::select('department_code', 'department_id')
+            Filter::select('department', 'department_id')
                 ->dataSource(Department::all())
                 ->optionLabel('code')
                 ->optionValue('id'),

@@ -17,10 +17,14 @@ return new class extends Migration
     {
         Schema::create('staff', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); //salutation
+            $table->string('title');
+            $table->foreignIdFor(Title::class); //salutation
             $table->string('name');
+            $table->foreignIdFor(Department::class);
             $table->string('department');
+            $table->foreignIdFor(Major::class);
             $table->string('major');
+            $table->foreignIdFor(Gred::class);
             $table->string('gred');
             $table->string('contactNumber')->nullable();
             $table->string('email');

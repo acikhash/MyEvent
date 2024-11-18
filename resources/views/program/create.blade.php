@@ -13,7 +13,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                         <div class="nav-wrapper position-relative end-0">
-                            <h6 class="mb-0">{{ $event->name }} {{ __('Guest Category Information') }}</h6>
+                            <h6 class="mb-0">{{ __('Program Information') }}</h6>
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
 
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form method="post" action="{{ route('guestcategory.store') }} " enctype="multipart/form-data">
+                    <form method="post" action="{{ route('program.store') }} " enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         @if ($errors->any())

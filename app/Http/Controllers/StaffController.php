@@ -40,21 +40,34 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-
         $attributes = request()->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required']
+            'email' => ['required', 'email'],
+            'title_id' => ['required'],
+            'department_id' => ['required'],
+            'gred_id' => ['required'],
+            'major_id' => ['required'],
         ]);
-
+        $attributes['name'] = strtoupper($attributes['name']); // Transform name to uppercase
+        $title = Title::find($attributes['title_id']); // get title name
+        $gred = Gred::find($attributes['gred_id']);
+        $department = Department::find($attributes['department_id']);
+        $major = Major::find($attributes['major_id']);
         DB::beginTransaction();
 
         try {
             $e = Staff::create([
                 'name'    => $attributes['name'],
                 'email' => $attributes['email'],
-                'department_id' => $request->department_id,
-                'title_id' => $request->title_id,
-                'major_id' => $request->major_id,
+                'contactnumber' => $request['phone'],
+                'gred_id' => $attributes['gred_id'],
+                'gred' => $gred->code,
+                'department_id' => $attributes['department_id'],
+                'department' => $department->code,
+                'title_id' => $attributes['title_id'],
+                'title' => $title->name,
+                'major_id' => $attributes['major_id'],
+                'major' => $major->name,
                 'created_by' => Auth::user()->name,
             ]);
 
@@ -80,18 +93,86 @@ class StaffController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Staff $staff)
+    public function edit(Request $request, $id)
     {
-        //
+        $staff = Staff::find($id);
+
+        $departments = Department::all();
+        $titles = Title::all();
+        $greds = Gred::all();
+        $majors = Major::all();
+        return view('staff.edit', ['staff' => $staff, 'departments' => $departments, 'greds' => $greds, 'titles' => $titles, 'majors' => $majors]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreStaffRequest $request, Staff $staff)
+    public function update(Request $request, Staff $staff)
     {
-        $staff->update($request->validated());
-        return redirect()->route('staff.index')->with('success', 'Staff member updated successfully.');
+
+        if (isset($request["edit"])) {
+            $attributes = request()->validate([
+                'name' => ['required', 'max:50'],
+                'email' => ['required', 'email'],
+                'title_id' => ['required'],
+                'department_id' => ['required'],
+                'gred_id' => ['required'],
+                'major_id' => ['required'],
+            ]);
+            $attributes['name'] = strtoupper($attributes['name']); // Transform name to uppercase
+            $title = Title::find($attributes['title_id']); // get title name
+            $gred = Gred::find($attributes['gred_id']);
+            $department = Department::find($attributes['department_id']);
+            $major = Major::find($attributes['major_id']);
+            DB::beginTransaction();
+
+            try {
+                $e = $staff->update([
+                    'name'    => $attributes['name'],
+                    'email' => $attributes['email'],
+                    'contactnumber' => $request['contactNumber'],
+                    'gred_id' => $attributes['gred_id'],
+                    'gred' => $gred->code,
+                    'department_id' => $attributes['department_id'],
+                    'department' => $department->code,
+                    'title_id' => $attributes['title_id'],
+                    'title' => $title->name,
+                    'major_id' => $attributes['major_id'],
+                    'major' => $major->name,
+                    'updated_by' => Auth::user()->name,
+                ]);
+
+                DB::commit();
+
+                return redirect('staff')->with('success', 'Record Updated Successfully');
+            } catch (\Exception $e) {
+                DB::rollback();
+                Log::error('Error updating staff record: ' . $e->getMessage());
+
+                return redirect('staff')->with('error', 'Failed to update record. Please try again.');
+            }
+        } else {
+            //dd("destroy");
+
+            try {
+                $e = $staff->update(
+
+                    [
+                        'updated_by' => Auth::id(),
+                        'updated_at' => now(),
+                    ]
+                );
+                $staff->delete();
+                DB::commit();
+
+                return redirect('staff')->with('success', 'Record Deleted Successfully');
+            } catch (\Exception $e) {
+                DB::rollback();
+                Log::error('Error deleting staff record: ' . $e->getMessage());
+
+                return redirect('staff')->with('error', 'Failed to delete record. Please try again.');
+            }
+        }
     }
 
     /**

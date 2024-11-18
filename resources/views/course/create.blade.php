@@ -13,7 +13,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                         <div class="nav-wrapper position-relative end-0">
-                            <h6 class="mb-0">{{ $event->name }} {{ __('Guest Category Information') }}</h6>
+                            <h6 class="mb-0">{{ __('Course Information') }}</h6>
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
 
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form method="post" action="{{ route('guestcategory.store') }} " enctype="multipart/form-data">
+                    <form method="post" action="{{ route('course.store') }} " enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         @if ($errors->any())
@@ -48,12 +48,38 @@
                             </div>
                         @endif
                         <div class="row">
+                            <div class="col-md-6">
+                                <label for="program_id" class="form-control-label">{{ __('Program') }}</label>
+                                <select name="program_id" class="form-select" id="program_id">
+                                    @foreach ($programs as $program)
+                                        <option value={{ $program->id }}>{{ $program->code }}.{{ $program->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="code" class="form-control-label">{{ __('Course Code') }}</label>
+                                    <div class="@error('code')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="" type="text"
+                                            placeholder="i.e : UANP6013" id="code" name="code">
+                                        @error('code')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name" class="form-control-label">{{ __('Category Name') }}</label>
-                                    <div class="@error('category-name')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="" type="text" placeholder="i.e : VIP"
-                                            id="name" name="name">
+                                    <label for="name" class="form-control-label">{{ __('Course Name') }}</label>
+                                    <div class="@error('name')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="" type="text"
+                                            placeholder="i.e : Research Methodology" id="name" name="name">
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -62,18 +88,40 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="description"
-                                        class="form-control-label">{{ __('Category Description') }}</label>
-                                    <div class="@error('category-description')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="" type="text"
-                                            placeholder="i.e : Very Important People" id="description" name="description">
-                                        @error('description')
+                                    <label for="section" class="form-control-label">{{ __('Section') }}</label>
+                                    <div class="@error('section')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="" type="text" placeholder="i.e : 03"
+                                            id="section" name="section">
+                                        @error('section')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
-                                        <input class="form-control" value="{{ $event->id }}" type="hidden"
-                                            id="eventid" name="eventid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="credit" class="form-control-label">{{ __('Credit') }}</label>
+                                    <div class="@error('credit')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="" type="number" placeholder="i.e : 3"
+                                            id="credit" name="credit">
+                                        @error('credit')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="no_of_student"
+                                        class="form-control-label">{{ __('No of Students') }}</label>
+                                    <div class="@error('no_of_student')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="" type="number" placeholder="i.e : 10"
+                                            id="no_of_student" name="no_of_student">
+                                        @error('no_of_student')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
