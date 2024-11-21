@@ -13,7 +13,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                         <div class="nav-wrapper position-relative end-0">
-                            <h6 class="mb-0">{{ __('Salutation Information') }}</h6>
+                            <h6 class="mb-0">{{ __('Grade Information') }}</h6>
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
 
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form method="post" action="{{ route('title.update', $title) }} " enctype="multipart/form-data">
+                    <form method="post" action="{{ route('grade.update', $gred) }} " enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         @if ($errors->any())
@@ -48,17 +48,16 @@
                             </div>
                         @endif
                         <div class="row">
-
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="code" class="form-control-label">{{ __('Code') }}</label>
+                                    <label for="code" class="form-control-label">{{ __('Grade Code') }}</label>
                                     <div class="@error('code')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="{{ old('code', $title->code) }}" type="text"
-                                            placeholder="i.e : VIP" id="code" name="code">
+                                        <input class="form-control" value="{{ old('code', $gred->code) }}" type="text"
+                                            placeholder="i.e : 5" id="code" name="code">
                                         @error('code')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
-
+                                        <input type="hidden" name="grade_id" value="{{ $gred->id }}">
                                     </div>
                                 </div>
                             </div>
@@ -66,10 +65,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name" class="form-control-label">{{ __('Description') }}</label>
+                                    <label for="name" class="form-control-label">{{ __('Grade Name') }}</label>
                                     <div class="@error('name')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="{{ old('name', $title->name) }}" type="text"
-                                            placeholder="i.e : Very Important Person" id="name" name="name">
+                                        <input class="form-control" value="{{ old('name', $gred->name) }}" type="text"
+                                            placeholder="i.e : Pensyarah" id="name" name="name">
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror

@@ -120,12 +120,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="contactNumber" class="form-control-label">{{ __('Phone') }}</label>
-                                    <div class="@error('contactNumber')border border-danger rounded-3 @enderror">
-                                        <input class="form-control"
-                                            value="{{ old('contactNumber', $staff->contactNumber) }}" type="tel"
-                                            placeholder="i.e : 0134567899" id="contactNumber" name="contactNumber">
-                                        @error('contactNumber')
+                                    <label for="phone" class="form-control-label">{{ __('Phone') }}</label>
+                                    <div class="@error('phone')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="{{ old('phone', $staff->phone) }}"
+                                            type="tel" placeholder="i.e : 0134567899" id="phone" name="phone">
+                                        @error('phone')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -146,7 +145,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="submit"
+                            <button type="submit" name="edit" value="0"
                                 class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
                             &nbsp;&nbsp;<button type="submit" name="delete" value="1"
                                 class="btn bg-gradient-danger btn-md mt-4 mb-4">{{ 'Delete' }}</button>

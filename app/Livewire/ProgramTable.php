@@ -46,10 +46,11 @@ final class ProgramTable extends PowerGridComponent
             'Programs.code',
             'Programs.name',
             'Programs.staff_id',
-            'Programs.department'
-
+            'Programs.department',
+            'Programs.deleted_at'
         )
-            ->join('Departments', 'Departments.id', '=', 'Programs.department_id');
+            ->join('Departments', 'Departments.id', '=', 'Programs.department_id')
+            ->whereNull('Programs.deleted_at');
     }
 
     public function fields(): PowerGridFields
@@ -69,6 +70,7 @@ final class ProgramTable extends PowerGridComponent
     public function columns(): array
     {
         return [
+            Column::action('Action'),
             Column::make('Id', 'id'),
             Column::make('Department', 'department', 'department')->sortable(),
             Column::make('Code', 'code')
@@ -82,8 +84,8 @@ final class ProgramTable extends PowerGridComponent
                 ->searchable(),
             Column::make('Department id', 'department_id')->hidden(),
             Column::make('Staff id', 'staff_id')->hidden(),
-            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')->sortable(),
-            Column::action('Action'),
+
+
         ];
     }
 

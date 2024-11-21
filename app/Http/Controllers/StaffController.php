@@ -41,12 +41,13 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         $attributes = request()->validate([
-            'name' => ['required', 'max:50'],
-            'email' => ['required', 'email'],
-            'title_id' => ['required'],
-            'department_id' => ['required'],
-            'gred_id' => ['required'],
-            'major_id' => ['required'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:staff,email',
+            'phone' => 'required|string|max:15',
+            'gred_id' => 'required|exists:greds,id',
+            'department_id' => 'required|exists:departments,id',
+            'title_id' => 'required|exists:titles,id',
+            'major_id' => 'required|exists:majors,id',
         ]);
         $attributes['name'] = strtoupper($attributes['name']); // Transform name to uppercase
         $title = Title::find($attributes['title_id']); // get title name
@@ -59,7 +60,7 @@ class StaffController extends Controller
             $e = Staff::create([
                 'name'    => $attributes['name'],
                 'email' => $attributes['email'],
-                'contactnumber' => $request['phone'],
+                'phone' => $request['phone'],
                 'gred_id' => $attributes['gred_id'],
                 'gred' => $gred->code,
                 'department_id' => $attributes['department_id'],
@@ -112,12 +113,13 @@ class StaffController extends Controller
 
         if (isset($request["edit"])) {
             $attributes = request()->validate([
-                'name' => ['required', 'max:50'],
-                'email' => ['required', 'email'],
-                'title_id' => ['required'],
-                'department_id' => ['required'],
-                'gred_id' => ['required'],
-                'major_id' => ['required'],
+                'name' => 'required|string|max:255',
+                'email' => 'required|email',
+                'phone' => 'required|string|max:15',
+                'gred_id' => 'required|exists:greds,id',
+                'department_id' => 'required|exists:departments,id',
+                'title_id' => 'required|exists:titles,id',
+                'major_id' => 'required|exists:majors,id',
             ]);
             $attributes['name'] = strtoupper($attributes['name']); // Transform name to uppercase
             $title = Title::find($attributes['title_id']); // get title name
@@ -130,7 +132,7 @@ class StaffController extends Controller
                 $e = $staff->update([
                     'name'    => $attributes['name'],
                     'email' => $attributes['email'],
-                    'contactnumber' => $request['contactNumber'],
+                    'phone' => $attributes['phone'],
                     'gred_id' => $attributes['gred_id'],
                     'gred' => $gred->code,
                     'department_id' => $attributes['department_id'],

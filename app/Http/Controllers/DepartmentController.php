@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 use App\Models\Faculty;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -34,33 +35,37 @@ class DepartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDepartmentRequest $request)
-    {
+    public function store(Request $request)
+    { // Validate the request attributes
         $attributes = $request->validate([
-            'name' => ['required', 'max:50'],
-            'code' => ['required'],
-            'faculty_id' => ['required'],
+            'name' => 'required|max:50',
+            'code' => 'required',
+            'faculty_id' => 'required|exists:faculties,id',
         ]);
-        $attributes['name'] = strtoupper($attributes['name']); // Transform name to uppercase
+        // Transform name and code to uppercase
+        $attributes['name'] = strtoupper($attributes['name']);
         $attributes['code'] = strtoupper($attributes['code']);
+
+        // Begin database transaction
         DB::beginTransaction();
 
         try {
+            // Create a new department
             $e = Department::create([
                 'name'    => $attributes['name'],
                 'code' => $attributes['code'],
                 'faculty_id' => $attributes['faculty_id'],
                 'created_by' => Auth::user()->name,
             ]);
-
+            //Commit the transaction
             DB::commit();
 
-            return redirect('department')->with('success', 'Record Created Successfully');
+            return redirect('departments')->with('success', 'Record Created Successfully');
         } catch (\Exception $e) {
+            // Rollback the transaction in case of an error
             DB::rollback();
-            Log::error('Error creating department record: ' . $e->getMessage());
-
-            return redirect('department')->with('error', 'Failed to create record. Please try again.');
+            // Optionally, you can log the error or return an error response
+            return back()->withErrors(['error' => 'Failed to create department: ' . $e->getMessage()]);
         }
     }
 
@@ -75,25 +80,30 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department)
+    public function edit($id)
     {
+        $department = Department::find($id);
         $faculties = Faculty::all();
-        return view('department.index', ['department' => $department, 'faculties' => $faculties]);
+        return view('department.edit', ['department' => $department, 'faculties' => $faculties]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDepartmentRequest $request, Department $department)
+    public function update(Request $request, Department $department)
     {
         if (isset($request["edit"])) {
+            // Validate the request attributes
             $attributes = $request->validate([
-                'name' => ['required', 'max:50'],
-                'code' => ['required'],
-                'faculty_id' => ['required'],
+                'name' => 'required|max:50',
+                'code' => 'required',
+                'faculty_id' => 'required|exists:faculties,id',
             ]);
-            $attributes['name'] = strtoupper($attributes['name']); // Transform name to uppercase
+            // Transform name and code to uppercase
+            $attributes['name'] = strtoupper($attributes['name']);
             $attributes['code'] = strtoupper($attributes['code']);
+
+            // Begin database transaction
             DB::beginTransaction();
 
             try {
@@ -104,35 +114,37 @@ class DepartmentController extends Controller
                     'updated_by' => Auth::user()->name,
                 ]);
 
-                DB::commit();
+                //Commit the transaction
+                DB::commit(); // If no exception is thrown, the transaction will be committed
 
-                return redirect('department')->with('success', 'Record Updated Successfully');
+                return redirect('departments')->with('success', 'Record Updated Successfully');
             } catch (\Exception $e) {
+                // Rollback the transaction in case of error
                 DB::rollback();
                 Log::error('Error updating department record: ' . $e->getMessage());
 
-                return redirect('department')->with('error', 'Failed to update record. Please try again.');
+                return redirect('departments')->with('error', 'Failed to update record. Please try again.');
             }
-        } else {
-            //dd("destroy");
+        } else if (isset($request["delete"])) {
 
             try {
                 $e = $department->update(
 
                     [
-                        'updated_by' => Auth::id(),
+                        'updated_by' =>
+                        Auth::user()->name,
                         'updated_at' => now(),
                     ]
                 );
                 $department->delete();
                 DB::commit();
 
-                return redirect('department')->with('success', 'Record Deleted Successfully');
+                return redirect('departments')->with('success', 'Record Deleted Successfully');
             } catch (\Exception $e) {
                 DB::rollback();
-                Log::error('Error deleting course record: ' . $e->getMessage());
+                Log::error('Error deleting department record: ' . $e->getMessage());
 
-                return redirect('department')->with('error', 'Failed to delete record. Please try again.');
+                return redirect('departments')->with('error', 'Failed to delete record. Please try again.');
             }
         }
     }

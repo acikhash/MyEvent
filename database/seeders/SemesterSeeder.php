@@ -17,6 +17,7 @@ class SemesterSeeder extends Seeder
             'id' => 1,
             'name' => 'SEMESTER 3 2023/2024',
             'code' => 'S3 23',
+            'year' => 2023,
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -24,6 +25,7 @@ class SemesterSeeder extends Seeder
             'id' => 2,
             'name' => 'SEMESTER 1 2024/2025',
             'code' => 'S1 24',
+            'year' => 2024,
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -31,6 +33,7 @@ class SemesterSeeder extends Seeder
             'id' => 3,
             'name' => 'SEMESTER 2 2024/2025',
             'code' => 'S2 24',
+            'year' => 2024,
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -38,6 +41,7 @@ class SemesterSeeder extends Seeder
             'id' => 4,
             'name' => 'SEMESTER 3 2024/2025',
             'code' => 'S3 24',
+            'year' => 2024,
             'created_by' => 'admin',
             'created_at' => now()
         ]);

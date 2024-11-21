@@ -7,6 +7,8 @@ use App\Http\Requests\StoreProgramRequest;
 use App\Http\Requests\UpdateProgramRequest;
 use App\Models\Department;
 use App\Models\Staff;
+use App\Models\Title;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -35,18 +37,22 @@ class ProgramController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProgramRequest $request)
+    public function store(Request $request)
     {
+        // Validate the request attributes
         $attributes = request()->validate([
             'name' => ['required', 'max:50'],
-            'code' => ['required', 'email'],
+            'code' => ['required'],
             'department_id' => ['required'],
             'staff_id' => ['required']
         ]);
-        $attributes['name'] = strtoupper($attributes['name']); // Transform name to uppercase
+        // Transform name and code to uppercase
+        $attributes['name'] = strtoupper($attributes['name']);
         $attributes['code'] = strtoupper($attributes['code']);
         $department = Department::find($attributes['department_id']);
         $coordinator = Staff::find($attributes['staff_id']);
+        $title = Title::find($coordinator->title_id);
+        // Begin database transaction
         DB::beginTransaction();
 
         try {
@@ -56,13 +62,13 @@ class ProgramController extends Controller
                 'department_id' => $attributes['department_id'],
                 'department' => $department->code,
                 'staff_id' => $attributes['staff_id'],
-                'coordinator' => $coordinator->name,
+                'coordinator' => $title->name . $coordinator->name,
                 'created_by' => Auth::user()->name,
             ]);
 
             DB::commit();
 
-            return redirect('staff')->with('success', 'Record Created Successfully');
+            return redirect('program')->with('success', 'Record Created Successfully');
         } catch (\Exception $e) {
             DB::rollback();
             Log::error('Error creating program record: ' . $e->getMessage());
@@ -84,29 +90,35 @@ class ProgramController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Program $program)
+    public function edit(Request $request, $id)
     {
+
+        $program = Program::findorfail($id);
         $staffs = Staff::all();
         $departments = Department::all();
-        return view('program.show', compact('program', 'staffs', 'departments'));
+        return view('program.edit', compact('program', 'staffs', 'departments'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProgramRequest $request, Program $program)
+    public function update(Request $request, Program $program)
     {
         if (isset($request["edit"])) {
+            // Validate the request attributes
             $attributes = request()->validate([
                 'name' => ['required', 'max:50'],
-                'code' => ['required', 'email'],
+                'code' => ['required'],
                 'department_id' => ['required'],
                 'staff_id' => ['required']
             ]);
-            $attributes['name'] = strtoupper($attributes['name']); // Transform name to uppercase
+            // Transform name and code to uppercase
+            $attributes['name'] = strtoupper($attributes['name']);
             $attributes['code'] = strtoupper($attributes['code']);
             $department = Department::find($attributes['department_id']);
             $coordinator = Staff::find($attributes['staff_id']);
+            $title = Title::find($coordinator->title_id);
+            // Begin database transaction
             DB::beginTransaction();
 
             try {
@@ -116,7 +128,7 @@ class ProgramController extends Controller
                     'department_id' => $attributes['department_id'],
                     'department' => $department->code,
                     'staff_id' => $attributes['staff_id'],
-                    'coordinator' => $coordinator->name,
+                    'coordinator' => $title->name . $coordinator->name,
                     'updated_by' => Auth::user()->name,
                 ]);
 
@@ -136,7 +148,7 @@ class ProgramController extends Controller
                 $e = $program->update(
 
                     [
-                        'updated_by' => Auth::id(),
+                        'updated_by' => Auth::user()->name,
                         'updated_at' => now(),
                     ]
                 );

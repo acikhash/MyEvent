@@ -68,8 +68,10 @@ final class StaffTable extends PowerGridComponent
             ->join('Departments', 'Departments.code', '=', 'Staff.department')
             ->join('Majors', 'Majors.name', '=', 'Staff.major')
             ->join('Titles', 'Titles.name', '=', 'Staff.title')
-            ->join('Greds', 'Greds.name', '=', 'Staff.gred');
-        // ->where('Departments.id', '=', $this->department_id);
+            ->join('Greds', 'Greds.name', '=', 'Staff.gred')
+            ->whereNull('Staff.deleted_at')
+            // ->where('Departments.id', '=', $this->department_id)
+        ;
     }
     public function relationSearch(): array
     {
@@ -92,6 +94,7 @@ final class StaffTable extends PowerGridComponent
     public function columns(): array
     {
         return [
+            Column::action('Action'),
             Column::make('Id', 'id'),
             Column::make('Title', 'title', 'title_name')->sortable(),
             Column::make('Name', 'name')
@@ -100,10 +103,7 @@ final class StaffTable extends PowerGridComponent
             Column::make('Department', 'department', 'department_name')->sortable(),
             Column::make('Major', 'major', 'major_name')->sortable(),
             Column::make('Grade', 'gred', 'gred_name')->sortable(),
-            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-                ->sortable()
-                ->searchable(),
-            Column::action('Action'),
+
         ];
     }
 

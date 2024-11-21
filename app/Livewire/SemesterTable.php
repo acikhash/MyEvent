@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Illuminate\Database\Query\Builder;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -37,7 +38,7 @@ final class SemesterTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('Semesters');
+        return DB::table('Semesters')->whereNull('deleted_at');
     }
 
     public function fields(): PowerGridFields
@@ -46,16 +47,14 @@ final class SemesterTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('code')
-            ->add('created_by')
-            ->add('updated_by')
-            ->add('deleted_at')
-            ->add('created_at')
-            ->add('updated_at');
+            ->add('year')
+        ;
     }
 
     public function columns(): array
     {
         return [
+            Column::action('Action'),
             Column::make('Id', 'id'),
             Column::make('Name', 'name')
                 ->sortable()
@@ -65,58 +64,34 @@ final class SemesterTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Created by', 'created_by')
+            Column::make('Academic Year', 'year')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Updated by', 'updated_by')
-                ->sortable()
-                ->searchable(),
 
-            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-                ->sortable(),
-
-            Column::make('Deleted at', 'deleted_at')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
-
-            Column::make('Created at', 'created_at')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Updated at', 'updated_at_formatted', 'updated_at')
-                ->sortable(),
-
-            Column::make('Updated at', 'updated_at')
-                ->sortable()
-                ->searchable(),
 
         ];
     }
 
     public function filters(): array
     {
-        return [
-        ];
+        return [];
     }
 
     #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
+    public function edit($rowId): Redirector
     {
-        $this->js('alert('.$rowId.')');
+        return redirect(route('semester.edit', $rowId));
     }
 
     public function actions($row): array
     {
         return [
             Button::add('edit')
-                ->slot('Edit: '.$row->id)
-                ->id()
-                ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
-                ->dispatch('edit', ['rowId' => $row->id])
+                ->id('edit')
+                ->class('fas fa-edit text-secondary')
+                ->tooltip('Edit Semester Info')
+                ->dispatch('edit', ['rowId' => $row->id]),
         ];
     }
 

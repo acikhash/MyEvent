@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('major');
             $table->foreignIdFor(Gred::class);
             $table->string('gred');
-            $table->string('contactNumber')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email');
             $table->string('created_by');
             $table->string('updated_by')->nullable();

@@ -75,22 +75,28 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return view('course.edit', compact('course'));
+        return view('course.show', compact('course'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course)
+    public function edit($id)
     {
+        // Retrieve the course from the database or return a 404 response if not found
+        $course = Course::findOrFail($id);
+
+        // Retrieve all programs
         $programs = Program::all();
-        return view('course.edit', ['programs' => $programs, 'course' => $course]);
+
+        // Return the edit view with the course and programs data
+        return view('course.edit', compact('programs', 'course'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCourseRequest $request, Course $course)
+    public function update(Request $request, Course $course)
     {
         if (isset($request["edit"])) {
             $attributes = $request->validate([
@@ -126,13 +132,13 @@ class CourseController extends Controller
                 return redirect('course')->with('error', 'Failed to update record. Please try again.');
             }
         } else {
-            //dd("destroy");
 
             try {
                 $e = $course->update(
 
                     [
-                        'updated_by' => Auth::id(),
+                        'updated_by' =>
+                        Auth::user()->name,
                         'updated_at' => now(),
                     ]
                 );

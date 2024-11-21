@@ -2,7 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Models\Program;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -18,6 +20,7 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
 final class AssignmentTable extends PowerGridComponent
 {
+    public bool $showFilters = true;
     use WithExport;
 
     public function setUp(): array
@@ -37,17 +40,33 @@ final class AssignmentTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('Assignments');
+        return DB::table('Courses')->select(
+            'Programs.name as program_name',
+            'Programs.code as program_code',
+            'Courses.id',
+            'Courses.name',
+            'Courses.code',
+            'Courses.credit',
+            'Courses.no_of_student',
+            'Courses.section',
+            'Courses.program_id'
+        )
+            ->join('Programs', 'Programs.id', '=', 'Courses.program_id')
+            ->where('Courses.deleted_at', '=', null); // filter out deleted records
     }
 
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('course_id')
-            ->add('staff_id')
-            ->add('semester_id')
-            ->add('notes')
+            ->add('name')
+            ->add('code')
+            ->add('credit')
+            ->add('no_of_student')
+            ->add('section')
+            ->add('program_id')
+            ->add('program_code')
+            ->add('program_name')
             ->add('created_by')
             ->add('updated_by')
             ->add('deleted_at')
@@ -58,42 +77,24 @@ final class AssignmentTable extends PowerGridComponent
     public function columns(): array
     {
         return [
+            Column::action('Action'),
             Column::make('Id', 'id'),
-            Column::make('Course id', 'course_id'),
-            Column::make('Staff id', 'staff_id'),
-            Column::make('Semester id', 'semester_id'),
-            Column::make('Notes', 'notes')
+            Column::make('Program', 'program_code', 'program_code')->sortable(),
+            Column::make('Code', 'code', 'code')->sortable()->searchable(),
+            Column::make('Name', 'name')
+                ->sortable()
+                ->searchable(),
+            Column::make('Section', 'section')
+                ->sortable()
+                ->searchable(),
+            Column::make('Credit', 'credit')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Created by', 'created_by')
+            Column::make('No of student', 'no_of_student')
                 ->sortable()
                 ->searchable(),
-
-            Column::make('Updated by', 'updated_by')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-                ->sortable(),
-
-            Column::make('Deleted at', 'deleted_at')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
-
-            Column::make('Created at', 'created_at')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Updated at', 'updated_at_formatted', 'updated_at')
-                ->sortable(),
-
-            Column::make('Updated at', 'updated_at')
-                ->sortable()
-                ->searchable(),
+            Column::make('Program id', 'program_id')->hidden(),
 
         ];
     }
@@ -101,35 +102,29 @@ final class AssignmentTable extends PowerGridComponent
     public function filters(): array
     {
         return [
+            Filter::select('program_code', 'program_id')
+                ->dataSource(Program::all())
+                ->optionLabel('code')
+                ->optionValue('id'),
+
+
         ];
     }
 
     #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
+    public function edit($rowId): Redirector
     {
-        $this->js('alert('.$rowId.')');
+        return redirect(route('assignment.edit', $rowId));
     }
 
     public function actions($row): array
     {
         return [
             Button::add('edit')
-                ->slot('Edit: '.$row->id)
-                ->id()
-                ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
-                ->dispatch('edit', ['rowId' => $row->id])
+                ->id('edit')
+                ->class('fas fa-user text-secondary')
+                ->tooltip('assign lecturer')
+                ->dispatch('edit', ['rowId' => $row->id]),
         ];
     }
-
-    /*
-    public function actionRules($row): array
-    {
-       return [
-            // Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($row) => $row->id === 1)
-                ->hide(),
-        ];
-    }
-    */
 }

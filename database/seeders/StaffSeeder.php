@@ -25,7 +25,7 @@ class StaffSeeder extends Seeder
             'email' => 'norzairah@utm.my',
             'gred_id' => 3,
             'gred' => 'DS54',
-            'contactNumber' => '0123456789',
+            'phone' => '0123456789',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -41,7 +41,7 @@ class StaffSeeder extends Seeder
             'gred' => 'DS51',
             'gred_id' => 1,
             'email' => 'azizul@utm.my',
-            'contactNumber' => '0123456789',
+            'phone' => '0123456789',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -57,7 +57,7 @@ class StaffSeeder extends Seeder
             'gred' => 'DS52',
             'gred_id' => 2,
             'email' => 'azri@utm.my',
-            'contactNumber' => '0123456789',
+            'phone' => '0123456789',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -73,7 +73,7 @@ class StaffSeeder extends Seeder
             'gred' => 'DS51',
             'gred_id' => 1,
             'email' => 'abd@utm.my',
-            'contactNumber' => '0123456789',
+            'phone' => '0123456789',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -89,7 +89,7 @@ class StaffSeeder extends Seeder
             'gred' => 'DS51',
             'gred_id' => 1,
             'email' => 'abd@utm.my',
-            'contactNumber' => '0123456789',
+            'phone' => '0123456789',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -105,7 +105,7 @@ class StaffSeeder extends Seeder
             'gred' => 'DS51',
             'gred_id' => 1,
             'email' => 'gan@utm.my',
-            'contactNumber' => '0123456789',
+            'phone' => '0123456789',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -121,7 +121,7 @@ class StaffSeeder extends Seeder
             'gred' => 'DS51',
             'gred_id' => 1,
             'email' => 'hayati@utm.my',
-            'contactNumber' => '0123456789',
+            'phone' => '0123456789',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -137,7 +137,7 @@ class StaffSeeder extends Seeder
             'gred' => 'DS51',
             'gred_id' => 1,
             'email' => 'intan@utm.my',
-            'contactNumber' => '0123456789',
+            'phone' => '0123456789',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -153,7 +153,7 @@ class StaffSeeder extends Seeder
             'gred' => 'DS51',
             'gred_id' => 1,
             'email' => 'intan@utm.my',
-            'contactNumber' => '0123456789',
+            'phone' => '0123456789',
             'created_by' => 'admin',
             'created_at' => now()
         ]);
@@ -169,7 +169,7 @@ class StaffSeeder extends Seeder
             'gred' => 'DS51',
             'gred_id' => 1,
             'email' => 'intan@utm.my',
-            'contactNumber' => '0123456789',
+            'phone' => '0123456789',
             'created_by' => 'admin',
             'created_at' => now()
         ]);

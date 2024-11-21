@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
-use App\Models\Faculty;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
@@ -17,10 +17,10 @@ use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class DepartmentTable extends PowerGridComponent
+final class FacultyTable extends PowerGridComponent
 {
     use WithExport;
-    public bool $showFilters = true;
+
     public function setUp(): array
     {
         $this->showCheckBox();
@@ -29,8 +29,7 @@ final class DepartmentTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()
-                ->showSearchInput(),
+            Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
@@ -39,17 +38,7 @@ final class DepartmentTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('Departments')
-            ->select(
-                'Departments.id',
-                'Departments.code',
-                'Departments.name',
-                'Departments.faculty_id',
-                'Faculties.name as faculty_name',
-                'Faculties.code as faculty_code'
-            )
-            ->join('Faculties', 'Faculties.id', '=', 'Departments.faculty_id')
-            ->whereNull('Departments.deleted_at');
+        return DB::table('faculties')->whereNull('deleted_at');;
     }
 
     public function fields(): PowerGridFields
@@ -58,10 +47,7 @@ final class DepartmentTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('code')
-            ->add('faculty_id')
-            ->add('faculty_name')
-            ->add('faculty_code')
-            ->add('deleted_at');
+        ;
     }
 
     public function columns(): array
@@ -69,8 +55,6 @@ final class DepartmentTable extends PowerGridComponent
         return [
             Column::action('Action'),
             Column::make('Id', 'id'),
-            Column::make('Faculty', 'faculty_code', 'faculty_code')->sortable(),
-
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
@@ -79,11 +63,6 @@ final class DepartmentTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Faculty id', 'faculty_id')->hidden(),
-
-            // Column::make('Deleted at', 'deleted_at_formatted', 'deleted_at')
-            //     ->sortable(),
-
 
 
         ];
@@ -91,28 +70,21 @@ final class DepartmentTable extends PowerGridComponent
 
     public function filters(): array
     {
-        return [
-            Filter::select('faculty_code', 'faculty_id')
-                ->dataSource(Faculty::all())
-                ->optionLabel('code')
-                ->optionValue('id'),
-        ];
+        return [];
     }
 
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): Redirector
     {
-        return redirect(route('department.edit', $rowId));
+        return redirect(route('faculty.edit', $rowId));
     }
-
-
     public function actions($row): array
     {
         return [
             Button::add('edit')
                 ->id('edit')
                 ->class('fas fa-edit text-secondary')
-                ->tooltip('Edit Department Info')
+                ->tooltip('Edit Faculty Info')
                 ->dispatch('edit', ['rowId' => $row->id]),
         ];
     }

@@ -54,7 +54,8 @@ final class CourseTable extends PowerGridComponent
             'Courses.section',
             'Courses.program_id'
         )
-            ->join('Programs', 'Programs.id', '=', 'Courses.program_id');;
+            ->join('Programs', 'Programs.id', '=', 'Courses.program_id')
+            ->where('Courses.deleted_at', '=', null); // filter out deleted records
     }
 
     public function fields(): PowerGridFields
@@ -79,9 +80,10 @@ final class CourseTable extends PowerGridComponent
     public function columns(): array
     {
         return [
+            Column::action('Action'),
             Column::make('Id', 'id'),
             Column::make('Program', 'program_code', 'program_code')->sortable(),
-            Column::make('Code', 'code', 'code')->sortable(),
+            Column::make('Code', 'code', 'code')->sortable()->searchable(),
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
@@ -96,7 +98,7 @@ final class CourseTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
             Column::make('Program id', 'program_id')->hidden(),
-            Column::action('Action'),
+
         ];
     }
 

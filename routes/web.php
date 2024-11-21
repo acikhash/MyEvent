@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\GredController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\NotificationController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\MajorController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\TitleController;
 use App\Models\User;
 
 /*
@@ -97,6 +99,24 @@ Route::group(
         Route::post('/semester/{semester}', [SemesterController::class, 'update'])->name('semester.update');
         Route::delete('/semester/{semester}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 
+        // Grade routes
+        Route::get('grade', [GredController::class, 'index'])->name('grade.index');
+        Route::get('/grade/create', [GredController::class, 'create'])->name('grade.create');
+        Route::post('/grade', [GredController::class, 'store'])->name('grade.store');
+        Route::get('/grade/{id}', [GredController::class, 'show'])->name('grade.show');
+        Route::get('/grade/{id}/edit', [GredController::class, 'edit'])->name('grade.edit');
+        Route::post('/grade/{grade}', [GredController::class, 'update'])->name('grade.update');
+        Route::delete('/grade/{grade}', [GredController::class, 'destroy'])->name('grade.destroy');
+
+        // title routes
+        Route::get('title', [TitleController::class, 'index'])->name('title.index');
+        Route::get('/title/create', [TitleController::class, 'create'])->name('title.create');
+        Route::post('/title', [TitleController::class, 'store'])->name('title.store');
+        Route::get('/title/{id}', [TitleController::class, 'show'])->name('title.show');
+        Route::get('/title/{id}/edit', [TitleController::class, 'edit'])->name('title.edit');
+        Route::post('/title/{title}', [TitleController::class, 'update'])->name('title.update');
+        Route::delete('/title/{title}', [TitleController::class, 'destroy'])->name('title.destroy');
+
 
         //View Workload
         Route::get('/viewworkload', [AssignmentController::class, 'workload'])->name('workload.index');
@@ -114,7 +134,7 @@ Route::group(
 
         // Faculty routes
         Route::get('faculty', [FacultyController::class, 'index'])->name('faculty.index');
-        Route::get('/faculty/create', [FacultyController::class, 'create'])->name('faculties.create');
+        Route::get('/faculty/create', [FacultyController::class, 'create'])->name('faculty.create');
         Route::post('/faculty', [FacultyController::class, 'store'])->name('faculty.store');
         Route::get('/faculty/{id}', [FacultyController::class, 'show'])->name('faculty.show');
         Route::get('/faculty/{id}/edit', [FacultyController::class, 'edit'])->name('faculty.edit');

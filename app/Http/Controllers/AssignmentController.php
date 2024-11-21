@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Assignment;
 use App\Http\Requests\StoreAssignmentRequest;
 use App\Http\Requests\UpdateAssignmentRequest;
+use App\Models\Course;
+use App\Models\Program;
+use App\Models\Staff;
+use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
 {
@@ -13,7 +17,7 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        //
+        return view('assignment.index');
     }
 
     /**
@@ -21,7 +25,8 @@ class AssignmentController extends Controller
      */
     public function create()
     {
-        //
+        $staff = Staff::all();
+        return view('assignment.create', ['staff' => $staff]);
     }
 
     /**
@@ -43,15 +48,19 @@ class AssignmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Assignment $assignment)
+    public function edit($id)
     {
-        //
+        $programs = Program::all();
+        $assignment = Course::find($id);
+        $course = Course::find($id);
+        $staffs = Staff::all();
+        return view('assignment.edit', ['staffs' => $staffs, 'assignment' => $assignment, 'programs' => $programs, 'course' => $course]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAssignmentRequest $request, Assignment $assignment)
+    public function update(Request $request, Assignment $assignment)
     {
         //
     }

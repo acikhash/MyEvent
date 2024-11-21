@@ -48,12 +48,39 @@
                             </div>
                         @endif
                         <div class="row">
+                            <div class="col-md-6">
+                                <label for="department_id" class="form-control-label">{{ __('Department') }}</label>
+                                <select name="department_id" class="form-select" id="department_id">
+                                    @foreach ($departments as $department)
+                                        <option value={{ $department->id }}>
+                                            {{ $department->code }}-{{ $department->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="code" class="form-control-label">{{ __('Program Code') }}</label>
+                                    <div class="@error('code')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="" type="text" placeholder="i.e : MBA "
+                                            id="code" name="code">
+                                        @error('code')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name" class="form-control-label">{{ __('Category Name') }}</label>
-                                    <div class="@error('category-name')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="" type="text" placeholder="i.e : VIP"
-                                            id="name" name="name">
+                                    <label for="name" class="form-control-label">{{ __('Program Name') }}</label>
+                                    <div class="@error('name')border border-danger rounded-3 @enderror">
+                                        <input class="form-control" value="" type="text"
+                                            placeholder="i.e : Master of Business Intelligence" id="name"
+                                            name="name">
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -63,19 +90,16 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="description"
-                                        class="form-control-label">{{ __('Category Description') }}</label>
-                                    <div class="@error('category-description')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="" type="text"
-                                            placeholder="i.e : Very Important People" id="description" name="description">
-                                        @error('description')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                        <input class="form-control" value="{{ $event->id }}" type="hidden"
-                                            id="eventid" name="eventid">
-                                    </div>
-                                </div>
+                                <label for="staff_id" class="form-control-label">{{ __('Coordinator') }}</label>
+                                <select name="staff_id" class="form-select" id="staff_id">
+                                    @foreach ($staffs as $staff)
+                                        <option value={{ $staff->id }}>
+                                            {{ $staff->title }}&nbsp;{{ $staff->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                </label>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
@@ -83,7 +107,6 @@
                                 class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

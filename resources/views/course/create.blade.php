@@ -52,7 +52,7 @@
                                 <label for="program_id" class="form-control-label">{{ __('Program') }}</label>
                                 <select name="program_id" class="form-select" id="program_id">
                                     @foreach ($programs as $program)
-                                        <option value={{ $program->id }}>{{ $program->code }}.{{ $program->name }}
+                                        <option value={{ $program->id }}>{{ $program->code }}-{{ $program->name }}
                                         </option>
                                     @endforeach
                                 </select>

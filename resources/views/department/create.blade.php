@@ -52,7 +52,7 @@
                                 <label for="faculty_id" class="form-control-label">{{ __('Faculty') }}</label>
                                 <select name="faculty_id" class="form-select" id="faculty_id">
                                     @foreach ($faculties as $faculty)
-                                        <option value={{ $faculty->id }}>{{ $faculty->code }}.{{ $faculty->name }}
+                                        <option value={{ $faculty->id }}>{{ $faculty->code }}-{{ $faculty->name }}
                                         </option>
                                     @endforeach
                                 </select>

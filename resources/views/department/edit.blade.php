@@ -25,7 +25,8 @@
 
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form method="post" action="{{ route('department.update', $course) }} " enctype="multipart/form-data">
+                    <form method="post" action="{{ route('department.update', $department) }} "
+                        enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         @if ($errors->any())
@@ -53,7 +54,7 @@
                                 <select name="faculty_id" class="form-select" id="faculty_id">
                                     @foreach ($faculties as $faculty)
                                         <option value={{ $faculty->id }} @if ($department->faculty_id == $faculty->id) Selected @endif>
-                                            {{ $faculty->code }}.{{ $faculty->name }}
+                                            {{ $faculty->code }}-{{ $faculty->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -79,8 +80,9 @@
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">{{ __('Department Name') }}</label>
                                     <div class="@error('name')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="{{ old('code', $course->code) }}" type="text"
-                                            placeholder="i.e : Intelligence Informatic" id="name" name="name">
+                                        <input class="form-control" value="{{ old('name', $department->name) }}"
+                                            type="text" placeholder="i.e : Intelligence Informatic" id="name"
+                                            name="name">
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -90,7 +92,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end">
-                            <button type="submit"
+                            <button type="submit" name="edit" value="0"
                                 class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
                             &nbsp;&nbsp;<button type="submit" name="delete" value="1"
                                 class="btn bg-gradient-danger btn-md mt-4 mb-4">{{ 'Delete' }}</button>

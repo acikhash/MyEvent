@@ -53,7 +53,7 @@
                                 <select name="program_id" class="form-select" id="program_id">
                                     @foreach ($programs as $program)
                                         <option value={{ $program->id }} @if ($course->program_id == $program->id) Selected @endif>
-                                            {{ $program->code }}.{{ $program->name }}
+                                            {{ $program->code }}-{{ $program->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -129,8 +129,9 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="submit"
-                                class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
+                            <button type="submit" name="edit" value="0"
+                                class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
+
                             &nbsp;&nbsp;<button type="submit" name="delete" value="1"
                                 class="btn bg-gradient-danger btn-md mt-4 mb-4">{{ 'Delete' }}</button>
                         </div>

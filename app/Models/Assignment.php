@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Assignment extends Model
@@ -18,9 +19,9 @@ class Assignment extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function staff()
+    public function staff(): HasMany
     {
-        return $this->belongsTo(Staff::class);
+        return $this->hasMany(Staff::class, 'staff_id', 'id');
     }
 
     public function semester()
