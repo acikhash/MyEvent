@@ -6,9 +6,16 @@ use App\Models\Assignment;
 use App\Http\Requests\StoreAssignmentRequest;
 use App\Http\Requests\UpdateAssignmentRequest;
 use App\Models\Course;
+use App\Models\Department;
 use App\Models\Program;
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use App\Exports\WorkloadExport;
 
 class AssignmentController extends Controller
 {
@@ -32,7 +39,7 @@ class AssignmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAssignmentRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -42,7 +49,7 @@ class AssignmentController extends Controller
      */
     public function show(Assignment $assignment)
     {
-        //
+        return view('workload.index');
     }
 
     /**
@@ -74,10 +81,11 @@ class AssignmentController extends Controller
     }
 
     /**
-     * Display the workload of staff.
+     * Download to excel the workload of staff separate each department in different sheet.
      */
     public function workload(Assignment $assignment)
     {
-        //
+        $departments = Department::all()->pluck('code'); // Assuming you have a Department model
+        return Excel::download(new WorkloadExport($departments), 'workloadByDepartment.xlsx');
     }
 }

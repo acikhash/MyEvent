@@ -29,7 +29,14 @@
                             <div>
                                 <h5 class="mb-0">Staff Workload </h5>
                             </div>
-
+                            <div class="card mb-4 mx-6">
+                                <form method="get" action="{{ route('workload.print') }} " enctype="multipart/form-data">
+                                    @csrf
+                                    @method('get')
+                                    <button type="submit"
+                                        class="btn bg-gradient-primary btn-sm mb-0">{{ 'Download Excel' }}</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
 

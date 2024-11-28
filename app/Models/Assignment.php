@@ -19,9 +19,9 @@ class Assignment extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function staff(): HasMany
+    public function staff()
     {
-        return $this->hasMany(Staff::class, 'staff_id', 'id');
+        return $this->belongsTo(Staff::class, 'staff_id');
     }
 
     public function semester()

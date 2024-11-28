@@ -119,7 +119,8 @@ Route::group(
 
 
         //View Workload
-        Route::get('/viewworkload', [AssignmentController::class, 'workload'])->name('workload.index');
+        Route::get('/workload', [AssignmentController::class, 'show'])->name('workload.index');
+        Route::get('/workload/print', [AssignmentController::class, 'workload'])->name('workload.print');
         //
 
         //staff page

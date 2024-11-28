@@ -40,7 +40,7 @@ final class AssignmentTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('Courses')->select(
+        return DB::table('Assignments')->select(
             'Programs.name as program_name',
             'Programs.code as program_code',
             'Courses.id',

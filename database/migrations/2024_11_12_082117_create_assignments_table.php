@@ -19,7 +19,12 @@ return new class extends Migration
             $table->foreignIdFor(Course::class);
             $table->foreignIdFor(Staff::class);
             $table->foreignIdFor(Semester::class);
-            $table->string('notes');
+            $table->string('course_code');
+            $table->string('staff_name');
+            $table->string('year');
+            $table->string('semester');
+            $table->string('credit');
+            $table->string('notes')->nullable();
             $table->string('created_by');
             $table->string('updated_by')->nullable();
             $table->softDeletes();

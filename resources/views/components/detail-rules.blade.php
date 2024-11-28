@@ -1,0 +1,1 @@
+ <livewire:staff-table />

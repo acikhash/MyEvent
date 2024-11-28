@@ -26,4 +26,9 @@ class Staff extends Model
     {
         return $this->belongsTo(Title::class);
     }
+    // Define the relationship with Assignment
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class, 'staff_id');
+    }
 }
