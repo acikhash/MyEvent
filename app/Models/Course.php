@@ -18,6 +18,10 @@ class Course extends Model
     {
         return $this->belongsTo(Program::class);
     }
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class);
+    }
     public function assignment(): HasMany
     {
         return $this->hasMany(Assignment::class);

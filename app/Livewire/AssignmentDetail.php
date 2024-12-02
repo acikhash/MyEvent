@@ -3,14 +3,10 @@
 namespace App\Livewire;
 
 use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Footer;
-use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
@@ -18,8 +14,13 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
 final class AssignmentDetail extends PowerGridComponent
 {
-    use WithExport;
+    // use WithExport;
     public string  $staff_id;
+    public string  $year;
+    public function __construct()
+    {
+        $this->year = date('Y');
+    }
     public function setUp(): array
     {
         // $this->showCheckBox();
@@ -37,7 +38,9 @@ final class AssignmentDetail extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('Assignments')->where('staff_id', '=', $this->staff_id);
+        return DB::table('Assignments')
+            ->where('staff_id', '=', $this->staff_id)
+            ->where('year', '=', $this->year);
     }
 
     public function fields(): PowerGridFields
@@ -101,33 +104,4 @@ final class AssignmentDetail extends PowerGridComponent
     {
         return [];
     }
-
-    // #[\Livewire\Attributes\On('edit')]
-    // public function edit($rowId): void
-    // {
-    //     $this->js('alert(' . $rowId . ')');
-    // }
-
-    // public function actions($row): array
-    // {
-    //     return [
-    //         Button::add('edit')
-    //             ->slot('Edit: ' . $row->id)
-    //             ->id()
-    //             ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
-    //             ->dispatch('edit', ['rowId' => $row->id])
-    //     ];
-    // }
-
-    /*
-    public function actionRules($row): array
-    {
-       return [
-            // Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($row) => $row->id === 1)
-                ->hide(),
-        ];
-    }
-    */
 }

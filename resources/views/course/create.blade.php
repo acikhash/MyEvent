@@ -60,6 +60,19 @@
                                 </label>
                             </div>
                             <div class="col-md-6">
+                                <label for="semester_id" class="form-control-label">{{ __('Semester') }}</label>
+                                <select name="semester_id" class="form-select" id="semester_id">
+                                    @foreach ($semesters as $semester)
+                                        <option value={{ $semester->id }}>{{ $semester->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="code" class="form-control-label">{{ __('Course Code') }}</label>
                                     <div class="@error('code')border border-danger rounded-3 @enderror">
@@ -72,9 +85,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">{{ __('Course Name') }}</label>
                                     <div class="@error('name')border border-danger rounded-3 @enderror">

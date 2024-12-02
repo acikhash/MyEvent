@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Program;
+use App\Models\Semester;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,8 @@ class CourseController extends Controller
     public function create()
     {
         $programs = Program::all();
-        return view('course.create', ['programs' => $programs]);
+        $semesters = Semester::all();
+        return view('course.create', ['programs' => $programs, 'semesters' => $semesters]);
     }
 
     /**
@@ -88,9 +90,9 @@ class CourseController extends Controller
 
         // Retrieve all programs
         $programs = Program::all();
-
+        $semesters = Semester::all();
         // Return the edit view with the course and programs data
-        return view('course.edit', compact('programs', 'course'));
+        return view('course.edit', compact('programs', 'course', 'semesters'));
     }
 
     /**

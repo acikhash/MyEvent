@@ -21,6 +21,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 20,
             'program_id' => 12,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -32,6 +33,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 20,
             'program_id' => 12,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -43,6 +45,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 20,
             'program_id' => 12,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -54,6 +57,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 20,
             'program_id' => 12,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -65,6 +69,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 20,
             'program_id' => 12,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -76,6 +81,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 20,
             'program_id' => 12,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -87,6 +93,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 20,
             'program_id' => 12,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -98,6 +105,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 20,
             'program_id' => 12,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -109,6 +117,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 20,
             'program_id' => 12,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -120,6 +129,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 1,
             'program_id' => 10,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -131,6 +141,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 1,
             'program_id' => 13,
+            'semester_id' => 2,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -142,6 +153,7 @@ class CourseSeeder extends Seeder
             'credit' => 7,
             'no_of_student' => 1,
             'program_id' => 13,
+            'semester_id' => 3,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -153,6 +165,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 2,
             'program_id' => 26,
+            'semester_id' => 3,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -164,6 +177,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 2,
             'program_id' => 26,
+            'semester_id' => 3,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);
@@ -175,6 +189,7 @@ class CourseSeeder extends Seeder
             'credit' => 3,
             'no_of_student' => 3,
             'program_id' => 26,
+            'semester_id' => 3,
             'created_by' => 'admin',
             'created_at' => now(),
         ]);

@@ -2,7 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Models\Course;
 use App\Models\Program;
+use App\Models\Semester;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Carbon;
@@ -40,18 +42,21 @@ final class AssignmentTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return DB::table('Assignments')->select(
+        return DB::table('Courses')->select(
             'Programs.name as program_name',
             'Programs.code as program_code',
             'Courses.id',
             'Courses.name',
-            'Courses.code',
+            'Courses.code as course_code',
             'Courses.credit',
             'Courses.no_of_student',
             'Courses.section',
-            'Courses.program_id'
+            'Courses.program_id',
+            'Courses.semester_id',
+            'Semesters.name as semester_name'
         )
             ->join('Programs', 'Programs.id', '=', 'Courses.program_id')
+            ->join('Semesters', 'Semesters.id', '=', 'Courses.semester_id')
             ->where('Courses.deleted_at', '=', null); // filter out deleted records
     }
 
@@ -60,13 +65,15 @@ final class AssignmentTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('name')
-            ->add('code')
+            ->add('course_code')
             ->add('credit')
             ->add('no_of_student')
             ->add('section')
             ->add('program_id')
             ->add('program_code')
             ->add('program_name')
+            ->add('semester_id')
+            ->add('semester_name')
             ->add('created_by')
             ->add('updated_by')
             ->add('deleted_at')
@@ -80,7 +87,8 @@ final class AssignmentTable extends PowerGridComponent
             Column::action('Action'),
             Column::make('Id', 'id'),
             Column::make('Program', 'program_code', 'program_code')->sortable(),
-            Column::make('Code', 'code', 'code')->sortable()->searchable(),
+            Column::make('Semester', 'semester_name', 'semester_name')->sortable(),
+            Column::make('Code', 'course_code', 'course_code')->sortable(),
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
@@ -101,12 +109,20 @@ final class AssignmentTable extends PowerGridComponent
 
     public function filters(): array
     {
+        $distinctCourses = Course::select('code')->distinct()->get();
         return [
             Filter::select('program_code', 'program_id')
                 ->dataSource(Program::all())
                 ->optionLabel('code')
                 ->optionValue('id'),
-
+            Filter::select('semester_name', 'semester_id')
+                ->dataSource(Semester::all())
+                ->optionLabel('name')
+                ->optionValue('id'),
+            Filter::select('course_code', 'courses.code')
+                ->dataSource($distinctCourses)
+                ->optionLabel('code')
+                ->optionValue('code'),
 
         ];
     }

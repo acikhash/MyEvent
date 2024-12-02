@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Department;
 use App\Models\Gred;
 use App\Models\Major;
+use App\Models\Semester;
 use App\Models\Title;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Carbon;
@@ -25,7 +26,9 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 final class Workload extends PowerGridComponent
 {
     // use WithExport;
+
     public bool $showFilters = true;
+
 
     public function setUp(): array
     {
@@ -38,7 +41,8 @@ final class Workload extends PowerGridComponent
                 ->showPerPage()
                 ->showRecordCount(),
             Detail::make()
-                ->view('components.detail', 'name'),
+                ->view('components.detail')
+
 
             // Exportable::make('workload')
             //     ->striped()
@@ -56,18 +60,33 @@ final class Workload extends PowerGridComponent
             'Staff.department',
             'Staff.major',
             'Staff.gred',
-            'Assignments.course_code',
+            // // 'Assignments.course_code',
+            // 'Assignments.year',
+            // 'Assignments.semester',
 
         )
 
-            ->leftjoin('Assignments', 'Staff.id', '=', 'Assignments.staff_id')
+            // ->leftjoin('Assignments', 'Staff.id', '=', 'Assignments.staff_id')
             ->whereNull('Staff.deleted_at');
+        // ->groupBy(
+
+        //     'Assignments.year',
+        //     'Assignments.semester',
+        //     'Staff.id',
+        //     'Staff.title',
+        //     'Staff.name',
+        //     'Staff.department',
+        //     'Staff.major',
+        //     'Staff.gred',
+        //     // 'Assignments.course_code',
+        // );
     }
 
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
             ->add('id')
+
             ->add('title')
             ->add('name')
             ->add('department')
@@ -81,6 +100,7 @@ final class Workload extends PowerGridComponent
     {
         return [
             Column::action('Action'),
+
             Column::make('Id', 'id'),
             Column::make('Title', 'title', 'title_name')->sortable(),
             Column::make('Name', 'name')
@@ -97,6 +117,15 @@ final class Workload extends PowerGridComponent
     public function filters(): array
     {
         return [
+            // Filter::select('year', 'year')
+            //     ->dataSource(
+            //         Semester::distinct()
+            //             ->pluck('year')
+            //             ->map(fn($year) => ['year' => $year])
+            //             ->toArray()
+            //     )
+            //     ->optionLabel('year')
+            //     ->optionValue('year'),
             Filter::select('department', 'department')
                 ->dataSource(Department::all())
                 ->optionLabel('code')

@@ -27,7 +27,7 @@
                     <div class="card-header pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div>
-                                <h5 class="mb-0">Staff Workload </h5>
+                                <h5 class="mb-0">Staff Workload {{ date('Y') }}</h5>
                             </div>
                             <div class="card mb-4 mx-6">
                                 <form method="get" action="{{ route('workload.print') }} " enctype="multipart/form-data">
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="card-body px-2 pt-2 pb-2">
-
+                        {{-- <livewire:event-guest-table eventid='{{ $event->id }}' /> --}}
                         <livewire:workload />
 
                     </div>

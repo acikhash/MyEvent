@@ -25,8 +25,7 @@
 
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form method="post" action="{{ route('assignment.update', $assignment) }} "
-                        enctype="multipart/form-data">
+                    <form method="post" action="{{ route('assignment.store') }} " enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         @if ($errors->any())
@@ -50,23 +49,48 @@
                         @endif
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="program_id" class="form-control-label">{{ __('Program') }}</label>
-                                <select name="program_id" class="form-select" id="program_id">
-                                    @foreach ($programs as $program)
-                                        <option value={{ $program->id }} @if ($course->program_id == $program->id) Selected @endif>
-                                            {{ $program->code }}-{{ $program->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <div class="form-group">
+                                    <label for="program" class="form-control-label">{{ __('Program') }}</label>
+                                    <input type="hidden" name="program_id" class="form-control" id="program_id"
+                                        value="{{ $course->program->id }}">
+                                    <div class="@error('program')border border-danger rounded-3 @enderror">
+                                        <input class="form-control"
+                                            value="{{ $course->program->code }}-{{ $course->program->name }} "
+                                            id="program" name="program" readonly>
+                                        @error('program')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
 
-                                </label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="semester" class="form-control-label">{{ __('Semester') }}</label>
+                                    <div class="@error('semester')border border-danger rounded-3 @enderror">
+                                        <input type="hidden" name="semester_id" id="semester_id"
+                                            value="{{ $course->semester->id }}">
+                                        <input type="hidden" name="year" id="year"
+                                            value="{{ $course->semester->year }}">
+                                        <input class="form-control"
+                                            value="{{ $course->semester->year }}-{{ $course->semester->name }}"
+                                            type="text" id="semester" name="semester" readonly>
+                                        @error('semester')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="code" class="form-control-label">{{ __('Course Code') }}</label>
+                                    <input type="hidden" name="course_id" class="form-control" id="course_id"
+                                        value="{{ $course->id }}">
                                     <div class="@error('code')border border-danger rounded-3 @enderror">
                                         <input class="form-control" value="{{ old('code', $course->code) }}" type="text"
-                                            placeholder="i.e : UANP6013" id="code" name="code">
+                                            placeholder="i.e : UANP6013" id="code" name="code" readonly>
                                         @error('code')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -74,20 +98,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">{{ __('Course Name') }}</label>
                                     <div class="@error('name')border border-danger rounded-3 @enderror">
                                         <input class="form-control" value="{{ old('name', $course->name) }}" type="text"
-                                            placeholder="i.e : Research Methodology" id="name" name="name">
+                                            placeholder="i.e : Research Methodology" id="name" name="name" readonly>
                                         @error('name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <div class="row">
                             <div class="col-md-4">
@@ -95,7 +118,8 @@
                                     <label for="section" class="form-control-label">{{ __('Section') }}</label>
                                     <div class="@error('section')border border-danger rounded-3 @enderror">
                                         <input class="form-control" value="{{ old('section', $course->section) }}"
-                                            type="text" placeholder="i.e : 03" id="section" name="section">
+                                            type="text" placeholder="i.e : 03" id="section" name="section"
+                                            readonly>
                                         @error('section')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -107,7 +131,7 @@
                                     <label for="credit" class="form-control-label">{{ __('Credit') }}</label>
                                     <div class="@error('credit')border border-danger rounded-3 @enderror">
                                         <input class="form-control" value="{{ old('credit', $course->credit) }}"
-                                            type="number" placeholder="i.e : 3" id="credit" name="credit">
+                                            type="number" placeholder="i.e : 3" id="credit" name="credit" readonly>
                                         @error('credit')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -121,7 +145,7 @@
                                     <div class="@error('no_of_student')border border-danger rounded-3 @enderror">
                                         <input class="form-control"
                                             value="{{ old('no_of_student', $course->no_of_student) }}" type="number"
-                                            placeholder="i.e : 10" id="no_of_student" name="no_of_student">
+                                            placeholder="i.e : 10" id="no_of_student" name="no_of_student" readonly>
                                         @error('no_of_student')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -129,52 +153,99 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="staff_id" class="form-control-label">{{ __('Lecturer') }}</label>
-
-                                <table>
-                                    <th></th>
-                                    <th>Name</th>
-                                    <th>Major</th>
-                                    <th>Grade</th>
-                                    <th>Department</th>
-                                    @php
-                                        $i = 0;
-                                    @endphp
-
-                                    @foreach ($staffs as $staff)
+                                <h6 class="mb-0">{{ __('Lecturer Assigned') }}</h6>
+                                <table style="width: 100%;" name="assign" id="assign">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <input type="checkbox" name="lec[{{ $i }}]">
-                                            </td>
-                                            <td>{{ $staff->title }} {{ $staff->name }}</td>
-                                            <td>{{ $staff->major }}</td>
-                                            <td>{{ $staff->gred }}</td>
-                                            <td>{{ $staff->department }}</td>
+                                            <th style="border: 1px solid">Staff ID</th>
+                                            <th style="border: 1px solid">Name</th>
+                                            <th style="border: 1px solid">Major</th>
+                                            <th style="border: 1px solid">Grade</th>
+                                            <th style="border: 1px solid">Department</th>
+                                            <th style="border: 1px solid">Notes</th>
+                                            <th style="border: 1px solid">Remove</th>
                                         </tr>
-                                        @php
-                                            $i++;
-                                        @endphp
-                                    @endforeach
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($staffs as $index => $staff)
+                                            <tr>
+                                                <td>
+                                                    {{ $staff->id }}
+                                                    <input type="hidden" name="rows[{{ $index }}][staff_id]"
+                                                        value="{{ $staff->id }}">
+                                                </td>
+                                                <td>
+                                                    {{ $staff->title }} {{ $staff->name }}
+                                                    <input type="hidden" name="rows[{{ $index }}][staff_name]"
+                                                        value="{{ $staff->title }} {{ $staff->name }}">
+                                                </td>
+                                                <td>
+                                                    {{ $staff->major }}
+
+                                                </td>
+                                                <td>
+                                                    {{ $staff->gred }}
+
+                                                <td>
+                                                    {{ $staff->department }}
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="rows[{{ $index }}][notes]"
+                                                        id="rows[{{ $index }}][notes]" class="form-control"
+                                                        value=" {{ $assignments[$index]->notes }}" readonly>
+                                                    <input type="hidden" name="rows[{{ $index }}][action]"
+                                                        id="rows[{{ $index }}][action]">
+                                                </td>
+                                                <td>
+                                                    <button type="button" onclick="updateRow(this)"
+                                                        class="fas fa-edit text-secondary btn-md mt-4 mb-4"></button>
+
+                                                    <button type="button" onclick="removeRow(this)"
+                                                        class="fas fa-trash text-secondary btn-md mt-4 mb-4"></button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
-
-
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 </label>
                             </div>
 
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6 class="mb-0">{{ __('Assign New Lecturer') }}</h6>
+                                <button type="button" name="search" value="0"
+                                    class="btn bg-gradient-primary btn-md mt-4 mb-4"
+                                    onclick="toggleSearchLecturer()">{{ 'Search Lecturer' }}</button>
+
+
+                            </div>
+                        </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" name="edit" value="0"
                                 class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
-
-                            &nbsp;&nbsp;<button type="submit" name="delete" value="1"
-                                class="btn bg-gradient-danger btn-md mt-4 mb-4">{{ 'Delete' }}</button>
                         </div>
                     </form>
-
+                    <div class="row" id="searchlec" hidden>
+                        <div class="col-md-12">
+                            <livewire:assign-lec />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+<script src="{{ asset('js/assignLecturers.js') }}"></script>
